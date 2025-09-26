@@ -29,35 +29,61 @@ class AlertsController extends Controller
         // then sends the db the string stores it 
         // no alert head anymore
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-     
         
 
     public function store()
     {   
+
+        $para1 = 70;
+        $para2 = 85;
+        $para3 = 80;
         $parameter_one = '';
         $parameter_two = '';
         $parameter_three = '';
 
-        if(1 != 1){
-            
-            $parameter_one = 'check1';
+        if($para1 > 69){
+            switch($para1){
+                case 70:
+                    $parameter_one = "This pm has reached a low level ";
+                    break;
+                case 80:
+                    $parameter_one = "This pm has reached a middle level "; 
+                    break;
+                case 85:
+                    $parameter_one = "This pm has reached a high level "; 
+                    break;
+            }
         }
 
-          if(1 != 2){
-            
-            $parameter_two = 'check2';
+               if($para2 > 69){
+            switch($para2){
+                case 70:
+                    $parameter_two = "This co2 has reached a low level ";
+                    break;
+                case 80:
+                    $parameter_two = "This co2 has reached a middle level "; 
+                    break;
+                case 85:
+                    $parameter_two = "This co2 has reached a high level "; 
+                    break;
+            }
         }
-          if(1 != 3){
-            
-            $parameter_three = 'check3';
+                if($para3 > 69){
+            switch($para3){
+                case 70:
+                    $parameter_three = "This co has reached a low level";
+                    break;
+                case 80:
+                    $parameter_three = "This co has reached a middle level"; 
+                    break;
+                case 85:
+                    $parameter_three = "This co has reached a high level"; 
+                    break;
+            }
         }
 
+        $complete_alert_string = $parameter_one . $parameter_two . $parameter_three;
 
-        $complete_alert_string = $parameter_one + $parameter_two + $parameter_three;
  
         ALerts::create([
              'alert_body' => $complete_alert_string,
