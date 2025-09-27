@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlertsController;
 use App\Http\Controllers\HardwareController;
+use App\Http\Controllers\HardwareDataController;
 
 Route::get('/', function () {
     return view('index');
@@ -12,6 +13,9 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
     Route::resource('hardware', HardwareController::class);
+    Route::resource('hardware_data', HardwareDataController::class);
     Route::resource('alert', AlertsController::class);
+   
 });
 
+ Route::post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');

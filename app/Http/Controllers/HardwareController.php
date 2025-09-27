@@ -3,30 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hardware;
+use App\Models\Pending_hardware;
 use Illuminate\Http\Request;
 
 class HardwareController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $hardwares = Hardware::all();
         return view('admin.hardware.hardware', compact('hardwares'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.hardware.hardware_create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
          $validated = $request->validate([
@@ -43,18 +36,12 @@ class HardwareController extends Controller
        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($hardware_id)
     {
         $hardware = Hardware::findOrFail($hardware_id);
         return view('admin.hardware.hardware_update', compact('hardware'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $hardware_id)
     {   
         //dd($hardware_id);
@@ -70,14 +57,32 @@ class HardwareController extends Controller
     }
     
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($hardware_id)
     {
         $hardware = Hardware::findOrFail($hardware_id);
         $hardware->delete();
 
         return redirect()->route('hardware.index')->with('success', 'Device unregistered successfully!');
+    }
+
+    public function receiveHardware(Request $request){
+       //dd('hehe');
+        $validated = $request->validate([
+         'hardware_info' => 'required',
+         'latitude' => 'required',
+         'longitude' => 'required',
+        ]);
+       $hardware = Hardware::where('hardware_info', $validated['hardware_info'])->first();
+
+       if(!$hardware){
+            Pending_hardware::updateOrCreate(
+            ['hardware_info' => $validated['hardware_info']], // Search condition
+            [
+                'latitude' => $validated['latitude'],
+                'longitude' => $validated['longitude']
+            ]
+            );
+       }  
+       // no return response here hehe
     }
 }
