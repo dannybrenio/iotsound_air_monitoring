@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id("hardware_id");
             $table->string("hardware_info");
             $table->string("longitude");
-            $table->string("lattitude");
+            $table->string("latitude");
             $table->string("status");
             $table->timestamps();
         });

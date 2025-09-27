@@ -17,18 +17,33 @@ class HardwareController extends Controller
 
     public function create()
     {
-        return view('admin.hardware.hardware_create');
+        $pending_list = Pending_hardware::all(); 
+        return view('admin.hardware.hardware_create', compact('pending_list'));
     }
 
     public function store(Request $request)
     {
-         $validated = $request->validate([
-            'hardware_info' => 'required',
-            'hardware_location' => 'required',
-        ]);
- 
-        Hardware::create($validated);
-            return redirect()->route('hardware.index')->with('success', 'Device registered successfully!');
+
+ $pending = Pending_hardware::findOrFail($request->hardware_info);
+
+   
+    $hardwareInfo = $pending->hardware_info;
+    $latitude = $pending->latitude;
+    $longitude = $pending->longitude;
+
+   //dd($hardwareInfo, $latitude, $longitude);
+
+   //still undecided to the status logic
+    Hardware::create([
+        'hardware_info' => $hardwareInfo,
+        'longitude' => $longitude,
+        'latitude' => $latitude,
+        'status' => 'active', 
+    ]);
+
+        //deletes the data on the device if done
+          $pending->delete();
+        return redirect()->route('hardware.index')->with('success', 'Device registered successfully!');
     }
 
     public function show(Hardware $hardware)
@@ -78,11 +93,11 @@ class HardwareController extends Controller
             Pending_hardware::updateOrCreate(
             ['hardware_info' => $validated['hardware_info']], // Search condition
             [
-                'latitude' => $validated['latitude'],
+                'latitude' => $validated['latitude'], //replaced values
                 'longitude' => $validated['longitude']
             ]
             );
        }  
-       // no return response here hehe
+       // no return response here 
     }
 }

@@ -3,6 +3,7 @@ IOT SOUND AND AIR MONITORING
 Versions: 
 - 0.1v initial commit with hardware table working
 - 0.1.1v working pending hardware with postman, new database migrations, hardware_data blade but no data entry point, updated:routing, hardware controller
+- 0.1.2v pending to hardware create now working, typo fix on migration 
 
 Cloning steps: 
 
