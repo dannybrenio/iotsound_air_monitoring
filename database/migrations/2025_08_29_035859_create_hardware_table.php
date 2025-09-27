@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('hardware', function (Blueprint $table) {
             $table->id("hardware_id");
             $table->string("hardware_info");
-            $table->string("hardware_location");
+            $table->string("longitude");
+            $table->string("lattitude");
+            $table->string("status");
             $table->timestamps();
         });
     }

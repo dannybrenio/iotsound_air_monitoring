@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('hardware_data', function (Blueprint $table) {
             $table->id("data_id");
-            //foreign key reference
+            //foreign key
             $table->unsignedBigInteger('hardware_id');  
             $table->foreign('hardware_id')->references('hardware_id')->on('hardware')->onDelete('cascade');
-            $table->string("parameter_example");
+            $table->float('PM2_5', 8, 2);
+            $table->float('PM10', 8, 2);
+            $table->float('Co', 8, 2);
+            $table->float('Mo2', 8, 2);
+            $table->float('Decibels', 8, 2);
             $table->timestamps();
         });
     }
@@ -25,7 +29,10 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {
-        Schema::dropIfExists('hardware_datas');
+    {   
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('hardware_data');
+        Schema::dropIfExists('hardware');        
+        Schema::enableForeignKeyConstraints();
     }
 };
