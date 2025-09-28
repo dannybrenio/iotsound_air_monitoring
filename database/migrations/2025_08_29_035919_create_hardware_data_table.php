@@ -21,6 +21,7 @@ return new class extends Migration
             $table->float('co', 8, 2);
             $table->float('no2', 8, 2);
             $table->float('decibels', 8, 2);
+            $table->dateTime('realtime_stamp');
             $table->timestamps();
         });
     }

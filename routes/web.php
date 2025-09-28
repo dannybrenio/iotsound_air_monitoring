@@ -19,3 +19,4 @@ Route::prefix('admin')->group(function () {
 });
 
  Route::post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');
+ Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');

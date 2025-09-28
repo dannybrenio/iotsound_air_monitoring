@@ -100,4 +100,7 @@ class HardwareController extends Controller
        }  
        // no return response here 
     }
+
+
+   
 }
