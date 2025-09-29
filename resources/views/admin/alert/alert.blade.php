@@ -25,7 +25,7 @@ $parameter_one = '';
 
         return $complete_alert_string;
     }
-//make a data creation when the hardware is available
+//make a data creation when the hardware is available1
 ?>
 
 

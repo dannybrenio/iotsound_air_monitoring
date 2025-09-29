@@ -8,26 +8,12 @@ use Illuminate\Http\Request;
 class AlertsController extends Controller
 {
     
-    public function index()
-    {
+    public function index(){
         $alerts = Alerts::all();
         return view('admin.alert.alert', compact('alerts'));
     }
 
-    public function create()
-    {
-        // $alerts = Alerts::create($request->all());
-        // return response()->json($alerts, 201);
-
-        //six parameters then those six parameters have conditional levels accurding to standard
-        //if theres a parameter its creates a string if no parameters are on alert it doest create it 
-        // then sends the db the string stores it 
-        // no alert head anymore
-    }
-        
-
-    public function store($pm2_5_val, $pm10_val, $co_val, $no2_val, $decibels_val)
-    {   
+    public function store($pm2_5_val, $pm10_val, $co_val, $no2_val, $decibels_val){   
 
         $pm2_5_str = '';
         $pm10_str = '';
@@ -87,24 +73,4 @@ class AlertsController extends Controller
         return response()->json(['message' => 'New ALert!']);
     }
     
-
-    public function show(Alerts $alerts)
-    {
-        //
-    }
-
-    public function edit(Alerts $alerts)
-    {
-        //
-    }
-
-    public function update(Request $request, Alerts $alerts)
-    {
-        //
-    }
-
-    public function destroy(Alerts $alerts)
-    {
-        //
-    }
 }
