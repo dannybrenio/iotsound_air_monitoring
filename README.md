@@ -4,7 +4,8 @@ Versions:
 - 0.1v initial commit with hardware table working
 - 0.1.1v working pending hardware with postman, new database migrations, hardware_data blade but no data entry point, updated:routing, hardware controller
 - 0.1.2v pending to hardware create now working, typo fix on migration 
-- 0.1.3v data fetching working, next step is alert triggers
+- 0.1.3v data fetching working, next step is alert 
+- 0.1.4v alert trigger working, next polishing of exisiting modules
 
 Cloning steps: 
 

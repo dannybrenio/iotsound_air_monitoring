@@ -26,58 +26,58 @@ class AlertsController extends Controller
     }
         
 
-    public function store()
+    public function store($pm2_5_val, $pm10_val, $co_val, $no2_val, $decibels_val)
     {   
 
-        $para1 = 70;
-        $para2 = 85;
-        $para3 = 80;
-        $parameter_one = '';
-        $parameter_two = '';
-        $parameter_three = '';
+        $pm2_5_str = '';
+        $pm10_str = '';
+        $co_str = '';
+        $no2_str = '';
+        $decibels_str = '';
 
-        if($para1 > 69){
-            switch($para1){
-                case 70:
-                    $parameter_one = "This pm has reached a low level ";
-                    break;
-                case 80:
-                    $parameter_one = "This pm has reached a middle level "; 
-                    break;
-                case 85:
-                    $parameter_one = "This pm has reached a high level "; 
-                    break;
+        if($pm2_5_val > 69){
+            if($pm2_5_val){
+
+                $pm2_5_str = "";
+
+            }elseif($pm2_5_str){
+
+            }
+
+        }
+
+        if($pm10_val > 69){
+            if($pm10_val){
+
+                $pm10_str = "";
+
+            }elseif($pm10_str){
+
             }
         }
 
-               if($para2 > 69){
-            switch($para2){
-                case 70:
-                    $parameter_two = "This co2 has reached a low level ";
-                    break;
-                case 80:
-                    $parameter_two = "This co2 has reached a middle level "; 
-                    break;
-                case 85:
-                    $parameter_two = "This co2 has reached a high level "; 
-                    break;
-            }
-        }
-                if($para3 > 69){
-            switch($para3){
-                case 70:
-                    $parameter_three = "This co has reached a low level";
-                    break;
-                case 80:
-                    $parameter_three = "This co has reached a middle level"; 
-                    break;
-                case 85:
-                    $parameter_three = "This co has reached a high level"; 
-                    break;
-            }
-        }
+        if($co_val > 69){
+            if($co_val){
 
-        $complete_alert_string = $parameter_one . $parameter_two . $parameter_three;
+                $co_str = "";
+
+            }elseif($co_str){
+
+            }
+
+        }
+        
+        if($no2_val){
+            if($no2_val){
+                $no2_str = "";
+            }elseif($no2_val){
+                $no2_str = "";
+            }
+        }    
+
+        
+        
+        $complete_alert_string = $pm2_5_str . $pm10_str . $co_str;
 
  
         ALerts::create([
@@ -86,6 +86,7 @@ class AlertsController extends Controller
 
         return response()->json(['message' => 'New ALert!']);
     }
+    
 
     public function show(Alerts $alerts)
     {

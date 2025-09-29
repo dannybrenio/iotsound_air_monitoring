@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hardware;
 use App\Models\Hardware_data;
+use App\Http\Controllers\AlertsController;
 use Illuminate\Http\Request;
 
 class HardwareDataController extends Controller
@@ -33,6 +34,13 @@ class HardwareDataController extends Controller
                 'decibels' => $rawdata['decibels']?? null,
                 'realtime_stamp' => $rawdata['realtime_stamp']?? null,
             ]);
+             if($hardware_data){
+                //dd($rawdata['pm2_5'], $rawdata['pm10'], $rawdata['no2']);
+                   //store($rawdata['pm2_5'], $rawdata['pm10'], $rawdata['no2']);         
+                   //store(70,80,60);
+                   $alertsController = new AlertsController();
+                   $alertsController->store($rawdata['pm2_5'], $rawdata['pm10'], $rawdata['co'] );
+                }
         }else{
             dd('does not exist');
         }
