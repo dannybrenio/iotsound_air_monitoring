@@ -13,5 +13,5 @@ use App\Http\Controllers\HardwareDataController;
 // });
 
  //Route::Post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');
-  Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
+  //Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
 

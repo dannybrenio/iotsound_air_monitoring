@@ -6,9 +6,7 @@
     <title>User Side</title>
 </head>
 <body>
-    @@foreach ($collection as $item)
-        
-    
+   <!-- for mobile app --> 
     @endforeach
 </body>
 </html>
