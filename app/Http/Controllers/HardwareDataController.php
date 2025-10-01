@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hardware;
 use App\Models\Hardware_data;
 use App\Http\Controllers\AlertsController;
+use Exception;
 use Illuminate\Http\Request;
 
 class HardwareDataController extends Controller
@@ -35,10 +36,11 @@ class HardwareDataController extends Controller
                 'decibels' => $rawdata['decibels']?? null,
                 'realtime_stamp' => $rawdata['realtime_stamp']?? null,
             ]);
-             if($hardware_data){
-                   $alertsController = new AlertsController();
-                   $alertsController->store($rawdata['pm2_5'], $rawdata['pm10'], $rawdata['co'] );
-                }
+
+            if($hardware_data){
+                $alertsController = new AlertsController();
+                $alertsController->store($rawdata['pm2_5'], $rawdata['pm10'], $rawdata['co'], $rawdata["no2"], $rawdata["decibels"]);
+            }
     } catch (Exception $e) {
         return response()->json([
             'error'   => 'Server Error',

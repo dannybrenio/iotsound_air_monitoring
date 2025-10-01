@@ -13,7 +13,7 @@
     @method('PUT')
     <label>Hardware Name:</label>
     <input type="text" name="hardware_info" value="{{ old('hardware_info') }}"><br>
-    <!-- <label>Hardware Location:</label>
+     <label>Hardware Location:</label>
     <input type="text" name="hardware_location" value="{{ old('hardware_location') }}"><br> -->
     <button type="submit">Update</button>
     <!-- todo: create a pressable button for the located hardware -->
