@@ -24,6 +24,5 @@ depending where you installed your php or inside xampp if you didn't separate it
     - extension=pdo_mysql
     - extension=mysqli
 
-- php artisan generate:key
 - php artisan migrate
 - php artisan serve 
