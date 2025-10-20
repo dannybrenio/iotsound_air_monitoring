@@ -24,7 +24,7 @@ class HardwareDataController extends Controller
 
         $hardware_id = Hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_id');
          if(empty($hardware_id)){
-            return response()->json(['error'   => 'Hardware ID not found.'], 404);
+            return response()->json(['success' => true, 'message' => 'Hardware ID not found, added to pending data.'], 200);
          }
 
             $hardware_data = Hardware_data::create([

@@ -159,7 +159,9 @@
     </div>
 @php
   $aqi_value = 78;   
-  dump($readings);
+//  np
+
+  //dump($readings);
 @endphp
 
     <script>
