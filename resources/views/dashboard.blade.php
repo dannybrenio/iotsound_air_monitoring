@@ -206,56 +206,104 @@
 
         // Weather
         document.addEventListener('DOMContentLoaded', () => {
-            const apiKey = "{{ env('WEATHER_KEY') }}";  // safer to store in .env
-            const city   = "Caloocan";                  // change or make dynamic
-            const days   = 7;                           // 1–10 days supported on free plan
+            const city = "Caloocan";
+            const lat = 14.6514, lon = 120.97; // coordinates for Caloocan
+            let currentUnit = "C"; // default
+            let forecastData = null;
 
-            const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=${days}&aqi=no&alerts=no`;
+            const weatherCodeMap = {
+                0:  { text: "Sunny", icon: "https://cdn.weatherapi.com/weather/64x64/day/113.png" },
+                1:  { text: "Mainly clear", icon: "https://cdn.weatherapi.com/weather/64x64/day/116.png" },
+                2:  { text: "Partly cloudy", icon: "https://cdn.weatherapi.com/weather/64x64/day/119.png" },
+                3:  { text: "Cloudy", icon: "https://cdn.weatherapi.com/weather/64x64/day/122.png" },
+                45: { text: "Fog", icon: "https://cdn.weatherapi.com/weather/64x64/day/248.png" },
+                48: { text: "Freezing fog", icon: "https://cdn.weatherapi.com/weather/64x64/day/260.png" },
+                51: { text: "Light drizzle", icon: "https://cdn.weatherapi.com/weather/64x64/day/266.png" },
+                53: { text: "Moderate drizzle", icon: "https://cdn.weatherapi.com/weather/64x64/day/296.png" },
+                55: { text: "Heavy drizzle", icon: "https://cdn.weatherapi.com/weather/64x64/day/302.png" },
+                56: { text: "Freezing drizzle", icon: "https://cdn.weatherapi.com/weather/64x64/day/281.png" },
+                57: { text: "Heavy freezing drizzle", icon: "https://cdn.weatherapi.com/weather/64x64/day/284.png" },
+                61: { text: "Light rain", icon: "https://cdn.weatherapi.com/weather/64x64/day/308.png" },
+                63: { text: "Moderate rain", icon: "https://cdn.weatherapi.com/weather/64x64/day/308.png" },
+                65: { text: "Heavy rain", icon: "https://cdn.weatherapi.com/weather/64x64/day/314.png" },
+                66: { text: "Light freezing rain", icon: "https://cdn.weatherapi.com/weather/64x64/day/311.png" },
+                67: { text: "Heavy freezing rain", icon: "https://cdn.weatherapi.com/weather/64x64/day/314.png" },
+                71: { text: "Light snow", icon: "https://cdn.weatherapi.com/weather/64x64/day/332.png" },
+                73: { text: "Moderate snow", icon: "https://cdn.weatherapi.com/weather/64x64/day/338.png" },
+                75: { text: "Heavy snow", icon: "https://cdn.weatherapi.com/weather/64x64/day/338.png" },
+                77: { text: "Snow grains", icon: "https://cdn.weatherapi.com/weather/64x64/day/338.png" },
+                80: { text: "Light rain showers", icon: "https://cdn.weatherapi.com/weather/64x64/day/353.png" },
+                81: { text: "Moderate rain showers", icon: "https://cdn.weatherapi.com/weather/64x64/day/356.png" },
+                82: { text: "Heavy rain showers", icon: "https://cdn.weatherapi.com/weather/64x64/day/359.png" },
+                85: { text: "Light snow showers", icon: "https://cdn.weatherapi.com/weather/64x64/day/368.png" },
+                86: { text: "Heavy snow showers", icon: "https://cdn.weatherapi.com/weather/64x64/day/371.png" },
+                95: { text: "Rain with lightning", icon: "https://cdn.weatherapi.com/weather/64x64/day/386.png" },
+                96: { text: "Showers with lightning", icon: "https://cdn.weatherapi.com/weather/64x64/day/389.png" },
+                99: { text: "Stormy rain", icon: "https://cdn.weatherapi.com/weather/64x64/day/389.png" }
+            };
 
-            fetch(url)
-                .then(res => res.json())
-                .then(data => {
-                    const container = document.getElementById('weather');
-                    const location  = `${data.location.name}, ${data.location.country}`;
-                    const current   = `${data.current.temp_c}°C – ${data.current.condition.text}`;
+            const toF = c => (c * 9/5 + 32).toFixed(1);
 
-                    // today in YYYY-MM-DD format to match WeatherAPI dates
-                    const todayStr = new Date().toISOString().split('T')[0];
+            async function loadWeather() {
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
+                const res = await fetch(url);
+                forecastData = await res.json();
+                renderWeather();
+            }
 
-                    const cards = data.forecast.forecastday.map(day => {
-                        const dateObj = new Date(day.date);
-                        const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
+            function renderWeather() {
+                const container = document.getElementById('weather');
+                const daily = forecastData.daily;
+                const current = forecastData.current_weather;
 
-                        // Add highlight classes if this card is for today
-                        const highlight =
-                            day.date === todayStr
-                                ? 'bg-blue-200'
-                                : 'bg-white';
+                const currentInfo = weatherCodeMap[current.weathercode] || {text:"Unknown",icon:"❓"};
+                const currentTemp = currentUnit === "C" ? `${current.temperature}°C` : `${toF(current.temperature)}°F`;
 
-                        return `
-                            <div class="flex flex-col justify-between items-center border-2 border-[#06402b] rounded-xl p-5 w-44 text-center shadow-xl hover:scale-105 duration-300 ${highlight}">
-                                <span class="font-semibold text-blue-700">${weekday}</span>
-                                <span class="text-sm text-gray-500 mb-1">${day.date}</span>
-                                <img src="https:${day.day.condition.icon}" alt="icon" class="size-20">
-                                <span class="text-red-600">High ${day.day.maxtemp_c}°C</span>
-                                <span class="text-blue-600">Low ${day.day.mintemp_c}°C</span>
-                                <span class="text-sm text-gray-600 text-center uppercase">${day.day.condition.text}</span>
-                            </div>
-                        `;
-                    }).join('');
+                const todayStr = new Date().toISOString().split('T')[0];
 
-                    container.innerHTML = `
-                        <div class="flex flex-col justify-center items-center mb-4">
-                            <h2 class="text-2xl font-bold text-[#06402b] uppercase">${location}</h2>
-                            <p class="text-lg text-[#a8a8a8]">( Current: ${current} )</p>
-                        </div>
-                        <div class="flex flex-wrap justify-center gap-4">
-                            ${cards}
+                const cards = daily.time.map((dateStr, i) => {
+                    const dateObj = new Date(dateStr);
+                    const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
+                    const code = daily.weathercode[i];
+                    const info = weatherCodeMap[code] || {text:"Unknown",icon:"❓"};
+
+                    const max = currentUnit === "C" ? `${daily.temperature_2m_max[i]}°C` : `${toF(daily.temperature_2m_max[i])}°F`;
+                    const min = currentUnit === "C" ? `${daily.temperature_2m_min[i]}°C` : `${toF(daily.temperature_2m_min[i])}°F`;
+
+                    const highlight = dateStr === todayStr ? 'bg-blue-200' : 'bg-white';
+
+                    return `
+                        <div class="flex flex-col justify-between items-center border-2 border-[#06402b] rounded-xl p-5 w-44 text-center shadow-xl hover:scale-105 duration-300 ${highlight}">
+                            <span class="font-semibold text-blue-700">${weekday}</span>
+                            <span class="text-sm text-gray-500 mb-1">${dateStr}</span>
+                            <img src="${info.icon}" alt="icon" class="size-20">
+                            <span class="text-red-600">High ${max}</span>
+                            <span class="text-blue-600">Low ${min}</span>
+                            <span class="text-sm text-gray-600 text-center uppercase">${info.text}</span>
                         </div>
                     `;
-                })
-                .catch(err => console.error('WeatherAPI error:', err));
-        });
+                }).join('');
+
+                container.innerHTML = `
+                    <div class="flex flex-col justify-center items-center mb-4">
+                        <h2 class="text-2xl font-bold text-[#06402b] uppercase">${city}, Philippines</h2>
+                        <p class="text-lg text-[#a8a8a8]">( Current: ${currentTemp} – ${currentInfo.text} )</p>
+                        <button id="toggleUnit" class="mt-2 bg-green-700 text-white px-3 py-1 rounded-lg hover:bg-green-800 transition">Switch to °${currentUnit === "C" ? "F" : "C"}</button>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        ${cards}
+                    </div>
+                `;
+
+                document.getElementById("toggleUnit").addEventListener("click", () => {
+                    currentUnit = currentUnit === "C" ? "F" : "C";
+                    renderWeather();
+                });
+            }
+
+            loadWeather();
+       });
+
 
         // Treshold Slider
         const aqi = {{ $aqi_value }}

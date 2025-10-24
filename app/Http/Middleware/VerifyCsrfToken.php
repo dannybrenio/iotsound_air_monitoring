@@ -15,5 +15,4 @@ class VerifyCsrfToken extends Middleware
       'send-reading',    // matches POST /send-reading
       'sensor-status',   // matches POST /sensor-status
     ];
-
 }
