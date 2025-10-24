@@ -158,8 +158,10 @@
         <div id="weather" class="h-[400px] bg-white flex flex-col justify-center items-center w-full shadow-xl z-0 gap-y-5 border-t-2 border-b-2 border-[#06402b]"></div>
     </div>
 @php
-  $aqi_value = 78;   
-  dump($readings);
+  $aqi_value = 100;   
+//  np
+
+  //dump($readings);
 @endphp
 
     <script>

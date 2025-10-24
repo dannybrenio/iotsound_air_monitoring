@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hardware;
+use App\Models\Hardware_data;
 use App\Models\Pending_hardware;
+use App\Models\Pending_hardware_data;
 use Illuminate\Http\Request;
 
 class HardwareController extends Controller
@@ -23,18 +25,37 @@ class HardwareController extends Controller
 
         $pending = Pending_hardware::findOrFail($request->hardware_info);
 
+        $insertedData = [];
+
             $hardwareInfo = $pending->hardware_info;
             $latitude = $pending->latitude;
             $longitude = $pending->longitude;
 
         //still undecided to the status logic
-            Hardware::create([
+           $hardware_created = Hardware::create([
                 'hardware_info' => $hardwareInfo,
                 'longitude' => $longitude,
                 'latitude' => $latitude,
                 'status' => 'active', 
             ]);
+            
+            $hardware_id_fetch = $hardware_created->hardware_id;
 
+               $pending_data_fetch= Pending_hardware_data::where('pending_hardware_info', $hardwareInfo)->get();
+
+                foreach ($pending_data_fetch as $pending_fetch) {
+                $newData = $pending_fetch->toArray();
+                $newData['hardware_id'] = $hardware_id_fetch; // assign foreign key
+                $record = Hardware_data::create($newData);
+
+               // $insertedData[] = $record;
+    }
+                //    return response([
+                //     'inserted_count' => count($insertedData),
+                //     'inserted_data' => $insertedData,
+                // ], 200);
+
+                Pending_hardware_data::where('pending_hardware_info', $hardwareInfo)->delete();
                 $pending->delete();
                 return redirect()->route('hardware.index')->with('success', 'Device registered successfully!');
         }
@@ -80,5 +101,4 @@ class HardwareController extends Controller
             );
        }  
     }
-   
 }

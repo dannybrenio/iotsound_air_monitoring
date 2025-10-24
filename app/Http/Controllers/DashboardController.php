@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HardwareDataController;
 use App\Events\ReadingReceived;
 use Illuminate\Http\Request;
 
