@@ -7,6 +7,9 @@ use App\Http\Controllers\HardwareController;
 use App\Http\Controllers\HardwareDataController;
 use App\Http\Controllers\ReportController;
 
+use App\Http\Controllers\AqiController;
+
+
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/about', function () { return view('about'); })->name('about');;
 Route::get('/help', function () { return view('help'); })->name('help');;
@@ -24,6 +27,13 @@ Route::prefix('admin')->group(function () {
     Route::resource('report', ReportController::class);
    
 });
+
+// Route::get('testing', function(){
+//     return view('testing');
+// });
+
+
+Route::get('/testing', [AqiController::class, 'index']);
 
  //Route::post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');
  //Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
