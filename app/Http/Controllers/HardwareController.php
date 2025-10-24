@@ -47,17 +47,16 @@ class HardwareController extends Controller
                 $newData = $pending_fetch->toArray();
                 $newData['hardware_id'] = $hardware_id_fetch; // assign foreign key
                 $record = Hardware_data::create($newData);
+
                // $insertedData[] = $record;
     }
-
-            //    return response([
-            //     'inserted_count' => count($insertedData),
-            //     'inserted_data' => $insertedData,
-            // ], 200);
+                //    return response([
+                //     'inserted_count' => count($insertedData),
+                //     'inserted_data' => $insertedData,
+                // ], 200);
 
                 Pending_hardware_data::where('pending_hardware_info', $hardwareInfo)->delete();
                 $pending->delete();
-                
                 return redirect()->route('hardware.index')->with('success', 'Device registered successfully!');
         }
 
@@ -102,5 +101,4 @@ class HardwareController extends Controller
             );
        }  
     }
-   
 }
