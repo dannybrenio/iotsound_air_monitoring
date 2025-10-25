@@ -74,6 +74,6 @@ class AlertsController extends Controller
     }
 
     public function receiveSensorStatus(Request $request){
-       
+            
     }    
 }

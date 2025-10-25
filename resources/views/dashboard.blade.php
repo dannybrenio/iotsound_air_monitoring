@@ -183,7 +183,7 @@
                                 "Content-Type": "application/json",          // CSRF not needed for routes/api.php
                             },
                             body: JSON.stringify({
-                                 "hardware_info": 1,
+                                "hardware_info": 1,
                                 "pm2_5": 27.6,
                                 "pm10": 45.2,
                                 "co": 0.31,

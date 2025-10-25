@@ -20,24 +20,23 @@ class HardwareController extends Controller
     }
 
     public function store(Request $request){
-
         $pending = Pending_hardware::findOrFail($request->hardware_info);
 
-            $hardwareInfo = $pending->hardware_info;
-            $latitude = $pending->latitude;
-            $longitude = $pending->longitude;
+        $hardwareInfo = $pending->hardware_info;
+        $latitude = $pending->latitude;
+        $longitude = $pending->longitude;
 
-        //still undecided to the status logic
-            Hardware::create([
-                'hardware_info' => $hardwareInfo,
-                'longitude' => $longitude,
-                'latitude' => $latitude,
-                'status' => 'active', 
-            ]);
+    //still undecided to the status logic
+        Hardware::create([
+            'hardware_info' => $hardwareInfo,
+            'longitude' => $longitude,
+            'latitude' => $latitude,
+            'status' => 'active', 
+        ]);
 
-                $pending->delete();
-                return redirect()->route('hardware.index')->with('success', 'Device registered successfully!');
-        }
+            $pending->delete();
+            return redirect()->route('hardware.index')->with('success', 'Device registered successfully!');
+    }
 
     public function edit($hardware_id){
         $hardware = Hardware::findOrFail($hardware_id);
