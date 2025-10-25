@@ -72,5 +72,8 @@ class AlertsController extends Controller
 
         return response()->json(['message' => 'New ALert!']);
     }
-    
+
+    public function receiveSensorStatus(Request $request){
+       
+    }    
 }

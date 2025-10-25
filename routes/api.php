@@ -1,11 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\DeviceController;
-use App\Http\Controllers\DashboardController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\AlertsController;
-use App\Http\Controllers\HardwareController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HardwareDataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -47,11 +44,23 @@ Route::get('/weather1', function (Request $request) {
 });
 
 
-Route::post('/send-reading', [DashboardController::class, 'sendReading'])->name('send.reading');
+// Route::post('/send-reading', function (Request $request) {
+//     $reading = new \App\Models\Hardware_data([
+//         'hardware_id'    => 1,
+//         'pm2_5'          => null,
+//         'pm10'           => null,
+//         'co'             => null,
+//         'no2'            => null,
+//         'decibels'       => null,
+//         'realtime_stamp' => now(),
+//     ]);
+//     event(new ReadingReceived($reading));
+//     return response()->noContent();
+// });
 
-Route::post('/sensor-status', [DashboardController::class, 'receiveSensorStatus'])->name('sensor-status');
+Route::post('/sensor-status', [AlertsController::class, 'receiveSensorStatus'])->name('sensor-status');
 
-Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
+Route::post('/receive-data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
  //Route::Post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');
   //Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
 

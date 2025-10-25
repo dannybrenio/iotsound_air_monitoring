@@ -16,7 +16,7 @@
                                     : 'text-black border-b border-transparent hover:text-blue-500'">
                             Barangay 115
                         </button>
-    
+                        
                         <button
                             class=" w-30 rounded-t-lg"
                             @click="activeTab = 'ucc'"
@@ -163,23 +163,36 @@
 @endphp
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            window.Echo.channel('readings').listen('ReadingReceived', e => console.log(e));
-        });
-
+        const RECEIVE_URL = @json(route('hardware.receive_data'));
+        console.log(RECEIVE_URL)
         document.addEventListener("DOMContentLoaded", () => {
+             window.Echo.channel('readings')
+                .listen('.reading.received', (e) => {
+                console.log('✅ reading.received', e);   // e.reading is your payload
+              });
+
             const btn = document.getElementById("send-reading-btn");
             if (btn) {
                 btn.addEventListener("click", async () => {
+                                    console.log("sending");
+
                     try {
-                        await fetch("/api/send-reading", {
+                       const res = await fetch("api/receive-data", {   // note: underscore to match your route
                             method: "POST",
                             headers: {
-                                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
-                                "Content-Type": "application/json",
+                                "Content-Type": "application/json",          // CSRF not needed for routes/api.php
                             },
+                            body: JSON.stringify({
+                                 "hardware_info": 1,
+                                "pm2_5": 27.6,
+                                "pm10": 45.2,
+                                "co": 0.31,
+                                "no2": 18.4,
+                                "decibels": 62.5,
+                                "realtime_stamp": "2025-10-24T09:10:11.123Z"   // or your own timestamp
+                            }),
                         });
-                        console.log("Reading dispatched!");
+                     console.log('Reading dispatched! HTTP', res.status);
                     } catch (err) {
                         console.error("Error sending reading:", err);
                     }

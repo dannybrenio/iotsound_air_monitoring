@@ -27,7 +27,7 @@ class DashboardController extends Controller
 
     public function receiveSensorStatus(Request $request){
         // Log::info('POST /api/readings payload', ['body' => $request->all()]);
-
+        
         // $data = $request->validate([
         //     'deviceId'     => 'required|string|max:64',
         //     'pm2_5'        => 'nullable|numeric',
