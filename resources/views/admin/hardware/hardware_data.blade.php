@@ -9,6 +9,7 @@
 <body>
     <table>
         <tr>
+
             <th>Hardware Id</th>
             <!-- <th>Hardware Info</th> -->
             <th>PM 2.5</th>

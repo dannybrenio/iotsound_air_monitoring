@@ -23,6 +23,7 @@ class HardwareController extends Controller
 
         $pending = Pending_hardware::findOrFail($request->hardware_info);
 
+        
             $hardwareInfo = $pending->hardware_info;
             $latitude = $pending->latitude;
             $longitude = $pending->longitude;
@@ -49,7 +50,7 @@ class HardwareController extends Controller
         'hardware_info' => 'required',
         'hardware_location' => 'required',
     ]);
-
+        
         $hardware = Hardware::findOrFail($hardware_id);
         $hardware->update($validated);
         return redirect()->route('hardware.index')->with('success', 'Device updated successfully!');
