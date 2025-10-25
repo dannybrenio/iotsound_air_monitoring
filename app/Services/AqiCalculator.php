@@ -8,7 +8,7 @@ use App\Models\Hardware_data;
 class AqiCalculator{
 
     private $breakpoints = [
-        'pm25' => [
+        'pm2_5' => [
             [0, 12, 0, 50],
             [12.1, 35.4, 51, 100],
             [35.5, 55.4, 101, 150],
@@ -62,7 +62,7 @@ class AqiCalculator{
         }
 
         // Extract pollutant values
-        $pollutants = ['pm25', 'pm10', 'no2', 'co'];
+        $pollutants = ['pm2_5', 'pm10', 'no2', 'co'];
         $aqiValues = [];
 
         foreach ($pollutants as $pollutant) {
