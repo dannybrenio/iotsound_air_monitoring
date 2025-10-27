@@ -19,6 +19,7 @@ return new class extends Migration
 
 
             $table->string('sensor_type');
+            $table->string('sensor_status');
             $table->timestamps();
         });
     }

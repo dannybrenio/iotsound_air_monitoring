@@ -13,7 +13,10 @@ class HardwareDataController extends Controller
 {
 
  public function index(){   
-        $hardware_data = Hardware_data::all();
+        $hardware_data = Hardware_data::with('hardware')
+         ->latest('data_id') // or any ordering you need
+        ->get();
+  
         return view('admin.hardware.hardware_data', compact('hardware_data'));
   }
   

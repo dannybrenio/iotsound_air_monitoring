@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('device_status', function (Blueprint $table) {
             $table->id('status_id');
-            $table->string('hardware_info', 50)->unique();
+
+            $table->string('hardware_info', 50);
             $table->string('pms_status');
             $table->string('mq135_status');
             $table->string('mq7_status');
