@@ -6,8 +6,7 @@ use App\Events\ReadingReceived;
 use App\Models\Hardware;
 use App\Models\Hardware_data;
 use App\Http\Controllers\AlertsController;
-use App\Models\Pending_hardware;
-use Carbon\Carbon;
+use App\Http\Controllers\PendingHardwareDataController;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -29,30 +28,13 @@ class HardwareDataController extends Controller
         $rawdata = $request->json()->all();
 
         $hardware_id = Hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_id');
-        
-        if(empty($hardware_id)){
-            Pending_hardware::firstOrCreate(
-                ['hardware_info' => $request->input('hardware_info')],
-                [
-                    'longitude' => $request->input('longitude', null),
-                    'latitude'  => $request->input('latitude', null),
-                ]
-            );
- 
-            return response()->json(['error'   => 'Hardware ID not found.'], 404);
-        }
-
-        $iso = $rawdata['realtime_stamp'] ?? null;
-
-        if ($iso) {
-            // Parse ISO 8601 and store as "Y-m-d H:i:s"
-            $realtime = Carbon::parse($iso)->toDateTimeString();          // e.g., "2025-10-24 09:10:11"
-        } elseif (isset($rawdata['ts'])) {
-            // Or accept epoch seconds from device
-            $realtime = Carbon::createFromTimestampUTC($rawdata['ts'])->toDateTimeString();
-        } else {
-            $realtime = now()->toDateTimeString();
-        }
+         if(empty($hardware_id)){ 
+            $PendingHardwareDataController = new PendingHardwareDataController();
+            $PendingHardwareDataController->store($rawdata['hardware_info'],$rawdata['pm2_5'], $rawdata['pm10'], $rawdata['co'], $rawdata["no2"], $rawdata["decibels"], $rawdata["realtime_stamp"]);
+            return response()->json(['success' => true, 
+            'hardware_info' => $rawdata['hardware_info'],
+            'message' => 'Hardware ID not found, added to pending data.'], 200);
+         }
 
             $hardware_data = Hardware_data::create([
                 'hardware_id' => $hardware_id,
