@@ -66,7 +66,7 @@ class AlertsController extends Controller
         $complete_alert_string = $pm2_5_str . $pm10_str . $co_str;
 
  
-        ALerts::create([
+        Alerts::create([
              'alert_body' => $complete_alert_string,
         ]);
 

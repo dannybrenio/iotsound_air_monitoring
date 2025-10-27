@@ -7,6 +7,7 @@ use App\Models\Hardware;
 use App\Models\Hardware_data;
 use App\Http\Controllers\AlertsController;
 use App\Http\Controllers\PendingHardwareDataController;
+use App\Models\Pending_hardware_data;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -28,9 +29,17 @@ class HardwareDataController extends Controller
         $rawdata = $request->json()->all();
 
         $hardware_id = Hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_id');
+        
          if(empty($hardware_id)){ 
-            $PendingHardwareDataController = new PendingHardwareDataController();
-            $PendingHardwareDataController->store($rawdata['hardware_info'],$rawdata['pm2_5'], $rawdata['pm10'], $rawdata['co'], $rawdata["no2"], $rawdata["decibels"], $rawdata["realtime_stamp"]);
+            Pending_hardware_data::create([
+                'pending_hardware_info' => $rawdata['hardware_info'],
+                'pm2_5'         => $rawdata['pm2_5']   ?? null,
+                'pm10'          => $rawdata['pm10']    ?? null,
+                'co'            => $rawdata['co']      ?? null,
+                'no2'           => $rawdata['no2']     ?? null,
+                'decibels'      => $rawdata['decibels']?? null,
+                'realtime_stamp'=> $rawdata['realtime_stamp'] ?? null,
+            ]);
             return response()->json(['success' => true, 
             'hardware_info' => $rawdata['hardware_info'],
             'message' => 'Hardware ID not found, added to pending data.'], 200);

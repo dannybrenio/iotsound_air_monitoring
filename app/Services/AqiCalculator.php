@@ -3,14 +3,14 @@
 namespace App\Serivces;
 
 use App\Models\Hardware_data;
-
+use Carbon\Carbon;
 
 class AqiCalculator{
 
      public function compute()
     {
         // Collect readings from the last 12 hours (144 records)
-        //carbon is a library
+        // carbon is a library
         $recentData = Hardware_data::where('realtime_stamp', '>=', Carbon::now()->subHours(12))
             ->orderBy('realtime_stamp', 'desc')
             ->get();
