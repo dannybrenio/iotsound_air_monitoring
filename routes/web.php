@@ -36,5 +36,5 @@ Route::prefix('admin')->group(function () {
 
 Route::get('/testing', [AqiController::class, 'index']);
 
- //Route::post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');
- //Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
+//  Route::post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');
+//  Route::Post('receive-data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');

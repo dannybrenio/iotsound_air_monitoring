@@ -34,4 +34,9 @@ class SensorMalfunctioned implements ShouldBroadcastNow
             new Channel('sensor-malfunctioned'),
         ];
     }
+
+    public function broadcastAs(): string
+    {
+        return 'sensor.status';
+    }
 }

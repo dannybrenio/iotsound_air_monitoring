@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pending_hardware_data;
+use Exception;
 use Illuminate\Http\Request;
 
 class PendingHardwareDataController extends Controller
@@ -36,7 +37,6 @@ class PendingHardwareDataController extends Controller
             //     'decibels' => $rawdata['decibels']?? null,
             //     'realtime_stamp' => $rawdata['realtime_stamp']?? null,
             // ]);
-            
 
             $pending_hardware_data = Pending_hardware_data::create([
                 'pending_hardware_info' => $pending_hardware_info,

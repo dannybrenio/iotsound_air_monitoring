@@ -23,14 +23,13 @@ class HardwareController extends Controller
     }
 
     public function store(Request $request){
-
         $pending = Pending_hardware::findOrFail($request->hardware_info);
 
         $insertedData = [];
 
-            $hardwareInfo = $pending->hardware_info;
-            $latitude = $pending->latitude;
-            $longitude = $pending->longitude;
+        $hardwareInfo = $pending->hardware_info;
+        $latitude = $pending->latitude;
+        $longitude = $pending->longitude;
 
         //still undecided to the status logic
            $hardware_created = Hardware::create([

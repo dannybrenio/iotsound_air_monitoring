@@ -2,37 +2,29 @@
 
 namespace App\Events;
 
+use App\Models\Hardware_data;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Laravel\Reverb\Protocols\Pusher\Channels\Channel as ChannelsChannel;
 
 class ReadingReceived implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * Create a new event instance.
-     */
-    public function __construct(public $reading)
+    public function __construct(public array $reading) {}
+
+    // Public channel named "readings"
+    public function broadcastOn(): Channel
     {
-       
+        return new Channel('readings');
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
-    public function broadcastOn(): array
+    // Optional: nice event name for the frontend
+    public function broadcastAs(): string
     {
-        return [
-            new Channel('readings'),
-        ];
+        return 'reading.received';
     }
+
 }
