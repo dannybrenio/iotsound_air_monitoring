@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlertsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HardwareController;
 use App\Http\Controllers\HardwareDataController;
 use App\Http\Controllers\HistoryStatusController;
 use Illuminate\Http\Request;
