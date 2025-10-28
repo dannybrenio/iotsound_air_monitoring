@@ -47,7 +47,6 @@ class PendingHardwareDataController extends Controller
                 'decibels' => $decibels ?? null,
                 'realtime_stamp' => $realtime_stamp ?? null,
             ]);
-
             //pending data shouldnt alert users if the data is pending
             // if($hardware_data){
             //     $alertsController = new AlertsController();

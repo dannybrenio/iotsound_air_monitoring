@@ -6,6 +6,7 @@ use App\Models\Hardware;
 use App\Models\Hardware_data;
 use App\Models\Pending_hardware;
 use App\Models\Pending_hardware_data;
+use App\Models\Device_status;
 use Illuminate\Http\Request;
 
 class HardwareController extends Controller
@@ -37,6 +38,17 @@ class HardwareController extends Controller
                 'latitude' => $latitude,
                 'status' => 'active', 
             ]);
+
+            if($hardware_created){
+                Device_status::create([
+                    'hardware_info' => $hardwareInfo,
+                    'pms_status' => 'active',
+                    'mq135_status' => 'active',
+                    'mq7_status' => 'active',
+                    'sound_status' => 'active',
+                    'timestamp_status' => 'active',
+                ]);
+            }
             
             $hardware_id_fetch = $hardware_created->hardware_id;
 

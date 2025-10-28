@@ -10,7 +10,7 @@
     <table>
         <tr>
             <th>Hardware Id</th>
-            <!-- <th>Hardware Info</th> -->
+            <th>Hardware Info</th>
             <th>PM 2.5</th>
             <th>PM 10</th>
             <th>Co</th>
@@ -22,7 +22,7 @@
     @foreach($hardware_data as $hardware_datum) 
     <tr>                                  
     <td><p> {{$hardware_datum->hardware_id}} </p></td>
-    <!-- //hardware info here -->
+    <td><p> {{$hardware_datum->hardware?->hardware_info}} </p></td>
     <td><p>{{$hardware_datum->pm2_5 }}</p></td>
     <td><p>{{$hardware_datum->pm10 }}</p></td>
     <td><p>{{$hardware_datum->co }}</p></td>

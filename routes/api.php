@@ -4,6 +4,7 @@ use App\Http\Controllers\AlertsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HardwareDataController;
+use App\Http\Controllers\HistoryStatusController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -60,7 +61,9 @@ Route::get('/weather1', function (Request $request) {
 
 Route::post('/sensor-status', [AlertsController::class, 'receiveSensorStatus'])->name('sensor-status');
 
-Route::post('/receive-data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
- //Route::Post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');
-  //Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
+//Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
+Route::Post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');
+Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
+Route::Post('receive_status', [HistoryStatusController::class, 'receiveStatus'])->name('hardware.receive_status');
+
 
