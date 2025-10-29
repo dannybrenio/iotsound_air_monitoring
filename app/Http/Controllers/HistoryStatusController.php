@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\History_status;
 use App\Models\Device_status;
+use Exception;
 use Illuminate\Http\Request;
 
 class HistoryStatusController extends Controller

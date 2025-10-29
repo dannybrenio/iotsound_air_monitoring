@@ -15,7 +15,6 @@ class AqiController extends Controller
 
         $today = Carbon::today();
 
-
         $peakDecibels = Hardware_data::whereDate('created_at', $today)->max('decibels');
 
         return view('testing', [

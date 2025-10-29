@@ -8,7 +8,7 @@ class Report extends Model
 {
     protected $table = 'reports';
     protected $primaryKey = 'report_id';
-    protected $fillable = ['alert_body', 'image_path'];
+    protected $fillable = ['user_id', 'alert_body', 'image_path'];
 
     public function user() {
         return $this->belongsTo(User::class);

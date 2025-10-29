@@ -4,21 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\HardwareDataController;
 use App\Events\ReadingReceived;
+use App\Models\Hardware_data;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(){
-        // Just supply your own static data
-        $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
-        $readings = [
-                        ["pm 2.5" => 12, "pm 10" => 15, "co" => 18, "no2" => 23],
-                        ["pm 2.5" => 32, "pm 10" => 45, "co" => 25, "no2" => 13],
-                        ["pm 2.5" => 56, "pm 10" => 25, "co" => 58, "no2" => 43],
-                    ];
+    public function index()
+    {
+        $months = ['Jan','Feb','Mar','Apr','May']; 
+        $readings = Hardware_data::query()
+            ->orderBy('created_at')        
+            ->select([
+                'hardware_id',
+                'pm2_5',     
+                'pm10',      
+                'co',     
+                'no2',        
+                'decibels',    
+                'realtime_stamp',
+            ])
+            ->take(200)                       
+            ->get();
 
         return view('dashboard', compact('months', 'readings'));
     }
+
 
     public function sendReading(Request $request){
         ReadingReceived::dispatch($request);
@@ -38,8 +48,4 @@ class DashboardController extends Controller
         //     'noise_leq_db' => 'nullable|numeric',
         // ]);
     }
-
-
-
-    
 }

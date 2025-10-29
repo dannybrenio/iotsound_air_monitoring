@@ -1,12 +1,12 @@
-<?php 
+<?php
+declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\Hardware_data;
+use App\Models\Hardware_data; // or HardwareData if that's your model name
 
-
-class AqiCalculator{
-
+class AqiCalculator
+{
     private $breakpoints = [
         'pm2_5' => [
             [0, 12, 0, 50],
@@ -46,12 +46,8 @@ class AqiCalculator{
         ],
     ];
 
-    /**
-     * Fetch latest readings and compute AQI
-     */
     public function compute()
     {
-        // Fetch last 12 readings (1 hour if 5-min intervals)
         $readings = Hardware_data::latest('realtime_stamp')
             ->take(144)
             ->get()
@@ -61,19 +57,17 @@ class AqiCalculator{
             return null;
         }
 
-        // Extract pollutant values
         $pollutants = ['pm2_5', 'pm10', 'no2', 'co'];
         $aqiValues = [];
 
         foreach ($pollutants as $pollutant) {
             $values = $readings->pluck($pollutant)->filter()->values()->toArray();
+            if (empty($values)) {
+                continue;
+            }
 
-            if (empty($values)) continue;
-
-            // Instant AQI (latest value)
             $instantAqi = $this->calculateAqi($pollutant, end($values));
 
-            // NowCast AQI (weighted average)
             $nowcastValue = $this->computeNowcast($values);
             $nowcastAqi = $this->calculateAqi($pollutant, $nowcastValue);
 
@@ -83,7 +77,6 @@ class AqiCalculator{
             ];
         }
 
-        // Determine overall AQI (max pollutant AQI)
         $overallInstant = max(array_column($aqiValues, 'instant'));
         $overallNowcast = max(array_column($aqiValues, 'nowcast'));
 
@@ -96,9 +89,6 @@ class AqiCalculator{
         ];
     }
 
-    /**
-     * Compute AQI using breakpoints
-     */
     private function calculateAqi($pollutant, $concentration)
     {
         foreach ($this->breakpoints[$pollutant] as [$C_low, $C_high, $I_low, $I_high]) {
@@ -110,10 +100,6 @@ class AqiCalculator{
         return null;
     }
 
-    /**
-     * Compute NowCast (weighted average)
-     * Based on USEPA method adapted for 5-min data
-     */
     private function computeNowcast(array $values)
     {
         if (count($values) < 2) {
@@ -122,15 +108,12 @@ class AqiCalculator{
 
         $min = min($values);
         $max = max($values);
-
-        // Weight factor w = min/max (bounded between 0.5–1.0)
         $w = max(0.5, $min / $max);
 
         $n = count($values);
         $sumWeights = 0;
         $sumWeightedValues = 0;
 
-        // Most recent has highest weight (w^0)
         for ($i = 0; $i < $n; $i++) {
             $weight = pow($w, $n - 1 - $i);
             $sumWeights += $weight;
@@ -139,7 +122,5 @@ class AqiCalculator{
 
         return $sumWeightedValues / $sumWeights;
     }
-
 }
-
-?>
+// no closing ?> on purpose

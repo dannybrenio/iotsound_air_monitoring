@@ -25,12 +25,31 @@ class HardwareDataController extends Controller
 
  public function receiveData(Request $request){
     try{
-        if ($request->header('X-Device-Key') !== env('DEVICE_API_KEY')) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
+        // if ($request->header('X-Device-Key') !== env('DEVICE_API_KEY')) {
+        //     return response()->json(['message' => 'Unauthorized Access'], 401);
+        // }
 
         $rawdata = $request->json()->all();
+            ReadingReceived::dispatch([
+                'hardware_id'    => "1",
+                'pm2_5'          => $rawdata["pm2_5"],
+                'pm10'           => $rawdata["pm10"],
+                'co'             => $rawdata["co"],
+                'no2'            => $rawdata["no2"],
+                'decibels'       => $rawdata["decibels"],
+                'realtime_stamp' => $rawdata["realtime_stamp"],
+            ]);
 
+        FCMv1Controller::send(
+            'New reading',
+            sprintf('PM2.5: %.1f | PM10: %.1f | dB: %.1f', $rawdata["pm2_5"], $rawdata["pm10"], $rawdata["decibels"]),
+            [
+                'pm2_5' => (string)$rawdata["pm2_5"],
+                'pm10'  => (string)$rawdata["pm10"],
+                'db'    => (string)$rawdata["decibels"],
+            ]
+        );
+        return response()->json(['message' => $rawdata], 200);
         $hardware_id = Hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_id');
         
          if(empty($hardware_id)){ 
