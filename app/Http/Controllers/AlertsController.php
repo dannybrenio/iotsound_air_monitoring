@@ -10,7 +10,7 @@ class AlertsController extends Controller
     
     public function index(){
         $alerts = Alerts::all();
-        return view('admin.alert.alert', compact('alerts'));
+        return view('admin.alert.admin_alert', compact('alerts'));
     }
 
     public function store($aqiLevel){  

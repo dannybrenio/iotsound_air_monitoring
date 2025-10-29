@@ -21,7 +21,7 @@ class HardwareDataController extends Controller
          ->latest('data_id') // or any ordering you need
         ->get();
   
-        return view('admin.hardware.hardware_data', compact('hardware_data'));
+        return view('admin.hardware.admin_hardware_data', compact('hardware_data'));
   }
   
 

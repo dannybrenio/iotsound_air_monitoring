@@ -16,7 +16,7 @@
                                     : 'text-black border-b border-transparent hover:text-blue-500'">
                             Barangay 115
                         </button>
-                        
+    
                         <button
                             class=" w-30 rounded-t-lg"
                             @click="activeTab = 'ucc'"
@@ -30,15 +30,15 @@
 
                 <!-- Tab content -->
                 <div class="border border-white rounded-b-3xl h-auto bg-white">
-                    <div x-show="activeTab === 'barangay'" x-transition class="flex flex-col h-auto w-full justify-between items-center">
+                    <div x-show="activeTab === 'barangay'" x-transition class="flex flex-col h-auto w-full justify-between items-center gap-y-2">
                         <div class="w-[98%] h-[100px] flex flex-col gap-y-1 justify-center items-start px-1">
                             <div class="w-14 h-4 flex justify-center items-center gap-x-2 bg-red-500 text-black text-center text-xs rounded-md"><span class="text-xl text-center">•</span>LIVE</div>
                             <span class="text-black font-bold text-lg tracking-wide uppercase">Air Quality Index | Sound Level</span>
                             <span class="text-[#919090] text-sm italic">Last Updated: 2025-09-25 06:52:16 PM (Local Time)</span>
                         </div>
                         <div id="aqi-back" class="">
-                            <div class="w-[48%] flex flex-col h-auto justify-center items-center gap-y-6">
-                                <div class="flex flex-row gap-y-5 w-[80%]"> 
+                            <div class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6">
+                                <div class="flex flex-row gap-y-5 w-[90%] lg:w-[80%]"> 
                                     <div class="flex flex-col w-[30%] items-center justify-center">
                                         <div class="flex flex-row gap-x-2 items-center">
                                             <div class="w-4 h-4 rounded-full bg-red-600 animate-pulse duration-100"></div>
@@ -51,7 +51,7 @@
                                         <span id="aqi-category">Good</span>
                                     </div>        
                                 </div>
-                                <div class="w-[80%] h-auto flex mt-8">
+                                <div class="w-[90%] lg:w-[80%] h-auto flex mt-8">
                                     <div class="relative w-full max-w-xl mx-auto">
                                         <!-- Labels positioned along the same line -->
                                         <div class="absolute -top-6 left-0 w-full">
@@ -92,6 +92,7 @@
                                         <!-- Labels positioned along the same line -->
                                         <div class="absolute top-6 left-0 w-full">
                                             <div class="relative w-full text-xs text-gray-700">
+
                                             <!-- Each span positioned by left percentage matching color stop -->
                                             <span class="absolute -translate-x-1/2 left-[12.5%] text-center text-black">Good</span>
                                             <span class="absolute -translate-x-1/2 left-[30%]  text-center text-black">Fair</span>
@@ -105,7 +106,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="flex flex-row justify-evenly w-[80%] mt-6">
+                                <div class="flex flex-row justify-evenly w-[90%] lg:w-[80%] mt-6">
                                     <span class="text-sm text-black font-bold">PM2.5: <span class="text-black font-normal">16 µg/m³</span></span>
                                     <div class="h-4 border border-white"></div>
                                     <span class="text-sm text-black font-bold">PM10: <span class="text-black font-normal">18 µg/m³</span></span>
@@ -115,36 +116,78 @@
                                     <span class="text-sm text-black font-bold">NO2: <span class="text-black font-normal">7 pbb</span></span>
                                 </div>
                             </div>
-                            <div class="w-[48%] flex flex-col h-auto justify-center items-center gap-y-6">
-                                <div class="flex flex-row bg-white/20 border border-white w-[80%] h-[70%] rounded-xl items-center justify-evenly">
-                                    <div class="w-[40%] h-full flex flex-col items-center justify-center">
-                                        <span class="text-gray-500 font-semibold uppercase">Sound Level</span>
-                                        <span class="text-black font-bold text-6xl">70<span class="text-base">db</span></span>
+                            <div class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6">
+                                <div class="flex flex-row bg-white/20 border border-white w-[80%] h-[90%] lg:h-[50%] rounded-xl items-center justify-evenly">
+                                    <div class="w-[30%] h-full flex flex-col items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="size-12 animate-pulse duration-100 text-black" viewBox="0 0 100 100" fill="currentColor"><path fill="currentColor" d="M45.697 45.697a6.083 6.083 0 0 0-.002 8.603a6.082 6.082 0 0 0 8.606.001a6.08 6.08 0 0 0 0-8.607a6.08 6.08 0 0 0-8.604.003zm30.852 33.468c15.972-16.109 15.934-42.207-.122-58.263c-.023-.023-.05-.037-.073-.059l.006-.006l-1.696-1.698l-.02.02a2.38 2.38 0 0 0-3.136.141l-.003-.003l-.026.026l-.008.007l-.006.008l-2.773 2.772l-.002.002a.002.002 0 0 1-.002.002l-.2.2l.02.02a2.376 2.376 0 0 0 .01 2.951l-.019.019l.19.19v.001h.001L70.196 27l.027-.027c.022.023.037.05.06.073C82.95 39.714 82.99 60.3 70.405 73.02l-.017-.017l-1.504 1.504l-.003.002l-.002.003l-.188.188l.019.019a2.38 2.38 0 0 0 .141 3.136l-.003.003l.031.031l.002.003l.003.002l1.396 1.396l.002.003l.003.002l1.376 1.376l.002.003l.003.002l.198.198l.02-.02a2.377 2.377 0 0 0 2.952-.009l.019.019l1.567-1.568a.018.018 0 0 1 .005-.004l.018-.019l.107-.107l-.003-.001z"/><path fill="currentColor" d="M64.923 67.54c9.561-9.699 9.523-25.365-.123-35.01c-.023-.023-.05-.037-.073-.06l.007-.007l-1.697-1.698l-.02.02a2.382 2.382 0 0 0-3.136.141l-.003-.003l-.029.029l-.005.004l-.004.005l-2.774 2.774l-.004.003l-.003.004l-.198.198l.02.02a2.376 2.376 0 0 0 .009 2.951l-.019.019l.189.189l.002.002l.002.002l1.504 1.505l.027-.027c.022.023.037.05.06.073c6.258 6.257 6.293 16.407.119 22.717l-.013-.013l-1.505 1.505l-.002.001l-.001.002l-.189.189l.019.019a2.38 2.38 0 0 0 .141 3.135l-.004.004l2.816 2.815l.201.201l.02-.02a2.378 2.378 0 0 0 2.951-.009l.02.02l1.572-1.572l.125-.125l-.002-.003z"/><g fill="currentColor"><path d="M54.305 45.7a6.083 6.083 0 0 0-8.606-.001a6.08 6.08 0 0 0 0 8.605a6.08 6.08 0 0 0 8.605-.001a6.084 6.084 0 0 0 .001-8.603z"/><path d="m43.109 63.089l.019-.019l-.188-.188l-.003-.004l-.003-.003l-1.503-1.504l-.027.027c-.022-.023-.037-.05-.059-.072c-6.258-6.258-6.293-16.408-.119-22.718l.013.013l1.697-1.696l-.02-.02a2.38 2.38 0 0 0-.141-3.135l.004-.004l-3.018-3.017l-.02.02a2.376 2.376 0 0 0-2.951.009l-.019-.019l-.191.191l-1.381 1.381l-.125.125l.003.003c-9.562 9.699-9.523 25.365.123 35.011c.022.022.049.037.072.059l-.006.006l1.697 1.698l.02-.02a2.382 2.382 0 0 0 3.135-.141l.003.003l.029-.029l.005-.004l.004-.005l2.775-2.775l.003-.002l.002-.002l.199-.199l-.02-.02a2.374 2.374 0 0 0-.009-2.95z"/><path d="m31.483 74.715l.019-.019l-.19-.19l-.001-.001l-.001-.001l-1.506-1.505l-.027.027c-.022-.023-.037-.05-.059-.073C17.05 60.284 17.012 39.7 29.597 26.98l.016.016l1.504-1.504l.003-.002l.002-.003l.188-.188l-.019-.019a2.38 2.38 0 0 0-.141-3.136l.004-.004l-1.434-1.434l-.001-.001l-.001-.001l-1.581-1.581l-.02.021a2.376 2.376 0 0 0-2.951.009l-.02-.02l-1.696 1.697l.003.003c-15.974 16.11-15.936 42.209.121 58.265c.023.023.05.037.073.059l-.007.007l1.697 1.698l.02-.02a2.382 2.382 0 0 0 3.136-.142l.003.003l.033-.033l2.778-2.779l.005-.004l.004-.005l.196-.196l-.02-.02a2.376 2.376 0 0 0-.009-2.951z"/></g></svg>
                                     </div>
                                     <div class="h-full border border-white"></div>
-                                    <div class="w-[60%] h-full flex flex-col items-center justify-center gap-y-5">
-                                        <div class="w-full justify-center items-center flex flex-row gap-x-3">
-                                            <span class="text-sm text-center font-semibold">Average dB:</span>
-                                            <span class="text-3xl text-center font-bold text-green-600">70</span>
+                                    <div class="w-[70%] h-full flex flex-col items-center justify-center">
+                                        <div class="flex flex-row w-full h-[50%] justify-center items-center gap-x-5">
+                                            <span class="text-black font-semibold text-xl uppercase">Sound Level</span>
+                                            <span class="text-blue-500 font-bold text-4xl">70<span class="text-lg text-black">db</span></span>
                                         </div>
-                                        <div class="w-full justify-center items-center flex flex-row gap-x-3">
-                                            <span class="text-sm text-center font-semibold">Peak dB:</span>
-                                            <span class="text-3xl text-center font-bold text-red-600">80</span>
+                                        <div class="w-full border border-white"></div>
+                                        <div class="flex flex-col w-full h-[50%] justify-evenly items-center py-3">
+                                            <div class="flex w-full h-[30%] justify-center items-center">
+                                                <span class="text-gray-500 text-xs italic">As of this Date: 2025-09-25</span>
+                                            </div>
+                                            <div class="flex flex-row w-full h-[70%] justify-evenly items-center">
+                                                <div class="w-full justify-center items-center flex flex-row gap-x-3">
+                                                    <span class="text-xs lg:text-base text-center font-semibold uppercase">Average dB:</span>
+                                                    <span class="text-xl text-center font-bold text-green-600">70</span>
+                                                </div>
+                                                <div class="h-[50%] border border-white"></div>
+                                                <div class="w-full justify-center items-center flex flex-row gap-x-3">
+                                                    <span class="text-xs lg:text-base text-center font-semibold uppercase">Peak dB:</span>
+                                                    <span class="text-xl text-center font-bold text-red-600">80</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full h-[400px] flex flex-row gap-x-3 mt-5">
-                            <div class="w-[50%] mx-auto bg-white p-4 rounded-xl shadow-md">
+                        <div class="w-full h-auto lg:h-[400px] flex flex-col lg:flex-row gap-y-3 gap-x-3 mt-2">
+                            <div class="w-full lg:w-[50%] mx-auto bg-white p-4 rounded-xl shadow-md">
                                 <h1 class="text-xl font-semibold mb-4 text-center">Air Monitoring Chart</h1>
                                 <canvas id="airChart" class="w-full h-64"></canvas>
                             </div>
-                            <div class="w-[50%] mx-auto bg-white p-4 rounded-xl shadow-md">
+                            <div class="w-full lg:w-[50%] mx-auto bg-white p-4 rounded-xl shadow-md">
                                 <h1 class="text-xl font-semibold mb-4 text-center">Sound Monitoring Chart</h1>
                                 <canvas id="soundChart" class="w-full h-64"></canvas>
                             </div>
                         </div>         
+                        <div x-data="{ open: false }" class="flex flex-col mt-1 bg-white w-full gap-y-3">
+                            <div x-show="open" x-transition class="flex flex-col gap-y-2">
+                                <div class="w-full h-auto lg:h-[400px] flex flex-col lg:flex-row gap-y-3 gap-x-3">
+                                    <div class="w-full lg:w-[50%] mx-auto bg-white p-4 rounded-xl shadow-md">
+                                        <h1 class="text-xl font-semibold mb-4 text-center">PM 2.5 Chart</h1>
+                                        <canvas id="pmTwoChart" class="w-full h-64"></canvas>
+                                    </div>
+                                    <div class="w-full lg:w-[50%] mx-auto bg-white p-4 rounded-xl shadow-md">
+                                        <h1 class="text-xl font-semibold mb-4 text-center">PM 10 Chart</h1>
+                                        <canvas id="pmTenChart" class="w-full h-64"></canvas>
+                                    </div>
+                                </div>
+                                <div class="w-full h-auto lg:h-[400px] flex flex-col lg:flex-row gap-y-3 gap-x-3">
+                                    <div class="w-full lg:w-[50%] mx-auto bg-white p-4 rounded-xl shadow-md">
+                                        <h1 class="text-xl font-semibold mb-4 text-center">CO Chart</h1>
+                                        <canvas id="coChart" class="w-full h-64"></canvas>
+                                    </div>
+                                    <div class="w-full lg:w-[50%] mx-auto bg-white p-4 rounded-xl shadow-md">
+                                        <h1 class="text-xl font-semibold mb-4 text-center">NO₂ Chart</h1>
+                                        <canvas id="noChart" class="w-full h-64"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="flex w-auto gap-x-2 justify-center items-center h-10 text-left text-[#06402b]">
+                                <span @click="open = !open" class="uppercase font-bold cursor-pointer group hover:text-blue-500">See more data
+                                    <i x-show="!open" class="fa-chevron-down fa-solid text-[#06402b] group-hover:text-blue-500"></i>
+                                    <i x-show="open" class="fa-solid fa-chevron-up text-[#06402b] group-hover:text-blue-500"></i>
+                                </span>
+                            </button>
+                        </div>
                     </div>
                     <div x-show="activeTab === 'ucc'" x-transition class="flex flex-col h-full w-full justify-center items-center">
                         Content for UCC
@@ -153,84 +196,9 @@
             </div>
         </div>
         <!-- Weather Forecast -->
-        <div id="weather" class="h-[400px] bg-white flex flex-col justify-center items-center w-full shadow-xl z-0 gap-y-5 border-t-2 border-b-2 border-[#06402b]"></div>
+        <div id="weather" class="h-auto bg-white flex flex-col justify-center items-center w-full shadow-xl z-0 py-5 lg:gap-y-5 border-t-2 border-b-2 border-[#06402b]"></div>
     </div>
-@php
-  $aqi_value = 100;   
-//  np
-
-  //dump($readings);
-@endphp
-
     <script>
-        const RECEIVE_URL = @json(route('hardware.receive_data'));
-        console.log(RECEIVE_URL)
-        document.addEventListener("DOMContentLoaded", () => {
-             window.Echo.channel('readings')
-                .listen('.reading.received', (e) => {
-                console.log('✅ reading.received', e);   // e.reading is your payload
-              });
-
-            const btn = document.getElementById("send-reading-btn");
-            if (btn) {
-                btn.addEventListener("click", async () => {
-                                    console.log("sending");
-
-                    try {
-                       const res = await fetch("api/receive-data", {   // note: underscore to match your route
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",          // CSRF not needed for routes/api.php
-                            },
-                            body: JSON.stringify({
-                                "hardware_info": 1,
-                                "pm2_5": 27.6,
-                                "pm10": 45.2,
-                                "co": 0.31,
-                                "no2": 18.4,
-                                "decibels": 62.5,
-                                "realtime_stamp": "2025-10-24T09:10:11.123Z"   // or your own timestamp
-                            }),
-                        });
-                     console.log('Reading dispatched! HTTP', res.status);
-                    } catch (err) {
-                        console.error("Error sending reading:", err);
-                    }
-                });
-            }
-        }); 
-
-        document.addEventListener("DOMContentLoaded", () => {
-            
-             window.Echo.channel('sensor-malfunctioned')
-                .listen('.sensor.status', (e) => {
-                console.log('✅ sensor.status', e);   // e.reading is your payload
-              });
-
-            const btn = document.getElementById("send-status-btn");
-            if (btn) {
-                btn.addEventListener("click", async () => {
-                                    console.log("sending");
-
-                    try {
-                       const res = await fetch("api/receive-data", {   // note: underscore to match your route
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",          // CSRF not needed for routes/api.php
-                            },
-                            body: JSON.stringify({
-                                "hardware_info": 1,
-                                       // or your own timestamp
-                            }),
-                        });
-                     console.log('Reading dispatched! HTTP', res.status);
-                    } catch (err) {
-                        console.error("Error sending reading:", err);
-                    }
-                });
-            }
-        });
-
         // Initialize map centered on a location
         const map = L.map('map').setView([14.6458, 120.9865], 18);
 
@@ -248,8 +216,10 @@
             L.marker(loc.coords).addTo(map).bindPopup(`<b>${loc.name}</b>`);
         });
 
+
+
         // Weather
-        document.addEventListener('DOMContentLoaded', () => {
+          document.addEventListener('DOMContentLoaded', () => {
             const city = "Caloocan";
             const lat = 14.6514, lon = 120.97; // coordinates for Caloocan
             let currentUnit = "C"; // default
@@ -350,8 +320,10 @@
 
 
         // Treshold Slider
-        const aqi = {{ $aqi_value }}
-        ; // change this dynamically if needed
+        const aqi = @json($overallNowcast ?? null); // change this dynamically if needed
+        console.log(aqi);
+        const another = @json($peakDecibels ?? null);
+        console.log(another);
 
         const slider   = document.getElementById('aqi-slider');
         const valueEl  = document.getElementById('aqi-value');
@@ -360,7 +332,7 @@
 
         const categories = [
         { max: 25, label: 'Good',                        color: 'text-[#00E400] bg-[#00E400]' },
-        { max: 35, label: 'Fair',                        color: 'text-[#FFFF00] bg-[#FFFF00]' },
+        { max: 35, label: 'Fair',                        color: 'text-[#FFC000] bg-[#FFFF00]' },
         { max: 45, label: 'Unhealthy for Sensitive',     color: 'text-[#FF7E00] bg-[#FF7E00]' },
         { max: 55, label: 'Very Unhealthy',              color: 'text-[#FF0000] bg-[#FF0000]' },
         { max: 90, label: 'Acutely Unhealthy',           color: 'text-[#8F3F97] bg-[#8F3F97]' },
@@ -376,7 +348,7 @@
         catEl.textContent = category.label;
         valueEl.className = `text-7xl font-bold bg-transparent text-center ${category.color}`;
         catEl.className = `text-2xl font-bold p-2 w-[81%] bg-white/20 h-14 flex justify-center items-center text-center rounded-xl ${category.color}`;
-        backColor.className = `w-full h-[350px] flex flex-row h-[300px] bg-gradient-to-t from-${category.color} to-white rounded-3xl`;
+        backColor.className = `w-full h-[500px] lg:h-[350px] flex flex-col lg:flex-row bg-gradient-to-t from-${category.color} to-white rounded-3xl gap-y-5 py-5 lg:py-0 shadow-lg`;
 
         // Chart Analysis
         const labels = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
@@ -403,7 +375,7 @@
             },
             {
             label: 'CO₂ (ppm)',
-            data: [400, 420, 460, 500, 480, 530, 490],
+            data: [7, 13, 23, 8, 10, 11, 22],
             borderColor: 'rgb(239,68,68)',
             backgroundColor: 'rgba(239,68,68,0.2)',
             tension: 0.3,
@@ -475,6 +447,121 @@
         };
 
         new Chart(document.getElementById('soundChart').getContext('2d'), soundConfig);
+
+        // Pm2.5
+        const pmTwoData = {
+        labels: labels,
+        datasets: [
+            {
+            label: 'PM2.5 (µg/m³)',
+            data: [12, 19, 14, 20, 15, 25, 18],
+            borderColor: 'rgb(59,130,246)',
+            backgroundColor: 'rgba(59,130,246,0.2)',
+            tension: 0.3,
+            fill: true
+            }
+        ]
+        };
+
+        const pmTwoConfig = {
+        type: 'line',
+        data: pmTwoData,
+        options: {
+            responsive: true,
+            plugins: {
+            legend: { position: 'top' },
+            title: { display: true, text: 'Weekly Air Quality' }
+            }
+        }
+        };
+
+        new Chart(document.getElementById('pmTwoChart').getContext('2d'), pmTwoConfig);
+
+        // Pm10
+        const pmTenData = {
+        labels: labels,
+        datasets: [
+            {
+            label: 'PM10 (µg/m³)',
+            data: [20, 30, 28, 35, 32, 40, 33],
+            borderColor: 'rgb(34,197,94)',
+            backgroundColor: 'rgba(34,197,94,0.2)',
+            tension: 0.3,
+            fill: true
+            }
+        ]
+        };
+
+        const pmTenConfig = {
+        type: 'line',
+        data: pmTenData,
+        options: {
+            responsive: true,
+            plugins: {
+            legend: { position: 'top' },
+            title: { display: true, text: 'Weekly Air Quality' }
+            }
+        }
+        };
+
+        new Chart(document.getElementById('pmTenChart').getContext('2d'), pmTenConfig);
+        
+        // CO
+        const coData = {
+        labels: labels,
+        datasets: [
+            {
+            label: 'CO (ppm)',
+            data: [7, 13, 23, 8, 10, 11, 22],
+            borderColor: 'rgb(239,68,68)',
+            backgroundColor: 'rgba(239,68,68,0.2)',
+            tension: 0.3,
+            fill: true
+            }
+        ]
+        };
+
+        const coConfig = {
+        type: 'line',
+        data: coData,
+        options: {
+            responsive: true,
+            plugins: {
+            legend: { position: 'top' },
+            title: { display: true, text: 'Weekly Air Quality' }
+            }
+        }
+        };
+
+        new Chart(document.getElementById('coChart').getContext('2d'), coConfig);
+        
+        // NO₂
+        const noData = {
+        labels: labels,
+        datasets: [
+            {
+            label: 'NO₂ (ppb)',
+            data: [15, 18, 22, 25, 20, 28, 24],
+            borderColor: 'rgb(168,85,247)',
+            backgroundColor: 'rgba(168,85,247,0.2)',
+            tension: 0.3,
+            fill: true
+            }
+        ]
+        };
+
+        const noConfig = {
+        type: 'line',
+        data: noData,
+        options: {
+            responsive: true,
+            plugins: {
+            legend: { position: 'top' },
+            title: { display: true, text: 'Weekly Air Quality' }
+            }
+        }
+        };
+
+        new Chart(document.getElementById('noChart').getContext('2d'), noConfig);
     </script>
-    
 </x-layout>
