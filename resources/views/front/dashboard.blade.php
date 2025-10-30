@@ -195,10 +195,14 @@
                 </div>
             </div>
         </div>
+                    <button id="send-reading-btn">Send Reading</button>
+            <button id="send-status-btn">Send Status</button>
         <!-- Weather Forecast -->
         <div id="weather" class="h-auto bg-white flex flex-col justify-center items-center w-full shadow-xl z-0 py-5 lg:gap-y-5 border-t-2 border-b-2 border-[#06402b]"></div>
     </div>
     <script>
+            
+
         // Initialize map centered on a location
         const map = L.map('map').setView([14.6458, 120.9865], 18);
 
@@ -563,5 +567,49 @@
         };
 
         new Chart(document.getElementById('noChart').getContext('2d'), noConfig);
+
+            // Testing btn
+        document.addEventListener("DOMContentLoaded", () => {
+        const RECEIVE_URL = @json(route('hardware.receive_data'));
+
+        const btn = document.getElementById("send-reading-btn");
+        if (!btn) {
+            console.warn("send-reading-btn not found in DOM.");
+            return;
+        }
+
+        btn.addEventListener("click", async () => {
+            console.log("📡 Sending test reading...");
+
+            try {
+            const res = await fetch(RECEIVE_URL, {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                // No CSRF header needed if your route is in routes/api.php
+                },
+                body: JSON.stringify({
+                hardware_info: 1,
+                pm2_5: 27.6,
+                pm10: 45.2,
+                co: 0.31,
+                no2: 18.4,
+                decibels: 62.5,
+                peak_db: 75.0,
+                realtime_stamp: new Date().toISOString(),
+                }),
+            });
+
+            if (res.ok) {
+                console.log("✅ Reading dispatched successfully!");
+            } else {
+                console.error("❌ Failed to send reading, HTTP", res.status);
+            }
+            
+            } catch (err) {
+            console.error("⚠️ Error sending reading:", err);
+            }
+        });
+    });
     </script>
 </x-layout>

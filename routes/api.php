@@ -3,9 +3,12 @@
 use App\Http\Controllers\AlertsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Api\ExportsController;
+use App\Http\Controllers\Api\SensorDataController;
 use App\Http\Controllers\HardwareController;
 use App\Http\Controllers\HardwareDataController;
 use App\Http\Controllers\HistoryStatusController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -66,5 +69,18 @@ Route::post('/sensor-status', [AlertsController::class, 'receiveSensorStatus'])-
 Route::Post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');
 Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
 Route::Post('receive_status', [HistoryStatusController::class, 'receiveStatus'])->name('hardware.receive_status');
+
+Route::get('/exports/reports.csv', [ExportsController::class, 'download']);
+Route::get('/exports/aqi.csv', [ExportsController::class, 'downloadAqi']);
+Route::get('/exports/sensor_history.csv', [ExportsController::class, 'downloadSensorHistory']);
+Route::get('/exports/alerts.csv', [ExportsController::class, 'downloadAlerts']);
+
+Route::controller(SensorDataController::class)->group(function () {
+    Route::get('/readings', 'index');
+    Route::get('/readings/latest', 'latest');
+});
+
+Route::post('/receive-report', [ReportController::class, 'receiveReport']);
+
 
 

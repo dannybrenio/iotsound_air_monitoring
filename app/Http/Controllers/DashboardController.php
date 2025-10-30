@@ -49,8 +49,4 @@ class DashboardController extends Controller
         //     'noise_leq_db' => 'nullable|numeric',
         // ]);
     }
-
-
-
-    
 }
