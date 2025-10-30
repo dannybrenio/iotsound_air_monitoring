@@ -13,7 +13,7 @@ class HardwareController extends Controller
 {
 
     public function index(){
-        $hardwares = Hardware::all();
+        $hardwares = Hardware::paginate(10);
         return view('admin.hardware.admin_hardware', compact('hardwares'));
     }
 
