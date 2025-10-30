@@ -107,13 +107,13 @@
                                 </div>
                                 
                                 <div class="flex flex-row justify-evenly w-[90%] lg:w-[80%] mt-6">
-                                    <span class="text-sm text-black font-bold">PM2.5: <span class="text-black font-normal">16 µg/m³</span></span>
+                                    <span class="text-sm text-black font-bold">PM2.5: <span class="text-black font-normal">{{$data['pollutants']['pm2_5']['nowcast'] ?? '—'}} µg/m³</span></span>
                                     <div class="h-4 border border-white"></div>
-                                    <span class="text-sm text-black font-bold">PM10: <span class="text-black font-normal">18 µg/m³</span></span>
+                                    <span class="text-sm text-black font-bold">PM10: <span class="text-black font-normal">{{$data['pollutants']['pm10']['nowcast'] ?? '—'}}µg/m³</span></span>
                                     <div class="h-4 border border-white"></div>
-                                    <span class="text-sm text-black font-bold">CO: <span class="text-black font-normal">62 pbb</span></span>
+                                    <span class="text-sm text-black font-bold">CO: <span class="text-black font-normal">{{$data['pollutants']['co']['nowcast'] ?? '—'}}</span></span>
                                     <div class="h-4 border border-white"></div>
-                                    <span class="text-sm text-black font-bold">NO2: <span class="text-black font-normal">7 pbb</span></span>
+                                    <span class="text-sm text-black font-bold">NO2: <span class="text-black font-normal">{{$data['pollutants']['no2']['nowcast'] ?? '—'}}</s/span></span>
                                 </div>
                             </div>
                             <div class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6">
@@ -125,22 +125,22 @@
                                     <div class="w-[70%] h-full flex flex-col items-center justify-center">
                                         <div class="flex flex-row w-full h-[50%] justify-center items-center gap-x-5">
                                             <span class="text-black font-semibold text-xl uppercase">Sound Level</span>
-                                            <span class="text-blue-500 font-bold text-4xl">70<span class="text-lg text-black">db</span></span>
+                                            <span class="text-blue-500 font-bold text-4xl">{{ $individualData->decibels }}<span class="text-lg text-black">db</span></span>
                                         </div>
                                         <div class="w-full border border-white"></div>
                                         <div class="flex flex-col w-full h-[50%] justify-evenly items-center py-3">
                                             <div class="flex w-full h-[30%] justify-center items-center">
-                                                <span class="text-gray-500 text-xs italic">As of this Date: 2025-09-25</span>
+                                                <span class="text-gray-500 text-xs italic">As of this Date: {{ $individualData->created_at }}</span>
                                             </div>
                                             <div class="flex flex-row w-full h-[70%] justify-evenly items-center">
                                                 <div class="w-full justify-center items-center flex flex-row gap-x-3">
                                                     <span class="text-xs lg:text-base text-center font-semibold uppercase">Average dB:</span>
-                                                    <span class="text-xl text-center font-bold text-green-600">70</span>
+                                                    <span class="text-xl text-center font-bold text-green-600">{{$individualData->decibels}}</span>
                                                 </div>
                                                 <div class="h-[50%] border border-white"></div>
                                                 <div class="w-full justify-center items-center flex flex-row gap-x-3">
                                                     <span class="text-xs lg:text-base text-center font-semibold uppercase">Peak dB:</span>
-                                                    <span class="text-xl text-center font-bold text-red-600">80</span>
+                                                    <span class="text-xl text-center font-bold text-red-600">{{$peakDecibels}}</span>
                                                 </div>
                                             </div>
                                         </div>

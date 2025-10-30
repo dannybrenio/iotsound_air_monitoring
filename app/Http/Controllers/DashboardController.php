@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function index(AqiCalculator $aqiCalculator){
 
         $data = $aqiCalculator->compute();
-        $individualdata = Hardware_data::latest()->first();
+        $individualData = Hardware_data::latest()->first();
 
         $today = Carbon::today();
         $peakDecibels = Hardware_data::whereDate('created_at', $today)->max('decibels');
@@ -23,12 +23,12 @@ class DashboardController extends Controller
         //$overallNowcast = data_get($data, 'overall.nowcast');
        // $individualArr = $individualdata?->only(['id','pm25','decibels','created_at']);
 
-        return view('front.dashboard', compact(
-        'data',
-        'individualdata',
-        'overallNowcast',
-        'peakDecibels'
-    ));
+        return view('front.dashboard', [
+        'data' => $data,
+        'individualData' => $individualData,
+        'overallNowcast' => $overallNowcast,
+        'peakDecibels' => $peakDecibels,
+    ]);
 
     }
     public function sendReading(Request $request){

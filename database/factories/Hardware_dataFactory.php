@@ -25,7 +25,7 @@ class Hardware_dataFactory extends Factory
         $minutes += 5; // advance by 5 minutes per record
 
         return [
-            'hardware_id' => 1,
+            'hardware_id' => 2,
             'pm2_5' => $this->faker->randomFloat(2, 0, 150),
             'pm10' => $this->faker->randomFloat(2, 0, 200),
             'no2'  => $this->faker->randomFloat(2, 0, 120),

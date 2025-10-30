@@ -19,7 +19,7 @@ Route::get('/about', function () { return view('front.about'); })->name('about')
 Route::get('/help', function () { return view('front.help'); })->name('help');;
 Route::get('/weather', function () { return view('weather'); });
 
-// Route::get('/testing', [AqiController::class, 'index']);
+Route::get('/testing', [AqiController::class, 'index']);
 
 //  Route::post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');
 //  Route::Post('receive-data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
