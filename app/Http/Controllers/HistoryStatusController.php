@@ -15,7 +15,7 @@ class HistoryStatusController extends Controller
         $history_statuses = History_status::with('device_Status')
          ->latest('status_id') // or any ordering you need
         ->get();
-        return view('admin.status.history_status', compact('history_statuses'));
+        return view('admin.history_status.admin_history_status', compact('history_statuses'));
     }
 
    private const POINTER_MAP = [

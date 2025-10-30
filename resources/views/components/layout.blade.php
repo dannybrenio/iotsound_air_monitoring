@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="shortcut icon" href="{{ asset('bglogo.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('bglogo.png') }}" type="image/png">
     <title>
-        Air and Sound Monitoring System
-        {{-- <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}"> --}}
+        AEROSON    
     </title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>      
     <style>
         /* Custom animations for smooth transitions */
@@ -55,13 +55,15 @@
     <!-- Fixed Header -->
     <header class="fixed top-0 left-0 right-0 shadow-xl w-screen h-[60px] px-10 py-2 bg-white z-50">
         <div class="flex flex-row w-full h-full justify-between items-center">
-            <div class="h-full text-[#06402b] w-[50%] flex justify-start items-center uppercase text-xl font-extrabold">RASE</div>
-            <div class="h-full w-[50%] flex justify-end items-center gap-x-4">
-                <div class="h-full w-[50%] flex-row items-center justify-between hidden lg:flex">
+            <div class="h-full text-[#06402b] w-[50%] flex flex-row justify-start items-center uppercase text-xl font-extrabold gap-x-2">
+                <img src="{{ asset('logo.png') }}" alt="" class="size-8">
+                <span class="text-center h-full flex justify-center items-center">AEROSON</span>
+            </div>
+            <div class="h-full w-[80%] flex justify-end items-center gap-x-4">
+                <div class="h-full w-[70%] flex-row items-center justify-between hidden lg:flex">
                     <a href="{{ route('dashboard') }}" 
                         class="flex flex-row gap-x-2 justify-center items-center text-lg uppercase h-[80%]
                                 {{ request()->routeIs('dashboard') ? 'text-green-500 border-b-2 font-semibold border-green-500 hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
-                        <!-- <img src="{{asset('dashboard.png')}}" alt="" class="size-4"> -->
                         <svg xmlns="http://www.w3.org/2000/svg" 
                             viewBox="0 0 24 24" 
                             fill="none" 
@@ -79,7 +81,6 @@
                     <a href="{{ route('about') }}" 
                         class="flex flex-row gap-x-2 justify-center items-center text-lg uppercase h-[80%]
                                 {{ request()->routeIs('about') ? 'text-green-500 border-b-2 font-semibold border-green-500 hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
-                        <!-- <img src="{{asset('info.png')}}" alt="" class="size-4"> -->
                         <svg xmlns="http://www.w3.org/2000/svg" 
                                 viewBox="0 0 24 24" 
                                 fill="none" 
@@ -92,25 +93,25 @@
                             <line x1="12" y1="16" x2="12" y2="12" />
                             <line x1="12" y1="8" x2="12.01" y2="8" />
                         </svg>
-                        About
+                        About Us
                     </a>
                     <a href="{{ route('help') }}" 
                         class="flex flex-row gap-x-2 justify-center items-center text-lg uppercase h-[80%]
                                 {{ request()->routeIs('help') ? 'text-green-500 border-b-2 font-semibold border-green-500 hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
-                        <!-- <img src="{{asset('question.png')}}" alt="" class="size-4 fill-current"> -->
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                                viewBox="0 0 24 24" 
-                                fill="none" 
-                                stroke="currentColor" 
-                                stroke-width="2" 
-                                stroke-linecap="round" 
-                                stroke-linejoin="round"
-                                class="size-4">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2.5-3 5" />
-                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        <svg class="size-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 7C9.23858 7 7 9.23858 7 12C7 13.3613 7.54402 14.5955 8.42651 15.4972C8.77025 15.8484 9.05281 16.2663 9.14923 16.7482L9.67833 19.3924C9.86537 20.3272 10.6862 21 11.6395 21H12.3605C13.3138 21 14.1346 20.3272 14.3217 19.3924L14.8508 16.7482C14.9472 16.2663 15.2297 15.8484 15.5735 15.4972C16.456 14.5955 17 13.3613 17 12C17 9.23858 14.7614 7 12 7Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 4V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M18 6L19 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M5 5L6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 17H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        Help
+                        Knowledge Hub
+                    </a>
+                    <a href="{{ route('login') }}"
+                        class="flex flex-row gap-x-2 justify-center items-center text-base bg-[#06402b] rounded text-white font-bold w-20 uppercase h-[70%] hover:scale-105 duration-300">
+                        Sign In
                     </a>
                 </div>
                 <!-- Mobile Hamburger Button -->
@@ -174,31 +175,33 @@
                         <line x1="12" y1="16" x2="12" y2="12" />
                         <line x1="12" y1="8" x2="12.01" y2="8" />
                     </svg>
-                    <span class="uppercase">About</span>
+                    <span class="uppercase">About Us</span>
                 </a>
 
                 <a href="{{route('help')}}" 
                    class="mobile-nav-link flex items-center space-x-3 p-4 text-lg font-medium text-gray-700 hover:text-green-500 hover:bg-green-50 transition-colors duration-200
                         {{ request()->routeIs('help') ? 'text-green-500 border-b-2 font-semibold border-green-500 hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        stroke-width="2" 
-                        stroke-linecap="round" 
-                        stroke-linejoin="round"
-                        class="size-5">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2.5-3 5" />
-                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                    <svg class="size-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 7C9.23858 7 7 9.23858 7 12C7 13.3613 7.54402 14.5955 8.42651 15.4972C8.77025 15.8484 9.05281 16.2663 9.14923 16.7482L9.67833 19.3924C9.86537 20.3272 10.6862 21 11.6395 21H12.3605C13.3138 21 14.1346 20.3272 14.3217 19.3924L14.8508 16.7482C14.9472 16.2663 15.2297 15.8484 15.5735 15.4972C16.456 14.5955 17 13.3613 17 12C17 9.23858 14.7614 7 12 7Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 4V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M18 6L19 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 5L6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 17H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <span class="uppercase">Help</span>
+                    <span class="uppercase">Knowledge Hub</span>
+                </a>
+
+                <a href="{{ route('login') }}"
+                    class="mobile-nav-link flex gap-x-2 justify-center items-center text-base bg-[#06402b] rounded text-white font-bold w-full h-16 uppercase hover:scale-105 duration-300">
+                    Sign In
                 </a>
             </nav>
 
             <!-- Menu Footer -->
             <div class="p-6 border-t border-gray-200">
-                <p class="text-sm text-gray-500 text-center">RASE © 2025</p>
+                <p class="text-sm text-gray-500 text-center">AEROSON © 2025</p>
             </div>
         </div>
     </div>
@@ -212,7 +215,7 @@
 
     <!-- Footer -->
     <footer class="bg-[#06402b] w-screen text-white h-[130px] lg:h-[50px] flex flex-col lg:flex-row items-center justify-between py-4 lg:px-4">
-        <p class="text-white h-auto font-bold upppercase">© RASE</p>
+        <p class="text-white h-auto font-bold upppercase">© AEROSON</p>
         <div class="w-full lg:w-[30%] h-auto flex flex-col lg:flex-row items-center justify-center lg:justify-between">
             <p class="text-white font-bold upppercase">Privacy Policy</p>
             <p class="text-white font-bold upppercase"># 0912-345-6789</p>
@@ -220,7 +223,6 @@
         </div>
     </footer>
 </body>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
     const hamburgerBtn = document.getElementById('hamburger-btn');
@@ -251,5 +253,6 @@
 });
 
 </script>
+
 
 </html>

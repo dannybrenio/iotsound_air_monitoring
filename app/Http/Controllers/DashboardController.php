@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hardware_data;
+use App\Services\AqiCalculator;
+use Carbon\Carbon;
 use App\Models\HardwareDataController;
 use App\Events\ReadingReceived;
 use App\Models\Hardware_data;
@@ -9,27 +12,26 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
-        $months = ['Jan','Feb','Mar','Apr','May']; 
-        $readings = Hardware_data::query()
-            ->orderBy('created_at')        
-            ->select([
-                'hardware_id',
-                'pm2_5',     
-                'pm10',      
-                'co',     
-                'no2',        
-                'decibels',    
-                'realtime_stamp',
-            ])
-            ->take(200)                       
-            ->get();
+    public function index(AqiCalculator $aqiCalculator){
 
-        return view('dashboard', compact('months', 'readings'));
+        $data = $aqiCalculator->compute();
+        $individualData = Hardware_data::latest()->first();
+
+        $today = Carbon::today();
+        $peakDecibels = Hardware_data::whereDate('created_at', $today)->max('decibels');
+        $overallNowcast = $data['overall']['nowcast'];
+
+        //$overallNowcast = data_get($data, 'overall.nowcast');
+       // $individualArr = $individualdata?->only(['id','pm25','decibels','created_at']);
+
+        return view('front.dashboard', [
+        'data' => $data,
+        'individualData' => $individualData,
+        'overallNowcast' => $overallNowcast,
+        'peakDecibels' => $peakDecibels,
+    ]);
+
     }
-
-
     public function sendReading(Request $request){
         ReadingReceived::dispatch($request);
         

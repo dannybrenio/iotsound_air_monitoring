@@ -80,6 +80,15 @@ class AqiCalculator
         $overallInstant = max(array_column($aqiValues, 'instant'));
         $overallNowcast = max(array_column($aqiValues, 'nowcast'));
 
+        // return response()->json([
+        //     'pollutants' => $aqiValues,
+        //     'overall' => [
+        //         'instant' => $overallInstant,
+        //         'nowcast' => $overallNowcast,
+        //     ],
+        // ]);
+
+
         return [
             'pollutants' => $aqiValues,
             'overall' => [
@@ -87,6 +96,8 @@ class AqiCalculator
                 'nowcast' => $overallNowcast,
             ],
         ];
+
+
     }
 
     private function calculateAqi($pollutant, $concentration)

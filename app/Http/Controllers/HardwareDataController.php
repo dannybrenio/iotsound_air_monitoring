@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Events\ReadingReceived;
 use App\Models\Hardware;
 use App\Models\Hardware_data;
+use App\Models\Alerts;
 use App\Http\Controllers\AlertsController;
 use App\Http\Controllers\PendingHardwareDataController;
 use App\Models\Pending_hardware_data;
+use App\Services\AqiCalculator;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -19,7 +21,7 @@ class HardwareDataController extends Controller
          ->latest('data_id') // or any ordering you need
         ->get();
   
-        return view('admin.hardware.hardware_data', compact('hardware_data'));
+        return view('admin.hardware.admin_hardware_data', compact('hardware_data'));
   }
   
 
@@ -74,7 +76,7 @@ class HardwareDataController extends Controller
                 'co' => $rawdata['co']?? null,
                 'no2' => $rawdata['no2']?? null,
                 'decibels' => $rawdata['decibels']?? null,
-                'realtime_stamp' => $realtime?? null,
+                'realtime_stamp' => $rawdata['realtime_stamp']?? null,
             ]);
 
             ReadingReceived::dispatch([
@@ -88,10 +90,45 @@ class HardwareDataController extends Controller
             ]);
 
             if($hardware_data){
-                $alertsController = new AlertsController();
-                $alertsController->store($rawdata['pm2_5'], $rawdata['pm10'], $rawdata['co'], $rawdata["no2"], $rawdata["decibels"]);
-            }
+                 $aqiService = new AqiCalculator();
+                 $alertData = $aqiService->compute();
 
+                // 1) Normalize payload whether compute() returned array or JsonResponse
+                $payload = $alertData instanceof \Illuminate\Http\JsonResponse
+                    ? $alertData->getData(true)   // associative array
+                    : $alertData;
+
+                // 2) Pull overall nowcast AQI
+                $overallNowcast = $payload['overall']['nowcast'] ?? null;
+
+                // 3) Map to your 6-level thresholds
+                $aqiLevel = null;
+                if ($overallNowcast !== null) {
+                    $aqi = (int) $overallNowcast;
+                    $aqiLevel = match (true) {
+                        $aqi <= 25   => 'good',
+                        $aqi <= 35  => 'fair',
+                        $aqi <= 45  => 'unhealthy',
+                        $aqi <= 55  => 'very unhealthy',
+                        $aqi <= 300  => 'acutely unhealthy',
+                        default      => 'emergency',
+                    };
+                }
+
+                //4) (Optional) Call your alert logic (uncomment if you want to persist alerts)
+                $alertsController = new AlertsControlle90r();
+                $alertsController->store($aqiLevel);
+
+                // 5) Return original payload + computed level (without changing AqiCalculator)
+                $final = $payload ?? [];
+                $final['overall'] = array_merge($final['overall'] ?? [], [
+                    'nowcast_level' => $aqiLevel,
+                ]);
+
+                return response()->json(['message' => 'New ALert!']);
+            }
+            
+        
     } catch (Exception $e) {
         return response()->json([
             'error'   => 'Server Error',
@@ -101,5 +138,6 @@ class HardwareDataController extends Controller
     }
     return response()->noContent();
   }
+
 
 }

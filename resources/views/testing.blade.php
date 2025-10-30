@@ -31,12 +31,13 @@
              @if ($individualdata)
     <ul>
         RAW DATA:
+        {{$data['pollutants']['pm2_5']['nowcast']}}
         <li>PM2.5: {{ $individualdata->pm2_5 }}</li>
         <li>PM10: {{ $individualdata->pm10 }}</li>
         <li>NO₂: {{ $individualdata->no2 }}</li>
         <li>CO: {{ $individualdata->co }}</li>
         <li>Decibels: {{ $individualdata->decibels }}</li>
-        <l1>Peak Decibels: {{ $peakDecibels}}</l1>
+        <l1>Peak Decibels: {{$peakDecibels}}</l1>
         <li>Recorded at: {{ $individualdata->created_at }}</li>
     </ul>
 @else
