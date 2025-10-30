@@ -7,7 +7,6 @@ use App\Services\AqiCalculator;
 use Carbon\Carbon;
 use App\Models\HardwareDataController;
 use App\Events\ReadingReceived;
-use App\Models\Hardware_data;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller

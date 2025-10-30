@@ -11,7 +11,6 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DeviceStatusController;
 use App\Http\Controllers\HistoryStatusController;
 use App\Http\Controllers\AqiController;
-use App\Http\Controllers\ExportController;
 
 
 // Dashboard

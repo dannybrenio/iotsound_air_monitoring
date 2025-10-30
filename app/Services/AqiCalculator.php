@@ -88,7 +88,6 @@ class AqiCalculator
         //     ],
         // ]);
 
-
         return [
             'pollutants' => $aqiValues,
             'overall' => [
@@ -134,4 +133,5 @@ class AqiCalculator
         return $sumWeightedValues / $sumWeights;
     }
 }
-// no closing ?> on purpose
+
+?> 
