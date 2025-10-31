@@ -162,17 +162,17 @@
        
 @php
   $aqi_value = 100;   
-//   dump($readings);
+  dump($readings);
 @endphp
 
 <script>
     const rows = @json($readings);
-
+    console.table(rows);
     const num = v => Number(v ?? 0);
     const labelFrom = r =>
         new Date(r.realtime_stamp ?? r.timestamp)
         .toLocaleDateString(undefined, { weekday: 'short' }); // Mon/Tue/…
-
+    console.log(labelFrom);
     // Initial labels and series
     const labels = rows.map(labelFrom);
     const series = {
