@@ -14,16 +14,20 @@ class HardwareDataSeeder extends Seeder
      */
     public function run(): void
     {
-        //Hardware_data::factory()->count(144)->create();
-         // clears only this table
+        // Optional: clear just this table first
+        // \DB::table('hardware_data')->truncate();
 
+        $end   = Carbon::now()->startOfMinute();
+        $start = (clone $end)->subMonthsNoOverflow(2);
 
-        $start = Carbon::now()->subHours(12); // starting point, e.g., 12 hours ago
+        // total 5-minute steps from $start up to and including $end
+        $total = intdiv($start->diffInMinutes($end), 5) + 1;
 
-        for ($i = 0; $i < 144; $i++) { // 144 records = 12 hours of 5-minute intervals
-            Hardware_data::factory()->create([
-                'realtime_stamp' => $start->copy()->addMinutes($i * 5),
-            ]);
-        }
+        Hardware_data::factory()
+            ->count($total)
+            ->sequence(fn ($seq) => [
+                'realtime_stamp' => (clone $start)->addMinutes($seq->index * 5),
+            ])
+            ->create();
     }
 }

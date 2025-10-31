@@ -11,26 +11,71 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(AqiCalculator $aqiCalculator){
+    public function index()
+    {
+        $aqiService = new AqiCalculator();
 
-        $data = $aqiCalculator->compute();
-        $individualData = Hardware_data::latest()->first();
+        // Use consistent "now" so all calculations align to the same instant
+        $now    = Carbon::now()->startOfMinute();
+        $today  = $now->copy()->startOfDay();
+        $since30d = $now->copy()->subDays(30);
 
-        $today = Carbon::today();
-        $peakDecibels = Hardware_data::whereDate('created_at', $today)->max('decibels');
-        $overallNowcast = $data['overall']['nowcast'];
+        // ✅ Single DB query for the whole range (select only fields you use)
+        $rangeData = Hardware_data::select([
+                'realtime_stamp', 'pm2_5', 'pm10', 'no2', 'co', 'decibels'
+            ])
+            ->whereBetween('realtime_stamp', [$since30d, $now])
+            ->orderBy('realtime_stamp')     // stable ordering for downstream calcs
+            ->get();
 
-        //$overallNowcast = data_get($data, 'overall.nowcast');
-       // $individualArr = $individualdata?->only(['id','pm25','decibels','created_at']);
+        // --- Derive today's data in memory (no extra SQL)
+        $todayData = $rangeData->whereBetween('realtime_stamp', [
+            $today, $today->copy()->endOfDay()
+        ])->values();
+
+        // ✅ Average decibel for current day (rounded 2 dp)
+        $avgDecibelToday = $todayData->pluck('decibel')
+                                ->merge($todayData->pluck('decibels'))
+                                ->filter()
+                                ->avg();
+        $avgDecibelToday = is_null($avgDecibelToday) ? null : round($avgDecibelToday, 2);
+
+        // --- Existing "today" summary (unchanged logic, just using $todayData)
+        $latestRecord   = $todayData->sortByDesc('realtime_stamp')->first();
+        $latestNowcast  = $aqiService->computeNowCast($todayData);
+        $latestAqi      = $latestNowcast['overall_aqi'] ?? null;
+
+        // Handle possible field name variations: 'decibel' vs 'decibels'
+        $latestDecibel  = $latestRecord ? ($latestRecord->decibel ?? $latestRecord->decibels ?? null) : null;
+
+        // Merge both fields, filter nulls/zeros, compute peak
+        $peakDecibel = collect([
+                ...$todayData->pluck('decibel')->filter()->all(),
+                ...$todayData->pluck('decibels')->filter()->all(),
+            ])->max() ?? null;
+
+        $latestDateTime = $latestRecord->realtime_stamp ?? null;
+
+        // --- Segmented outputs (unchanged)
+        $seg12h = $aqiService->computeSegmentedAverages($rangeData, '12h', $now);
+        $seg24h = $aqiService->computeSegmentedAverages($rangeData, '24h', $now);
+        $seg7d  = $aqiService->computeSegmentedAverages($rangeData, '7d',  $now);
+        $seg30d = $aqiService->computeSegmentedAverages($rangeData, '30d', $now);
 
         return view('front.dashboard', [
-        'data' => $data,
-        'individualData' => $individualData,
-        'overallNowcast' => $overallNowcast,
-        'peakDecibels' => $peakDecibels,
-    ]);
-
+            'latest_aqi'      => $latestAqi,
+            'latest_nowcast'  => $latestNowcast,
+            'latest_decibel'  => $latestDecibel,
+            'peak_decibel'    => $peakDecibel,
+            'latest_datetime' => $latestDateTime,
+            'avgDecibelToday' => $avgDecibelToday,
+            'seg12h' => $seg12h,
+            'seg24h' => $seg24h,
+            'seg7d'  => $seg7d,
+            'seg30d' => $seg30d,
+        ]);
     }
+
     public function sendReading(Request $request){
         ReadingReceived::dispatch($request);
         

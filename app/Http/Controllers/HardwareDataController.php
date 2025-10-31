@@ -117,7 +117,7 @@ class HardwareDataController extends Controller
                 }
 
                 //4) (Optional) Call your alert logic (uncomment if you want to persist alerts)
-                $alertsController = new AlertsControlle90r();
+                $alertsController = new AlertsController();
                 $alertsController->store($aqiLevel);
 
                 // 5) Return original payload + computed level (without changing AqiCalculator)
