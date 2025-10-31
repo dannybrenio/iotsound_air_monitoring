@@ -12,13 +12,16 @@
                     </thead>
                  <tbody>
                     @foreach($alerts as $alert)
-                        <tr>
-                            <td><p>{{$alert->alert_id}}</p></td>
-                            <td><p>{{$alert->alert_body}}</p></td>
+                        <tr class="{{ $loop->even ? 'bg-gray-300' : 'bg-white' }}">
+                            <td class="px-4 py-2"><p>{{$alert->alert_id}}</p></td>
+                            <td class="px-4 py-2"><p>{{$alert->alert_body}}</p></td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-6 flex justify-center">
+                    {{ $alerts->onEachSide(1)->links('vendor.pagination.tailwind') }}
+                </div>
             </div>
         </div> 
     </div>

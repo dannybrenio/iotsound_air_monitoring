@@ -15,13 +15,13 @@
                     </thead>
                     <tbody>
                           @foreach ($reports as $report)
-                            <tr>
-                                <td>{{ $report->report_id}}</td>
-                                <td>{{ $report->user->name}}</td>
-                                <td>{{ $report->report_body}}</td>
+                            <tr class="{{ $loop->even ? 'bg-gray-300' : 'bg-white' }}">
+                                <td class="px-4 py-2">{{ $report->report_id}}</td>
+                                <td class="px-4 py-2">{{ $report->user->name}}</td>
+                                <td class="px-4 py-2">{{ $report->report_body}}</td>
                                 <!-- no image path yet -->
-                                <td>{{ $report->image_path}}</td>
-                                <td>{{ $report->created_at}}</td>
+                                <td class="px-4 py-2">{{ $report->image_path}}</td>
+                                <td class="px-4 py-2">{{ $report->created_at}}</td>
                             </tr>
                         @endforeach
                     </tbody>

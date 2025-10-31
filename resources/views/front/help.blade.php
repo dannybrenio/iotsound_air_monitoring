@@ -1,8 +1,8 @@
 <x-layout>
-    <div class="h-auto w-screen flex flex-col justify-start items-center gap-y-2 py-5">
+    <div class="h-auto w-full flex flex-col justify-start items-center gap-y-2 pb-5">
         <img src="{{ asset('landscape.jpg') }}" alt="landscape" class="w-full h-60 shadow-md">
         <div class="w-full h-auto rounded-3xl flex flex-col gap-y-3 items-center">
-            <div x-data="{ activeTab: 'sound' }" class="w-full h-full">
+            <div x-data="{ activeTab: 'aqi' }" class="w-full h-full">
                 <!-- Tab header -->
                 <div class="flex flex-row justify-between h-[70px] w-full">
                     <div class="flex flex-row bg-white w-full border-b border-[#a8a8a8]">
