@@ -13,7 +13,9 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-
+    'device' => [
+        'key' => env('DEVICE_API_KEY', ''), // default empty, not null
+    ],
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
