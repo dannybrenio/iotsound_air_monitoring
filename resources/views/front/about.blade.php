@@ -1,6 +1,6 @@
 <x-layout>
-    <div class="flex flex-col w-screen h-auto justify-center items-center bg-white">
-        <div class="flex flex-col h-auto w-screen bg-white shadow-xl">
+    <div class="flex flex-col w-full h-auto justify-center items-center bg-white">
+        <div class="flex flex-col h-auto w-full bg-white shadow-xl">
             <div class="flex flex-col lg:flex-row w-full h-[800px] lg:h-[600px] gap-x-5">
                 <div class="flex flex-col w-full lg:w-[50%] h-[50%] lg:h-full justify-center items-center gap-y-4 md:gap-y-6 lg:gap-y-10 p-10 lg:p-20">
                     <span class="text-[#06402b] font-extrabold text-2xl md:text-4xl lg:text-6xl uppercase">About 
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col h-[800px] lg:h-screen w-screen justify-center items-center p-5">
+        <div class="flex flex-col h-[800px] lg:h-screen w-full justify-center items-center p-5">
             <div class="flex flex-col lg:flex-row h-[90%] w-[95%] bg-white shadow-xl rounded-xl justify-center items-center border-2 border-[#06402b]">
                 <div class="flex flex-col w-full lg:w-[50%] h-[45%] lg:h-[80%] justify-center items-center">
                     <div class="border-4 border-[#d4af37] w-[30%] lg:w-[50%]"></div>   
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col lg:flex-row h-[1000px] lg:h-screen w-screen justify-evenly items-center bg-[#06402b]">
+        <div class="flex flex-col lg:flex-row h-[1000px] lg:h-screen w-full justify-evenly items-center bg-[#06402b]">
             <div class="flex flex-col bg-white/20 h-[45%] lg:h-[70%] w-[80%] lg:w-[45%] rounded-4xl justify-center items-center gap-y-8 px-10 ">
                 <span class="text-white font-extrabold text-2xl md:text-4xl lg:text-6xl uppercase">THE 
                     <span class="text-[#d4af37] uppercase text-2xl md:text-4xl lg:text-6xl font-extrabold">PROBLEM</span>
@@ -79,7 +79,7 @@
                 </span>           
             </div>
         </div>
-        <div class="flex flex-col h-[800px] md:h-[650px] lg:h-screen w-screen justify-center items-center p-5">
+        <div class="flex flex-col h-[800px] md:h-[650px] lg:h-screen w-full justify-center items-center p-5">
             <div class="flex flex-row h-[90%] w-[95%] bg-white shadow-xl rounded-xl justify-center items-center border-2 border-[#06402b]">
                 <div class="flex flex-col w-[90%] h-[90%] lg:h-[80%] justify-center items-center">
                     <div class="flex flex-col w-full h-full justify-start items-center gap-y-4 md:gap-y-6 lg:gap-y-10 px-10">

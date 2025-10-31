@@ -9,7 +9,7 @@ class AlertsController extends Controller
 {
     
     public function index(){
-        $alerts = Alerts::all();
+        $alerts = Alerts::paginate(5);
         return view('admin.alert.admin_alert', compact('alerts'));
     }
 
