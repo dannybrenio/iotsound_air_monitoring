@@ -15,6 +15,7 @@ class ReportController extends Controller
         return view('admin.report.admin_report', compact('reports'));
     }
 
+    // api to receive report from mobile
     public function receiveReport(Request $request)
     {
       $validated = $request->validate([

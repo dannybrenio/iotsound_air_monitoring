@@ -289,7 +289,7 @@
                 </div>
             </div>
         </div>
-                    <button id="send-reading-btn">Send Reading</button>
+            <button id="send-reading-btn">Send Reading</button>
             <button id="send-status-btn">Send Status</button>
         <!-- Weather Forecast -->
         <!-- <div id="weather"
@@ -297,8 +297,7 @@
         </div> -->
     </div>
     <script>
-            
-
+        
         // Initialize map centered on a location
         const map = L.map('map').setView([14.6458, 120.9865], 18);
 
@@ -313,6 +312,7 @@
         const locations = [
             { name: 'Barangay 115', coords: [14.6458, 120.9865] },
         ];
+        
         locations.forEach(loc => {
             L.marker(loc.coords).addTo(map).bindPopup(`<b>${loc.name}</b>`);
         });
