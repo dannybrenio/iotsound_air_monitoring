@@ -74,8 +74,8 @@
         <!-- Add Close Button Here -->
         <button id="close-menu" class="absolute top-5 right-4 text-gray-700 text-4xl lg:hidden cursor-pointer">&times;</button>
         <div class="flex flex-row justify-start items-center gap-x-3 w-[85%]">
-            <img src="{{ asset('bglogo.png') }}" alt="" class="size-7">
-            <span class="text-[#06402b] font-extrabold text-2xl">ADMIN</span>
+            <img src="{{ asset('bglogo.png') }}" alt="" class="size-6">
+            <span class="text-[#06402b] font-extrabold text-xl">ADMIN</span>
         </div>
         <div class="rounded border border-[#06402b] w-[85%]"></div>
         <div class="flex flex-col w-[85%] justify-center items-start gap-y-2 ">
@@ -207,7 +207,7 @@
                 </svg>
                 Alerts
             </a>
-            <a href="{{ route('login') }}"
+            <a href="{{ route('dashboard') }}"
                 class="px-2.5 text-[#06402b] text-sm truncate flex flex-row gap-x-3 items-center font-semibold hover:text-black hover:bg-[#a9b3da] w-full h-10 rounded justify-start duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="currentColor">
                     <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"

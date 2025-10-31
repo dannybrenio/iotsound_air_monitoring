@@ -25,7 +25,7 @@ Route::get('/testing', [AqiController::class, 'index']);
 //  Route::Post('receive-data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
 
 // Log in
-Route::get('/login', function () { return view('login');})->name('login');;
+Route::get('/admin', function () { return view('login');})->name('login');;
 
 // Admin
 Route::get('/admin_hardware', [HardwareController::class, 'index'])->name('hardware');

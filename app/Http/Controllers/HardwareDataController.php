@@ -16,14 +16,15 @@ use Illuminate\Http\Request;
 class HardwareDataController extends Controller
 {
 
- public function index(){   
+    public function index()
+    {
         $hardware_data = Hardware_data::with('hardware')
-         ->latest('data_id') // or any ordering you need
-        ->get();
-  
+            ->latest('data_id') // or any ordering you need
+            ->paginate(10);
+
         return view('admin.hardware.admin_hardware_data', compact('hardware_data'));
-  }
-  
+    }
+
 
  public function receiveData(Request $request){
     try{
@@ -72,26 +73,26 @@ class HardwareDataController extends Controller
             $hardware_data = Hardware_data::create([
                 'hardware_id' => $hardware_id,
                 'pm2_5' => $rawdata['pm2_5'] ?? null,
-                'pm10' => $rawdata['pm10']?? null,
-                'co' => $rawdata['co']?? null,
-                'no2' => $rawdata['no2']?? null,
-                'decibels' => $rawdata['decibels']?? null,
-                'realtime_stamp' => $rawdata['realtime_stamp']?? null,
+                'pm10' => $rawdata['pm10'] ?? null,
+                'co' => $rawdata['co'] ?? null,
+                'no2' => $rawdata['no2'] ?? null,
+                'decibels' => $rawdata['decibels'] ?? null,
+                'realtime_stamp' => $rawdata['realtime_stamp'] ?? null,
             ]);
 
             ReadingReceived::dispatch([
-                'hardware_id'    => $hardware_data->hardware_id,
-                'pm2_5'          => $hardware_data->pm2_5,
-                'pm10'           => $hardware_data->pm10,
-                'co'             => $hardware_data->co,
-                'no2'            => $hardware_data->no2,
-                'decibels'       => $hardware_data->decibels,
+                'hardware_id' => $hardware_data->hardware_id,
+                'pm2_5' => $hardware_data->pm2_5,
+                'pm10' => $hardware_data->pm10,
+                'co' => $hardware_data->co,
+                'no2' => $hardware_data->no2,
+                'decibels' => $hardware_data->decibels,
                 'realtime_stamp' => $hardware_data->realtime_stamp,
             ]);
 
-            if($hardware_data){
-                 $aqiService = new AqiCalculator();
-                 $alertData = $aqiService->compute();
+            if ($hardware_data) {
+                $aqiService = new AqiCalculator();
+                $alertData = $aqiService->compute();
 
                 // 1) Normalize payload whether compute() returned array or JsonResponse
                 $payload = $alertData instanceof \Illuminate\Http\JsonResponse
@@ -106,12 +107,12 @@ class HardwareDataController extends Controller
                 if ($overallNowcast !== null) {
                     $aqi = (int) $overallNowcast;
                     $aqiLevel = match (true) {
-                        $aqi <= 25   => 'good',
-                        $aqi <= 35  => 'fair',
-                        $aqi <= 45  => 'unhealthy',
-                        $aqi <= 55  => 'very unhealthy',
-                        $aqi <= 300  => 'acutely unhealthy',
-                        default      => 'emergency',
+                        $aqi <= 25 => 'good',
+                        $aqi <= 35 => 'fair',
+                        $aqi <= 45 => 'unhealthy',
+                        $aqi <= 55 => 'very unhealthy',
+                        $aqi <= 300 => 'acutely unhealthy',
+                        default => 'emergency',
                     };
                 }
 
@@ -127,17 +128,17 @@ class HardwareDataController extends Controller
 
                 return response()->json(['message' => 'New ALert!']);
             }
-            
-        
-    } catch (Exception $e) {
-        return response()->json([
-            'error'   => 'Server Error',
-            'message' => $e->getMessage(),
-            'trace'   => $e->getTrace()
-        ], 500);
+
+
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Server Error',
+                'message' => $e->getMessage(),
+                'trace' => $e->getTrace()
+            ], 500);
+        }
+        return response()->noContent();
     }
-    return response()->noContent();
-  }
 
 
 }
