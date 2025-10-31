@@ -31,18 +31,44 @@
                 <div class="border border-white rounded-b-3xl h-auto bg-white">
                     <div x-show="activeTab === 'barangay'" x-transition
                         class="flex flex-col h-auto w-full justify-between items-center gap-y-2">
-                        <div class="w-[98%] h-[100px] flex flex-col gap-y-1 justify-center items-start px-1">
-                            <div
-                                class="w-14 h-4 flex justify-center items-center gap-x-2 bg-red-500 text-black text-center text-xs rounded-md">
-                                <span class="text-xl text-center">•</span>LIVE
+                        <div class="w-[98%] h-[120px] flex flex-row justify-between items-center px-1">
+                            <div class="flex flex-col w-auto h-full gap-y-1 items-start justify-center">
+                                <div
+                                    class="w-14 h-4 flex justify-center items-center gap-x-2 bg-red-500 text-black text-center text-xs rounded-md">
+                                    <span class="text-xl text-center">•</span>LIVE
+                                </div>
+                                <span class="text-black font-bold text-lg tracking-wide uppercase">Air Quality Index |
+                                    Sound
+                                    Level</span>
+                                <span class="text-[#919090] text-sm italic">Last Updated: 2025-09-25 06:52:16 PM (Local
+                                    Time)</span>
+                                <div class="overflow-hidden whitespace-nowrap">
+                                    <div class="inline-block animate-marquee">
+                                        <span class="mx-4 text-xs italic uppercase tracking-widest">For the next hour,
+                                            the aqi will be: 48</span>
+                                    </div>
+                                </div>
                             </div>
-                            <span class="text-black font-bold text-lg tracking-wide uppercase">Air Quality Index | Sound
-                                Level</span>
-                            <span class="text-[#919090] text-sm italic">Last Updated: 2025-09-25 06:52:16 PM (Local
-                                Time)</span>
+                            <div class="flex w-[50%] h-full items-center justify-end">
+                            </div>
                         </div>
                         <div id="aqi-back" class="">
-                            <div class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6">
+                            <!-- <div class="absolute flex overflow-hidden whitespace-nowrap w-full h-full">
+                                <div class="inline-block animate-marquee w-[200%] h-full">
+                                    <div class="flex w-full h-full">
+                                       
+                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="h-full object-cover">
+                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="w-1/3 h-full object-cover">
+                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
+
+                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
+                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
+                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div
+                                class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6 z-10">
                                 <div class="flex flex-row gap-y-5 w-[90%] lg:w-[80%]">
                                     <div class="flex flex-col w-[30%] items-center justify-center">
                                         <div class="flex flex-row gap-x-2 items-center">
@@ -103,12 +129,11 @@
                                                 <span
                                                     class="absolute -translate-x-1/2 left-[30%]  text-center text-black">Fair</span>
                                                 <span
-                                                    class="absolute -translate-x-1/2 left-[40%]  text-center text-black">Unhealthy</span>
+                                                    class="absolute -translate-x-1/2 left-[40%]  text-center text-black">Poor</span>
                                                 <span
-                                                    class="absolute -translate-x-1/2 left-[50%]  text-center text-black">Very<br>Unhealthy</span>
+                                                    class="absolute -translate-x-1/2 left-[50%]  text-center text-black">Unhealthy</span>
                                                 <span
-                                                    class="absolute -translate-x-1/2 left-[72.5%] text-center text-black">Acutely
-                                                    Unhealthy</span>
+                                                    class="absolute -translate-x-1/2 left-[72.5%] text-center text-black">Severe</span>
                                                 <span
                                                     class="absolute -translate-x-1/2 left-[95%]  text-center text-black">Emergency</span>
 
@@ -131,9 +156,10 @@
                                             class="text-black font-normal">7 ppb</span></span>
                                 </div>
                             </div>
-                            <div class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6">
+                            <div
+                                class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6 z-10">
                                 <div
-                                    class="flex flex-row bg-white/20 border border-white w-[80%] h-[90%] lg:h-[50%] rounded-xl items-center justify-evenly">
+                                    class="flex flex-row bg-white/70 border border-white w-[80%] h-[90%] lg:h-[50%] rounded-xl items-center justify-evenly">
                                     <div class="w-[30%] h-full flex flex-col items-center justify-center">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             class="size-12 animate-pulse duration-100 text-black" viewBox="0 0 100 100"
@@ -216,11 +242,16 @@
                                 </div>
 
                                 <!-- Chart canvases -->
-                                <div x-show="selectedChart === 'air'" x-transition><canvas id="airChart" height="300" class="w-full"></canvas></div>
-                                <div x-show="selectedChart === 'pm2'" x-transition><canvas id="pmTwoChart" height="300" class="w-full"></canvas></div>
-                                <div x-show="selectedChart === 'pm10'" x-transition><canvas id="pmTenChart" height="300" class="w-full"></canvas></div>
-                                <div x-show="selectedChart === 'co'" x-transition><canvas id="coChart" height="300" class="w-full"></canvas></div>
-                                <div x-show="selectedChart === 'no'" x-transition><canvas id="noChart" height="300" class="w-full"></canvas></div>
+                                <div x-show="selectedChart === 'air'" x-transition><canvas id="airChart" height="300"
+                                        class="w-full"></canvas></div>
+                                <div x-show="selectedChart === 'pm2'" x-transition><canvas id="pmTwoChart" height="300"
+                                        class="w-full"></canvas></div>
+                                <div x-show="selectedChart === 'pm10'" x-transition><canvas id="pmTenChart" height="300"
+                                        class="w-full"></canvas></div>
+                                <div x-show="selectedChart === 'co'" x-transition><canvas id="coChart" height="300"
+                                        class="w-full"></canvas></div>
+                                <div x-show="selectedChart === 'no'" x-transition><canvas id="noChart" height="300"
+                                        class="w-full"></canvas></div>
                             </div>
                             <div class="w-full h-auto mx-auto bg-white p-4 rounded-xl shadow-md">
                                 <div class="flex flex-row justify-between items-center px-5">
@@ -430,9 +461,9 @@
         const categories = [
             { max: 25, label: 'Good', color: 'text-[#00E400] bg-[#00E400]' },
             { max: 35, label: 'Fair', color: 'text-[#FFC000] bg-[#FFFF00]' },
-            { max: 45, label: 'Unhealthy for Sensitive', color: 'text-[#FF7E00] bg-[#FF7E00]' },
-            { max: 55, label: 'Very Unhealthy', color: 'text-[#FF0000] bg-[#FF0000]' },
-            { max: 90, label: 'Acutely Unhealthy', color: 'text-[#8F3F97] bg-[#8F3F97]' },
+            { max: 45, label: 'Poor', color: 'text-[#FF7E00] bg-[#FF7E00]' },
+            { max: 55, label: 'Unhealthy', color: 'text-[#FF0000] bg-[#FF0000]' },
+            { max: 90, label: 'Severe', color: 'text-[#8F3F97] bg-[#8F3F97]' },
             { min: 91, label: 'Emergency', color: 'text-[#7E0023] bg-[#7E0023]' },
         ];
 
@@ -445,7 +476,7 @@
         catEl.textContent = category.label;
         valueEl.className = `text-7xl font-bold bg-transparent text-center ${category.color}`;
         catEl.className = `text-2xl font-bold p-2 w-[81%] bg-white/20 h-14 flex justify-center items-center text-center rounded-xl ${category.color}`;
-        backColor.className = `w-full h-[500px] lg:h-[350px] flex flex-col lg:flex-row bg-gradient-to-t from-${category.color} to-white rounded-3xl gap-y-5 py-5 lg:py-0 shadow-lg`;
+        backColor.className = `w-full h-[500px] lg:h-[350px] relative flex flex-col lg:flex-row bg-gradient-to-t from-${category.color} to-white rounded-3xl gap-y-5 py-5 lg:py-0 shadow-lg`;
 
         // Chart Analysis
         // Sample label sets for each time range
@@ -463,22 +494,30 @@
 
         // Example AQI data (mocked; you can replace with live data)
         const aqiDataSets = {
-            "12h": { pm2: [12, 19, 14, 20, 15, 25, 18, 22, 24, 28, 26, 21],
-                    pm10: [20, 30, 28, 35, 32, 40, 33, 37, 39, 42, 38, 35],
-                    co: [7, 13, 23, 8, 10, 11, 22, 18, 15, 12, 17, 20],
-                    no: [15, 18, 22, 25, 20, 28, 24, 30, 26, 23, 21, 19] },
-            "24h": { pm2: Array.from({ length: 24 }, () => Math.floor(Math.random() * 15) + 10),
-                    pm10: Array.from({ length: 24 }, () => Math.floor(Math.random() * 20) + 25),
-                    co: Array.from({ length: 24 }, () => Math.floor(Math.random() * 20) + 5),
-                    no: Array.from({ length: 24 }, () => Math.floor(Math.random() * 20) + 10) },
-            "7d": { pm2: [18, 20, 16, 21, 24, 22, 19],
-                    pm10: [30, 35, 33, 38, 40, 36, 32],
-                    co: [9, 11, 13, 8, 15, 10, 12],
-                    no: [18, 22, 20, 25, 28, 26, 24] },
-            "30d": { pm2: Array.from({ length: 30 }, () => Math.floor(Math.random() * 10) + 15),
-                    pm10: Array.from({ length: 30 }, () => Math.floor(Math.random() * 15) + 30),
-                    co: Array.from({ length: 30 }, () => Math.floor(Math.random() * 10) + 5),
-                    no: Array.from({ length: 30 }, () => Math.floor(Math.random() * 15) + 15) }
+            "12h": {
+                pm2: [12, 19, 14, 20, 15, 25, 18, 22, 24, 28, 26, 21],
+                pm10: [20, 30, 28, 35, 32, 40, 33, 37, 39, 42, 38, 35],
+                co: [7, 13, 23, 8, 10, 11, 22, 18, 15, 12, 17, 20],
+                no: [15, 18, 22, 25, 20, 28, 24, 30, 26, 23, 21, 19]
+            },
+            "24h": {
+                pm2: Array.from({ length: 24 }, () => Math.floor(Math.random() * 15) + 10),
+                pm10: Array.from({ length: 24 }, () => Math.floor(Math.random() * 20) + 25),
+                co: Array.from({ length: 24 }, () => Math.floor(Math.random() * 20) + 5),
+                no: Array.from({ length: 24 }, () => Math.floor(Math.random() * 20) + 10)
+            },
+            "7d": {
+                pm2: [18, 20, 16, 21, 24, 22, 19],
+                pm10: [30, 35, 33, 38, 40, 36, 32],
+                co: [9, 11, 13, 8, 15, 10, 12],
+                no: [18, 22, 20, 25, 28, 26, 24]
+            },
+            "30d": {
+                pm2: Array.from({ length: 30 }, () => Math.floor(Math.random() * 10) + 15),
+                pm10: Array.from({ length: 30 }, () => Math.floor(Math.random() * 15) + 30),
+                co: Array.from({ length: 30 }, () => Math.floor(Math.random() * 10) + 5),
+                no: Array.from({ length: 30 }, () => Math.floor(Math.random() * 15) + 15)
+            }
         };
 
         // Helper: create chart instance

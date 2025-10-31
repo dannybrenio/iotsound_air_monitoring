@@ -1,3 +1,4 @@
+
 <x-admin>
     <div class="h-screen flex justify-center items-start p-5">
         <div class="container mx-auto">

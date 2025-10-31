@@ -207,7 +207,7 @@
                 </svg>
                 Alerts
             </a>
-            <a href="{{ route('dashboard') }}"
+            <a href="{{ route('logout') }}"
                 class="px-2.5 text-[#06402b] text-sm truncate flex flex-row gap-x-3 items-center font-semibold hover:text-black hover:bg-[#a9b3da] w-full h-10 rounded justify-start duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="currentColor">
                     <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
