@@ -258,7 +258,7 @@
                                         <canvas id="coChart1" class="w-full h-64"></canvas>
                                     </div>
                                     <div class="w-full lg:w-[50%] mx-auto bg-white p-4 rounded-xl shadow-md">
-                                        <h1 class="text-xl font-semibold mb-4 text-center">NO₂ Chart</h1>
+                                        <h1 class="text-xl font-semibold mb-4 text-center">NO₂ Chart</h1>W
                                         <canvas id="noChart1" class="w-full h-64"></canvas>
                                     </div>
                                 </div>
