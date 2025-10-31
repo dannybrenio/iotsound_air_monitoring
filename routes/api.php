@@ -63,7 +63,7 @@ Route::get('/weather1', function (Request $request) {
 //     return response()->noContent();
 // });
 
-Route::post('/sensor-status', [AlertsController::class, 'receiveSensorStatus'])->name('sensor-status');
+// Route::post('/sensor-status', [HistoryStatusController::class, 'receiveStatus'])->name('sensor-status');
 
 //Route::Post('receive_data', [HardwareDataController::class, 'receiveData'])->name('hardware.receive_data');
 Route::Post('receive_hardware', [HardwareController::class, 'receiveHardware'])->name('hardware.receive');

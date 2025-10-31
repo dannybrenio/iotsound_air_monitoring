@@ -784,6 +784,35 @@
             // lastId = r.id ?? lastId;
             console.log('✅ reading.received', r);
         });
+
+        window.Echo.channel('sensor-malfunctioned')
+        // match broadcastAs('reading.received')
+        .listen('.sensor.status', (e) => {
+            const r = e.reading ?? e;
+            // if (!r) return;
+            // if (lastId && r.id && r.id === lastId) return;
+
+            // const label = labelFrom(r);
+
+            // // Air chart
+            // airChart.data.labels.push(label);
+            // airChart.data.datasets[0].data.push(num(r.pm25   ?? r.pm_25   ?? r['pm 2.5']));
+            // airChart.data.datasets[1].data.push(num(r.pm10   ?? r.pm_10   ?? r['pm 10']));
+            // airChart.data.datasets[2].data.push(num(r.co2    ?? r.co));
+            // airChart.data.datasets[3].data.push(num(r.no     ?? r.no2));
+            // trim(airChart.data.labels); airChart.data.datasets.forEach(ds => trim(ds.data));
+            // airChart.update('none');
+
+            // // Sound chart
+            // soundChart.data.labels.push(label);
+            // soundChart.data.datasets[0].data.push(num(r.avg_db ?? r.decibels ?? r.db));
+            // soundChart.data.datasets[1].data.push(num(r.peak_db ?? r.peak));
+            // trim(soundChart.data.labels); soundChart.data.datasets.forEach(ds => trim(ds.data));
+            // soundChart.update('none');
+
+            // lastId = r.id ?? lastId;
+            console.log('✅ .sensor.status', r);
+        });
     }
     const RECEIVE_URL = @json(route('hardware.receive_data'));
 
@@ -825,6 +854,38 @@
         console.error("⚠️ Error sending reading:", err);
         }
     });
+
+    const sensorBtn =  document.getElementById("send-status-btn");
+    const SENSOR_URL = @json(route('hardware.receive_status'));
+
+     sensorBtn.addEventListener("click", async () => {
+        console.log("📡 Sending test reading...");
+
+        try {
+        const res = await fetch(SENSOR_URL, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            // No CSRF header needed if your route is in routes/api.php
+            },
+            body: JSON.stringify({
+            hardware_info: 1,
+            sensor_type: "mq7",
+            sensor_status: "inactive"
+            }),
+        });
+
+        if (res.ok) {
+            console.log("✅ Reading dispatched successfully!");
+            // console.table(res);
+        } else {
+            console.error("❌ Failed to send reading, HTTP", res.status);
+        }
+        } catch (err) {
+        console.error("⚠️ Error sending reading:", err);
+        }
     });
+    });
+
     </script>
 </x-layout>
