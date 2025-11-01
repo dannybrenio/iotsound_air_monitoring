@@ -427,7 +427,7 @@
     // Testing btn
     document.addEventListener("DOMContentLoaded", () => {
     const RECEIVE_URL = @json(route('hardware.receive_data'));
-
+        
     const btn = document.getElementById("send-reading-btn");
     if (!btn) {
         console.warn("send-reading-btn not found in DOM.");

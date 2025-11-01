@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SensorMalfunctioned;
 use App\Models\History_status;
 use App\Models\Device_status;
 use Exception;
@@ -30,6 +31,12 @@ class HistoryStatusController extends Controller
 
         try{
             $rawdata = $request->json()->all();
+            
+            SensorMalfunctioned::dispatch([
+                "hardware_info" => $rawdata["hardware_info"],
+                "sensor_type" => $rawdata["sensor_type"],
+                "sensor_status" => $rawdata["sensor_status"]
+            ]);    
 
             $device_status_id = Device_status::where('hardware_info', $rawdata['hardware_info'])->value('status_id');
 

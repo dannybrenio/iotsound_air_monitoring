@@ -119,16 +119,16 @@
 
                                 <div class="flex flex-row justify-evenly w-[90%] lg:w-[80%] mt-6">
                                     <span class="text-sm text-black font-bold">PM2.5: <span
-                                            class="text-black font-normal">16 µg/m³</span></span>
+                                            class="text-black font-normal" id="pm2.5Label">16 µg/m³</span></span>
                                     <div class="h-4 border border-white"></div>
                                     <span class="text-sm text-black font-bold">PM10: <span
-                                            class="text-black font-normal">18 µg/m³</span></span>
+                                            class="text-black font-normal" id="pm2.5Label">18 µg/m³</span></span>
                                     <div class="h-4 border border-white"></div>
                                     <span class="text-sm text-black font-bold">CO: <span
-                                            class="text-black font-normal">62 ppm</span></span>
+                                            class="text-black font-normal" id="pm2.5Label">62 ppm</span></span>
                                     <div class="h-4 border border-white"></div>
                                     <span class="text-sm text-black font-bold">NO₂: <span
-                                            class="text-black font-normal">7 ppb</span></span>
+                                            class="text-black font-normal" id="pm2.5Label">7 ppb</span></span>
                                 </div>
                             </div>
                             <div class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6">
@@ -156,13 +156,13 @@
                                     <div class="w-[70%] h-full flex flex-col items-center justify-center">
                                         <div class="flex flex-row w-full h-[50%] justify-center items-center gap-x-5">
                                             <span class="text-black font-semibold text-xl uppercase">Sound Level</span>
-                                            <span class="text-blue-500 font-bold text-4xl">70<span
+                                            <span class="text-blue-500 font-bold text-4xl" id="latestDbLbl">70<span
                                                     class="text-lg text-black">db</span></span>
                                         </div>
                                         <div class="w-full border border-white"></div>
                                         <div class="flex flex-col w-full h-[50%] justify-evenly items-center py-3">
                                             <div class="flex w-full h-[30%] justify-center items-center">
-                                                <span class="text-gray-500 text-xs italic">As of this Date:
+                                                <span class="text-black text-xs italic" id="asOfLbl">As of this Date:
                                                     2025-09-25</span>
                                             </div>
                                             <div class="flex flex-row w-full h-[70%] justify-evenly items-center">
@@ -170,14 +170,14 @@
                                                     <span
                                                         class="text-xs lg:text-base text-center font-semibold uppercase">Average
                                                         dB:</span>
-                                                    <span class="text-xl text-center font-bold text-green-600">70</span>
+                                                    <span class="text-xl text-center font-bold text-green-600" id="avgDbLbl">70</span>
                                                 </div>
                                                 <div class="h-[50%] border border-white"></div>
                                                 <div class="w-full justify-center items-center flex flex-row gap-x-3">
                                                     <span
                                                         class="text-xs lg:text-base text-center font-semibold uppercase">Peak
                                                         dB:</span>
-                                                    <span class="text-xl text-center font-bold text-red-600">80</span>
+                                                    <span class="text-xl text-center font-bold text-red-600" id="peakDbLbl">80</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -297,7 +297,76 @@
         </div> -->
     </div>
     <script>
-        
+        // Segmented data passed from controller
+        const seg12h = @json($seg12h).slice().reverse();
+        const seg24h = @json($seg24h).slice().reverse();
+        const seg7d  = @json($seg7d).slice().reverse();
+        const seg30d = @json($seg30d).slice().reverse();
+
+
+        function sortByLabelAsc(data) {
+            return data.slice().sort((a, b) => {
+            // Try to parse label as Date first; fallback to string compare
+            const da = new Date(a.label);
+            const db = new Date(b.label);
+            return da - db || a.label.localeCompare(b.label);
+            });
+        }
+
+        const sorted12h = sortByLabelAsc(seg12h);
+        const sorted24h = sortByLabelAsc(seg24h);
+        const sorted7d  = sortByLabelAsc(seg7d);
+        const sorted30d = sortByLabelAsc(seg30d);
+
+        // console.table(sorted12h);
+        // console.table(sorted24h);
+        console.table(sorted7d);
+        // console.table(sorted30d);
+
+        // (Optional) Existing summaries, if you ever want to inspect them:
+        const latestAqi      = Math.floor(@json($latest_aqi));
+        const latestNowcast  = @json($latest_nowcast);
+        const latestDateTime = @json($latest_datetime);
+        console.log(latestDateTime);
+        const latestDecibel  = Math.floor(@json($latest_decibel));
+        const peakDecibel    = Math.floor(@json($peak_decibel));
+        const averageDecibel = Math.floor(@json($avgDecibelToday));
+
+        console.log("average " + averageDecibel);
+        document.addEventListener('DOMContentLoaded', () => {
+            const fmt = (v, unit) => (v == null ? '—' : `${Math.floor(v)} ${unit}`);
+
+            // Select *all* spans with id="pm2.5Label" (yes, duplicates)
+            const nodes = document.querySelectorAll('span[id="pm2.5Label"]');
+            // Expecting order in your snippet: PM2.5, PM10, CO, NO₂
+            if (nodes[0]) nodes[0].textContent = fmt(latestNowcast.pm2_5, 'µg/m³');
+            if (nodes[1]) nodes[1].textContent = fmt(latestNowcast.pm10,  'µg/m³');
+            if (nodes[2]) nodes[2].textContent = fmt(latestNowcast.co,    'ppm');
+            if (nodes[3]) nodes[3].textContent = fmt(latestNowcast.no2,   'ppb');
+
+            // --- Sound level labels ---
+            if (document.getElementById('latestDbLbl'))
+            document.getElementById('latestDbLbl').textContent = latestDecibel + " Db" ?? '—';
+
+            if (document.getElementById('avgDbLbl'))
+            document.getElementById('avgDbLbl').textContent = averageDecibel ?? '—';
+
+            if (document.getElementById('peakDbLbl'))
+            document.getElementById('peakDbLbl').textContent = peakDecibel ?? '—';
+
+            if (document.getElementById('asOfLbl')){
+                let dateText = '—';
+                if (latestDateTime) {
+                    // Create a JS Date object
+                    const d = new Date(latestDateTime);
+                    // Format to YYYY-MM-DD (local time)
+                    dateText = d.toISOString().split('T')[0];
+                }
+                document.getElementById('asOfLbl').textContent = `As of this Date: ${dateText}`;
+            }
+            
+        });
+
         // Initialize map centered on a location
         const map = L.map('map').setView([14.6458, 120.9865], 18);
 
@@ -316,8 +385,6 @@
         locations.forEach(loc => {
             L.marker(loc.coords).addTo(map).bindPopup(`<b>${loc.name}</b>`);
         });
-
-
 
         // Weather
         document.addEventListener('DOMContentLoaded', () => {
@@ -419,10 +486,8 @@
             loadWeather();
         });
 
-
         // Treshold Slider
-        const aqi = @json($overallNowcast ?? null); // change this dynamically if needed
-        console.log(aqi);
+        console.log(latestAqi);
         const another = @json($peakDecibels ?? null);
         console.log(another);
 
@@ -441,11 +506,11 @@
         ];
 
         // Determine category based on AQI
-        const category = categories.find(c => aqi <= c.max) || categories[categories.length - 1];
+        const category = categories.find(c => latestAqi <= c.max) || categories[categories.length - 1];
 
         // Update UI
-        slider.value = aqi;
-        valueEl.textContent = aqi;
+        slider.value = latestAqi;
+        valueEl.textContent = latestAqi;
         catEl.textContent = category.label;
         valueEl.className = `text-7xl font-bold bg-transparent text-center ${category.color}`;
         catEl.className = `text-2xl font-bold p-2 w-[81%] bg-white/20 h-14 flex justify-center items-center text-center rounded-xl ${category.color}`;
@@ -454,35 +519,34 @@
         // Chart Analysis
         // Sample label sets for each time range
         const labelSets = {
-            "12h": ["1 AM", "3 AM", "5 AM", "7 AM", "9 AM", "11 AM", "1 PM", "3 PM", "5 PM", "7 PM", "9 PM", "11 PM"],
-            "24h": Array.from({ length: 24 }, (_, i) => `${i}:00`),
-            "7d": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-            "30d": Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`)
+            "12h": sorted12h.map(s => s.label),
+            "24h": sorted24h.map(s => s.label),
+            "7d" : sorted7d.map(s => s.label),
+            "30d": sorted30d.map(s => s.label),
         };
 
         // Default
         let currentRange = "12h";
 
         // Air monitoring data
+        const toNum = (v) => (v == null ? null : Math.floor(v));
+
+        function buildDataset(segments) {
+            return {
+            pm2:  segments.map(s => toNum(s.pm2_5)),
+            pm10: segments.map(s => toNum(s.pm10)),
+            co:   segments.map(s => toNum(s.co)),
+            // keep key "no" to match your existing code, source from s.no2
+            no:   segments.map(s => toNum(s.no2)),
+            };
+        }
 
         // Example AQI data (mocked; you can replace with live data)
         const aqiDataSets = {
-            "12h": { pm2: [12, 19, 14, 20, 15, 25, 18, 22, 24, 28, 26, 21],
-                    pm10: [20, 30, 28, 35, 32, 40, 33, 37, 39, 42, 38, 35],
-                    co: [7, 13, 23, 8, 10, 11, 22, 18, 15, 12, 17, 20],
-                    no: [15, 18, 22, 25, 20, 28, 24, 30, 26, 23, 21, 19] },
-            "24h": { pm2: Array.from({ length: 24 }, () => Math.floor(Math.random() * 15) + 10),
-                    pm10: Array.from({ length: 24 }, () => Math.floor(Math.random() * 20) + 25),
-                    co: Array.from({ length: 24 }, () => Math.floor(Math.random() * 20) + 5),
-                    no: Array.from({ length: 24 }, () => Math.floor(Math.random() * 20) + 10) },
-            "7d": { pm2: [18, 20, 16, 21, 24, 22, 19],
-                    pm10: [30, 35, 33, 38, 40, 36, 32],
-                    co: [9, 11, 13, 8, 15, 10, 12],
-                    no: [18, 22, 20, 25, 28, 26, 24] },
-            "30d": { pm2: Array.from({ length: 30 }, () => Math.floor(Math.random() * 10) + 15),
-                    pm10: Array.from({ length: 30 }, () => Math.floor(Math.random() * 15) + 30),
-                    co: Array.from({ length: 30 }, () => Math.floor(Math.random() * 10) + 5),
-                    no: Array.from({ length: 30 }, () => Math.floor(Math.random() * 15) + 15) }
+            "12h": buildDataset(sorted12h),   // 12 × 1-hour bins
+            "24h": buildDataset(sorted24h),   // 12 × 2-hour bins (not 24 points)
+            "7d" : buildDataset(sorted7d),    // 7 × 1-day bins
+            "30d": buildDataset(sorted30d),   // 30 × 1-day bins
         };
 
         // Helper: create chart instance
@@ -605,23 +669,32 @@
             );
         });
 
+        
 
-
+        let soundRange = "12h";
+        
+        function buildSoundDs(segments) {
+        return {
+            avg_decibel: segments.map(s => toNum(s.avg_decibel)),
+            peak_decibel: segments.map(s => toNum(s.peak_decibel))
+            };
+        }
         // Sound monitoring data
         // Sample data for each range
         const dataSets = {
-            "12h": { avg: [55, 56, 58, 60, 65, 62, 63, 66, 68, 70, 67, 65], peak: [70, 72, 74, 75, 78, 80, 82, 81, 85, 83, 80, 78] },
-            "24h": { avg: Array.from({ length: 24 }, () => Math.floor(Math.random() * 20) + 50), peak: Array.from({ length: 24 }, () => Math.floor(Math.random() * 25) + 70) },
-            "7d": { avg: [60, 62, 61, 65, 68, 64, 63], peak: [75, 78, 77, 80, 82, 79, 78] },
-            "30d": { avg: Array.from({ length: 30 }, () => Math.floor(Math.random() * 20) + 55), peak: Array.from({ length: 30 }, () => Math.floor(Math.random() * 25) + 70) }
+            "12h": buildSoundDs(sorted12h),   // 12 × 1-hour bins
+            "24h": buildSoundDs(sorted24h),   // 12 × 2-hour bins (not 24 points)
+            "7d" : buildSoundDs(sorted7d),    // 7 × 1-day bins
+            "30d": buildSoundDs(sorted30d), 
         };
 
+        // console.table(dataSets);
         const soundData = {
-            labels: labelSets[currentRange],
+            labels: labelSets[soundRange],
             datasets: [
                 {
                     label: 'Average dB',
-                    data: dataSets[currentRange].avg,
+                    data: dataSets[soundRange].avg_decibel,
                     borderColor: 'rgb(245,158,11)',
                     backgroundColor: 'rgba(245,158,11,0.2)',
                     tension: 0.3,
@@ -629,7 +702,7 @@
                 },
                 {
                     label: 'Peak dB',
-                    data: dataSets[currentRange].peak,
+                    data: dataSets[soundRange].peak_decibel,
                     borderColor: 'rgb(99,102,241)',
                     backgroundColor: 'rgba(99,102,241,0.2)',
                     tension: 0.3,
@@ -663,15 +736,156 @@
 
         // Listen to dropdown changes
         document.getElementById("timeRangeSelect").addEventListener("change", function () {
-            currentRange = this.value;
-
+            soundRange = this.value;
+            // console.log("Current " + soundRange);
+            // console.table(dataSets[soundRange]);
             // Update labels and data
-            soundChart.data.labels = labelSets[currentRange];
-            soundChart.data.datasets[0].data = dataSets[currentRange].avg;
-            soundChart.data.datasets[1].data = dataSets[currentRange].peak;
-
+            soundChart.data.labels = labelSets[soundRange];
+            soundChart.data.datasets[0].data = dataSets[soundRange].avg_decibel;
+            soundChart.data.datasets[1].data = dataSets[soundRange].peak_decibel;
             // Refresh chart
             soundChart.update();
         });
+        
+
+    // Testing btn
+    document.addEventListener("DOMContentLoaded", () => {
+    attachEcho();
+    function attachEcho() {
+        if (!window.Echo) { console.warn('Echo not found'); return; }
+
+        // let lastId = rows.length ? (rows[rows.length - 1].id ?? null) : null;
+
+        window.Echo.channel('readings')
+        // match broadcastAs('reading.received')
+        .listen('.reading.received', (e) => {
+            const r = e.reading ?? e;
+            // if (!r) return;
+            // if (lastId && r.id && r.id === lastId) return;
+
+            // const label = labelFrom(r);
+
+            // // Air chart
+            // airChart.data.labels.push(label);
+            // airChart.data.datasets[0].data.push(num(r.pm25   ?? r.pm_25   ?? r['pm 2.5']));
+            // airChart.data.datasets[1].data.push(num(r.pm10   ?? r.pm_10   ?? r['pm 10']));
+            // airChart.data.datasets[2].data.push(num(r.co2    ?? r.co));
+            // airChart.data.datasets[3].data.push(num(r.no     ?? r.no2));
+            // trim(airChart.data.labels); airChart.data.datasets.forEach(ds => trim(ds.data));
+            // airChart.update('none');
+
+            // // Sound chart
+            // soundChart.data.labels.push(label);
+            // soundChart.data.datasets[0].data.push(num(r.avg_db ?? r.decibels ?? r.db));
+            // soundChart.data.datasets[1].data.push(num(r.peak_db ?? r.peak));
+            // trim(soundChart.data.labels); soundChart.data.datasets.forEach(ds => trim(ds.data));
+            // soundChart.update('none');
+
+            // lastId = r.id ?? lastId;
+            console.log('✅ reading.received', r);
+        });
+
+        window.Echo.channel('sensor-malfunctioned')
+        // match broadcastAs('reading.received')
+        .listen('.sensor.status', (e) => {
+            const r = e.reading ?? e;
+            // if (!r) return;
+            // if (lastId && r.id && r.id === lastId) return;
+
+            // const label = labelFrom(r);
+
+            // // Air chart
+            // airChart.data.labels.push(label);
+            // airChart.data.datasets[0].data.push(num(r.pm25   ?? r.pm_25   ?? r['pm 2.5']));
+            // airChart.data.datasets[1].data.push(num(r.pm10   ?? r.pm_10   ?? r['pm 10']));
+            // airChart.data.datasets[2].data.push(num(r.co2    ?? r.co));
+            // airChart.data.datasets[3].data.push(num(r.no     ?? r.no2));
+            // trim(airChart.data.labels); airChart.data.datasets.forEach(ds => trim(ds.data));
+            // airChart.update('none');
+
+            // // Sound chart
+            // soundChart.data.labels.push(label);
+            // soundChart.data.datasets[0].data.push(num(r.avg_db ?? r.decibels ?? r.db));
+            // soundChart.data.datasets[1].data.push(num(r.peak_db ?? r.peak));
+            // trim(soundChart.data.labels); soundChart.data.datasets.forEach(ds => trim(ds.data));
+            // soundChart.update('none');
+
+            // lastId = r.id ?? lastId;
+            console.log('✅ .sensor.status', r);
+        });
+    }
+    const RECEIVE_URL = @json(route('hardware.receive_data'));
+
+    const btn = document.getElementById("send-reading-btn");
+    if (!btn) {
+        console.warn("send-reading-btn not found in DOM.");
+        return;
+    }
+
+    btn.addEventListener("click", async () => {
+        console.log("📡 Sending test reading...");
+
+        try {
+        const res = await fetch(RECEIVE_URL, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            // No CSRF header needed if your route is in routes/api.php
+            },
+            body: JSON.stringify({
+            hardware_info: 1,
+            pm2_5: 27.6,
+            pm10: 45.2,
+            co: 0.31,
+            no2: 18.4,
+            decibels: 62.5,
+            peak_db: 75.0,
+            realtime_stamp: new Date().toISOString(),
+            }),
+        });
+
+        if (res.ok) {
+            console.log("✅ Reading dispatched successfully!");
+            // console.table(res);
+        } else {
+            console.error("❌ Failed to send reading, HTTP", res.status);
+        }
+        } catch (err) {
+        console.error("⚠️ Error sending reading:", err);
+        }
+    });
+
+    const sensorBtn =  document.getElementById("send-status-btn");
+    const SENSOR_URL = @json(route('hardware.receive_status'));
+
+     sensorBtn.addEventListener("click", async () => {
+        console.log("📡 Sending test reading...");
+
+        try {
+        const res = await fetch(SENSOR_URL, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            // No CSRF header needed if your route is in routes/api.php
+            },
+            body: JSON.stringify({
+            hardware_info: 1,
+            sensor_type: "mq7",
+            sensor_status: "inactive"
+            }),
+        });
+
+        if (res.ok) {
+            console.log("✅ Reading dispatched successfully!");
+            // console.table(res);
+        } else {
+            console.error("❌ Failed to send reading, HTTP", res.status);
+        }
+        } catch (err) {
+        console.error("⚠️ Error sending reading:", err);
+        }
+    });
+    });
+
     </script>
 </x-layout>
