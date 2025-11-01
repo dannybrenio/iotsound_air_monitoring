@@ -23,7 +23,9 @@ class HardwareController extends Controller
     }
 
     public function store(Request $request){
-        $pending = Pending_hardware::findOrFail($request->hardware_info);
+        // $pending = Pending_hardware::findOrFail($request->hardware_info);
+        $pending = Pending_hardware::where('hardware_info', $request->hardware_info)->firstOrFail();
+
 
         $insertedData = [];
 
@@ -31,8 +33,8 @@ class HardwareController extends Controller
         $latitude = $pending->latitude;
         $longitude = $pending->longitude;
 
-        //still undecided to the status logic
-           $hardware_created = Hardware::create([
+
+        $hardware_created = Hardware::create([
                 'hardware_info' => $hardwareInfo,
                 'longitude' => $longitude,
                 'latitude' => $latitude,
@@ -68,7 +70,7 @@ class HardwareController extends Controller
 
                 Pending_hardware_data::where('pending_hardware_info', $hardwareInfo)->delete();
                 $pending->delete();
-                return redirect()->route('hardware.index')->with('success', 'Device registered successfully!');
+                return redirect()->route('pendingHardware')->with('success', 'Device registered successfully!');
         }
 
     public function edit($hardware_id){
@@ -84,14 +86,14 @@ class HardwareController extends Controller
 
         $hardware = Hardware::findOrFail($hardware_id);
         $hardware->update($validated);
-        return redirect()->route('hardware.index')->with('success', 'Device updated successfully!');
+        return redirect()->route('hardware')->with('success', 'Device updated successfully!');
     }
     
 
     public function destroy($hardware_id){
         $hardware = Hardware::findOrFail($hardware_id);
         $hardware->delete();
-        return redirect()->route('hardware.index')->with('success', 'Device unregistered successfully!');
+        return redirect()->route('hardware')->with('success', 'Device unregistered successfully!');
     }
 
     public function receiveHardware(Request $request){

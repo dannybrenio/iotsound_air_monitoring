@@ -32,15 +32,15 @@
                                 <td class="px-4 py-2">
                                     <p>{{$hardware->updated_at}}</p>
                                 </td>
-                                <td class="px-4 py-2"> EDIT HERE{{--
-                                <td><a href="{{ route('hardware.edit', $hardware->hardware_id) }}">Update</a>
+                                <td class="px-4 py-2">
+                                {{-- <td><a href="{{ route('hardware.edit', $hardware->hardware_id) }}">Update</a> --}}
                                     <form action="{{ route('hardware.destroy', $hardware->hardware_id) }}" method="POST"
                                         style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
                                             onclick="return confirm('Are you sure you want to delete this hardware?')">Delete</button>
-                                    </form> --}}
+                                    </form> 
                                 </td>
                             </tr>
                         @endforeach

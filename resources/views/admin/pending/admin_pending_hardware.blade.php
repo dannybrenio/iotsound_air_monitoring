@@ -22,12 +22,14 @@
                                 <td><p>{{$pending_hardware->hardware_location}}</p></td>
                                 <td><p>{{$pending_hardware->created_at}}</p></td> 
                                 <td><p>{{$pending_hardware->updated_at}}</p></td>
-                                <td> ADD HERE{{-- <td><a href="{{ route('hardware.edit', $hardware->hardware_id) }}">Update</a> 
-                                        <form action="{{ route('hardware.destroy', $hardware->hardware_id) }}" method="POST" style="display:inline;">
+                                <td>
+                                <form action="{{ route('hardware.store') }}" method="POST" style="display:inline;">
                                         @csrf
-                                        @method('DELETE') 
-                                        <button type="submit" onclick="return confirm('Are you sure you want to delete this hardware?')">Delete</button>
-                                        </form> --}}
+                                      {{-- //  @method('POST')  --}}
+                                          <input type="hidden" name="hardware_info" value="{{ $pending_hardware->hardware_info }}">
+                                          <?php dump($pending_hardware->hardware_info) ?>
+                                        <button type="submit" onclick="return confirm('Do you want to register this hardware?')">Register</button>
+                                        </form> 
                                 </td>
                             </tr>
                         @endforeach

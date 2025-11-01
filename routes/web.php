@@ -65,6 +65,11 @@ $authMiddleware = function (Request $request, \Closure $next) {
 // Apply the middleware group properly
 Route::middleware('auth.admin')->group(function () {
     Route::get('/admin_hardware', [HardwareController::class, 'index'])->name('hardware');
+    Route::delete('/admin_hardware/{hardware}', [HardwareController::class, 'destroy'])
+        ->name('hardware.destroy');
+    Route::post('/admin_pending_hardware', [HardwareController::class, 'store'])
+        ->name('hardware.store');
+
     Route::get('/admin_hardware_data', [HardwareDataController::class, 'index'])->name('hardwareData');
     Route::get('/admin_pending_data', [PendingHardwareDataController::class, 'index'])->name('pendingData');
     Route::get('/admin_pending_hardware', [PendingHardwareController::class, 'index'])->name('pendingHardware');
