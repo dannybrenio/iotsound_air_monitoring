@@ -52,6 +52,20 @@
             opacity: 1;
             visibility: visible;
         }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-marquee {
+            animation: marquee 5s linear infinite;
+        }
     </style>
 </head>
 
