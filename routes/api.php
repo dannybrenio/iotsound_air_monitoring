@@ -4,6 +4,8 @@ use App\Http\Controllers\AlertsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Api\ExportsController;
+use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\SensorDataController;
 use App\Http\Controllers\HardwareController;
 use App\Http\Controllers\HardwareDataController;
@@ -81,6 +83,37 @@ Route::controller(SensorDataController::class)->group(function () {
 });
 
 Route::post('/receive-report', [ReportController::class, 'receiveReport']);
+
+Route::post('/register-user', [RegisterController::class, 'index']);
+
+Route::middleware('auth:sanctum')->group(function () {
+
+});
+
+Route::post('/login-user', [LoginController::class, 'index'])
+    ->name('api.login')
+    ->middleware('throttle:10,1');
+    
+Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
+    return $request->user(); // or return new UserResource($request->user());
+});
+
+Route::middleware('auth:sanctum')->put('/me', function (Request $request) {
+    $user = $request->user();
+
+    $data = $request->validate([
+        'first_name' => ['sometimes','string','max:255'],
+        'middle_name'=> ['nullable','string','max:255'],
+        'last_name'  => ['sometimes','string','max:255'],
+        'barangay'   => ['nullable','string','max:255'],
+        'email'      => ['sometimes','email','max:255','unique:users,email,'.$user->id],
+        'username'   => ['sometimes','string','max:255','unique:users,username,'.$user->id],
+    ]);
+
+    $user->fill($data)->save();
+
+    return $user->fresh(); // or UserResource
+});
 
 
 

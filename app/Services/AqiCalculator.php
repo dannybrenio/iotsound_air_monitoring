@@ -61,9 +61,9 @@ class AqiCalculator
         $results = [];
 
         $grouped = $data->groupBy(function ($item) {
-            return Carbon::parse($item->realtime_stamp)->format('Y-m-d');
+            return Carbon::parse($item->realtime_stamp, 'UTC')->format('Y-m-d');
         });
-
+        
         foreach ($grouped as $date => $records) {
             $daily = [];
 
@@ -135,6 +135,23 @@ class AqiCalculator
         return collect($results)->sortBy('date')->values();
     }
 
+    private function segmentLabelRolling(string $preset, Carbon $start, Carbon $end): string
+    {
+        switch ($preset) {
+            case '12h':
+                return $start->format('h:i A');
+            case '24h':
+                return $end->format('H:i');
+            case '7d':
+            case '30d':
+                return $start->format('Y-m-d');
+            default:
+                // return $start->toDateTimeString() . '–' . $end->toDateTimeString();
+                return $start->toDateTimeString();
+        }
+    }
+
+
     /**
      * Segmented individual averages with NowCast AQI per pollutant
      * + average & peak decibels per segment.
@@ -151,19 +168,28 @@ class AqiCalculator
         ?Carbon $endTime = null,
         string $timestampField = 'realtime_stamp'
     ): Collection {
-        $end = $endTime ? $endTime->copy() : Carbon::now();
-
+        
+        $end = $endTime ? $endTime->copy() : Carbon::now('UTC');
+    
         [$segments, $segmentDuration, $lookback] = $this->presetToSpec($preset);
-        $start = $end->copy()->sub($lookback);
-
-        // Sort by timestamp and window to [start, end]
-        $data = $data->sortBy(function ($item) use ($timestampField) {
-            return Carbon::parse(data_get($item, $timestampField));
-        })->values();
-
+    
+        // Align day-based presets to calendar midnights
+        if (in_array($preset, ['7d','30d'], true)) {
+            // $end is a moment in UTC; convert to local day boundary if you prefer:
+            // If you passed an end-of-day in UTC already, this is fine as-is.
+            $end   = $end->copy()->endOfDay();                 // end of that day
+            $start = $end->copy()->startOfDay()->subDays($segments - 1);
+        } else {
+            // Rolling for hour-based presets
+            $start = $end->copy()->sub($lookback);
+        }
+    
+        // Sort and window in UTC
+        $data = $data->sortBy(fn($item) => Carbon::parse(data_get($item, $timestampField), 'UTC'))->values();
+    
         $windowed = $data->filter(function ($item) use ($timestampField, $start, $end) {
-            $ts = Carbon::parse(data_get($item, $timestampField));
-            return $ts->gte($start) && $ts->lte($end);
+            $ts = Carbon::parse(data_get($item, $timestampField), 'UTC');
+            return $ts->gte($start) && $ts->lt($end);
         })->values();
 
         $results = [];
@@ -171,17 +197,20 @@ class AqiCalculator
 
         for ($i = 0; $i < $segments; $i++) {
             $segEnd = $segStart->copy()->add($segmentDuration);
+            if ($segEnd->gt($end)) {
+                $segEnd = $end->copy(); // clamp final segment if needed
+            }
 
+            // Segment data: [segStart, segEnd)
             $segmentRecords = $windowed->filter(function ($item) use ($timestampField, $segStart, $segEnd) {
-                $ts = Carbon::parse(data_get($item, $timestampField));
-                // include left bound, exclude right bound
+                $ts = Carbon::parse(data_get($item, $timestampField), 'UTC');
                 return $ts->gte($segStart) && $ts->lt($segEnd);
             })->values();
 
-            // NowCast AQI (per pollutant) for this segment
+            // NowCast AQI per pollutant for this segment
             $nowcast = $this->computeNowCast($segmentRecords);
 
-            // Decibel stats (support 'decibel' or 'decibels')
+            // Decibel stats (supports 'decibel' or 'decibels')
             $decVals = $segmentRecords->pluck('decibel')
                 ->merge($segmentRecords->pluck('decibels'))
                 ->filter()
@@ -193,8 +222,7 @@ class AqiCalculator
             $results[] = [
                 'start'        => $segStart->toIso8601String(),
                 'end'          => $segEnd->toIso8601String(),
-                'label'        => $this->segmentLabel($preset, $segStart, $segEnd),
-                // AQI values already truncated in convertToAQI()
+                'label'        => $this->segmentLabelRolling($preset, $segStart, $segEnd),
                 'pm2_5'        => $nowcast['pm2_5'] ?? null,
                 'pm10'         => $nowcast['pm10'] ?? null,
                 'co'           => $nowcast['co'] ?? null,
@@ -205,10 +233,14 @@ class AqiCalculator
             ];
 
             $segStart->add($segmentDuration);
+            if ($segStart->gte($end)) {
+                break; // safety
+            }
         }
 
         return collect($results)->values();
     }
+
 
     /**
      * Convert pollutant concentration to AQI (US EPA breakpoints).
@@ -296,16 +328,11 @@ class AqiCalculator
     private function presetToSpec(string $preset): array
     {
         switch ($preset) {
-            case '12h':
-                return [12, CarbonInterval::hours(1), CarbonInterval::hours(12)];
-            case '24h':
-                return [12, CarbonInterval::hours(2), CarbonInterval::hours(24)];
-            case '7d':
-                return [7,  CarbonInterval::days(1),  CarbonInterval::days(7)];
-            case '30d':
-                return [30, CarbonInterval::days(1),  CarbonInterval::days(30)];
-            default:
-                return [12, CarbonInterval::hours(1), CarbonInterval::hours(12)];
+            case '12h': return [12, CarbonInterval::hours(1), CarbonInterval::hours(12)];
+            case '24h': return [12, CarbonInterval::hours(2), CarbonInterval::hours(24)];
+            case '7d' : return [7,  CarbonInterval::days(1), CarbonInterval::days(7)];
+            case '30d': return [30, CarbonInterval::days(1), CarbonInterval::days(30)];
+            default   : return [12, CarbonInterval::hours(1), CarbonInterval::hours(12)];
         }
     }
 
