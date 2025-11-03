@@ -29,6 +29,9 @@ Route::get('/weather', fn() => view('weather'));
 // ======================
 
 Route::get('/admin', function () {
+    if(Session::get('logged_in')){
+        return redirect()->route('hardware');
+    }
     return view('login');
 })->name('login');
 
@@ -37,7 +40,7 @@ Route::post('/login', function (Request $request) {
     $password = $request->input('password');
 
     // Hardcoded credentials
-    if ($username === 'admin' && $password === '12345') {
+    if ($username === 'admin' && $password === 'admin') {
         Session::put('logged_in', true);
         return redirect()->route('hardware');
     }

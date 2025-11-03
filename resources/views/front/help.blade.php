@@ -29,7 +29,7 @@
                 <!-- Tab content -->
                 <div class="border border-white rounded-b-3xl h-auto bg-white">
                     <div x-show="activeTab === 'aqi'" x-transition
-                        class="flex flex-col w-full h-auto items-center gap-y-10 px-10 py-5"> 
+                        class="flex flex-col w-full h-auto items-center gap-y-10 px-3 lg:px-10 py-5"> 
                         <div class="flex flex-col lg:flex-row w-full items-center justify-center gap-y-5">
                             <div class="flex flex-col w-full lg:w-[60%] items-start gap-y-3 lg:pr-8">    
                                 <span class="text-2xl font-semibold uppercase text-center lg:text-start">What is Air Quality Index (AQI)?</span>
@@ -57,7 +57,7 @@
                         <div class="flex flex-col lg:flex-row w-full items-center justify-center gap-y-5">
                             <img src="{{ asset('line.png') }}" alt="" class="w-full lg:w-[40%] h-60 lg:h-52 rounded-xl shadow-md">
                             <div class="flex flex-col w-full lg:w-[60%] items-center lg:items-start gap-y-3 lg:pl-8">    
-                                <span class="text-2xl font-semibold uppercase">Ideal Air Quality Ranges</span>
+                                <span class="text-2xl font-semibold uppercase text-center">Ideal Air Quality Ranges</span>
                                 <span class="text-xl indent-8">Ideal air quality is considered "Good" (0-25 on the Air Quality Index or AQI), posing little to no risk to health. As the AQI increases, air quality becomes "Fair" (25.1-35), "Unhealthy for Sensitive Groups" (35.1-45), "Very Unhealthy" (45.1-55), "Acutely Unhealthy" (55.1-90), and finally "Hazardous" (90.1 and above), with each level posing progressively greater health risks, especially for sensitive groups.</span>
                             </div>
                         </div> 
@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div x-show="activeTab === 'sound'" x-transition
-                        class="flex flex-col w-full h-auto items-center gap-y-10 px-10 py-5"> 
+                        class="flex flex-col w-full h-auto items-center gap-y-10 px-3 lg:px-10 py-5"> 
                         <div class="flex flex-col lg:flex-row w-full items-center justify-center gap-y-5">
                             <div class="flex flex-col w-full lg:w-[60%] items-start gap-y-3 lg:pr-8">    
                                 <span class="text-2xl font-semibold uppercase text-center lg:text-start">What is Sound Level?</span>
@@ -244,7 +244,7 @@
                     </div>
                 </div>  
             </div>
-            <div class="flex flex-col gap-y-5 px-10 py-8 border-3 border-[#06402b] w-[98%] h-auto rounded-xl">
+            <div class="flex flex-col gap-y-5 px-3 lg:px-10 py-8 border-3 border-[#06402b] w-[98%] h-auto rounded-xl">
                 <div class="flex flex-col w-full gap-y-5 items-center">
                     <span class="text-2xl font-semibold uppercase text-[#06402b] underline text-start">Combined Impact</span>
                     <div class="flex flex-row w-full items-center justify-center">
@@ -352,7 +352,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col gap-y-5 px-10 py-5 w-[98%] h-auto rounded-xl">
+            <div class="flex flex-col gap-y-5 px-3 lg:px-10 py-5 w-[98%] h-auto rounded-xl">
                 <div class="flex flex-col w-full gap-y-5 items-center">
                     <span class="text-2xl font-semibold uppercase text-[#06402b] underline text-start">Preventive & Safety Measures</span>
                     <div class="flex flex-row w-full items-center justify-center">
