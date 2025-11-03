@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\SensorMalfunctioned;
 use App\Models\Alerts;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AlertsController extends Controller
 {
@@ -16,12 +17,22 @@ class AlertsController extends Controller
 
     public function store($aqiLevel){  
 
+    $exists = Alerts::where('alert_body',$aqiLevel)
+        ->where('created_at', '>=', Carbon::now()->subHours(3))
+        ->exists();
+
+    if ($exists) {
+       return response()->json(['message' => 'Downtime!']); // still cooling down
+    }
+
         Alerts::create([
              'alert_body' => $aqiLevel,
         ]);
 
         return response()->json(['message' => 'New ALert!']);
-    }
+        }
+    
+
 
     public function receiveSensorStatus(Request $request){
         $rawdata = $request->json()->all();

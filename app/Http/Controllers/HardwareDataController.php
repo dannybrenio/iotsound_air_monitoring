@@ -13,6 +13,7 @@ use App\Models\Pending_hardware_data;
 use App\Services\AqiCalculator;
 use Exception;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class HardwareDataController extends Controller
 {
@@ -105,45 +106,40 @@ class HardwareDataController extends Controller
                 'realtime_stamp' => $hardware_data->realtime_stamp,
             ]);
 
-            // if ($hardware_data) {
-            //     $aqiService = new AqiCalculator();
-            //     $alertData = $aqiService->compute();
 
-            //     // 1) Normalize payload whether compute() returned array or JsonResponse
-            //     $payload = $alertData instanceof \Illuminate\Http\JsonResponse
-            //         ? $alertData->getData(true)   // associative array
-            //         : $alertData;
+            if($hardware_data){
 
-            //     // 2) Pull overall nowcast AQI
-            //     $overallNowcast = $payload['overall']['nowcast'] ?? null;
+                 $aqiService = new AqiCalculator();
+        
+                $today = Carbon::today();
+                $todayData = Hardware_data::whereDate('realtime_stamp', $today)->get();
+                $latestNowcast  = $aqiService->computeNowCast($todayData);
+                $latestAqi      = $latestNowcast['overall_aqi'] ?? null;
 
-            //     // 3) Map to your 6-level thresholds
-            //     $aqiLevel = null;
-            //     if ($overallNowcast !== null) {
-            //         $aqi = (int) $overallNowcast;
-            //         $aqiLevel = match (true) {
-            //             $aqi <= 25 => 'good',
-            //             $aqi <= 35 => 'fair',
-            //             $aqi <= 45 => 'unhealthy',
-            //             $aqi <= 55 => 'very unhealthy',
-            //             $aqi <= 300 => 'acutely unhealthy',
-            //             default => 'emergency',
-            //         };
-            //     }
+                //DONT KNOW WHAT TO DO WITH DECIBELS
+                
+                if($latestAqi <= 35){
+                   // return response()->json(['message' => 'MODERATE AIR!']);
+                    $aqiLevel = "moderate air quality";
+                }elseif($latestAqi <= 45){
+                   // return response()->json(['message' => 'POOR AIR!']);
+                    $aqiLevel = "poor air quality";
+                }elseif($latestAqi <= 55){
+                    //return response()->json(['message' => 'UNHEALTHY AIR!']);
+                    $aqiLevel = "unhealthy air quality";
+                }elseif($latestAqi <= 90){
+                    //return response()->json(['message' => 'SEVERE AIR!']);
+                    $aqiLevel = "severe air quality";
+                }elseif($latestAqi > 100){
+                //  return response()->json(['message' => 'EMERGENCY!',
+                // 'AQI' => $latestAqi]);
+                    $aqiLevel = "emergency, evacuation advised!";
+                }
 
-            //     //4) (Optional) Call your alert logic (uncomment if you want to persist alerts)
-            //     $alertsController = new AlertsController();
-            //     $alertsController->store($aqiLevel);
+                 $alertsController = new AlertsController();
+                 $alertsController->store($aqiLevel);
 
-            //     // 5) Return original payload + computed level (without changing AqiCalculator)
-            //     $final = $payload ?? [];
-            //     $final['overall'] = array_merge($final['overall'] ?? [], [
-            //         'nowcast_level' => $aqiLevel,
-            //     ]);
-
-            //     return response()->json(['message' => 'New ALert!']);
-            // }
-
+            }
 
         } catch (Exception $e) {
             return response()->json([
