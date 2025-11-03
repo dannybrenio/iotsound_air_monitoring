@@ -19,15 +19,15 @@
                     </thead>
                     <tbody>
                            @foreach($pending_data as $pending_datum) 
-                            <tr>                                  
-                            <td>{{$pending_datum->pending_hardware_data_id}}</td>
-                            <td>{{$pending_datum->pending_hardware_info}}</td>
-                            <td>{{$pending_datum->pm2_5 }}</td>
-                            <td>{{$pending_datum->pm10 }}</td>
-                            <td>{{$pending_datum->co }}</td>
-                            <td>{{$pending_datum->no2 }}</td>
-                            <td>{{$pending_datum->decibels }}</td>
-                            <td>{{$pending_datum->created_at}}</td> 
+                            <tr class="{{ $loop->even ? 'bg-gray-300' : 'bg-white' }}">                                  
+                            <td class="px-4 py-2">{{$pending_datum->pending_hardware_data_id}}</td>
+                            <td class="px-4 py-2">{{$pending_datum->pending_hardware_info}}</td>
+                            <td class="px-4 py-2">{{$pending_datum->pm2_5 }}</td>
+                            <td class="px-4 py-2">{{$pending_datum->pm10 }}</td>
+                            <td class="px-4 py-2">{{$pending_datum->co }}</td>
+                            <td class="px-4 py-2">{{$pending_datum->no2 }}</td>
+                            <td class="px-4 py-2">{{$pending_datum->decibels }}</td>
+                            <td class="px-4 py-2">{{$pending_datum->created_at}}</td> 
                             </tr>
                         @endforeach
                     </tbody>

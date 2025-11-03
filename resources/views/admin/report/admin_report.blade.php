@@ -17,15 +17,25 @@
                           @foreach ($reports as $report)
                             <tr class="{{ $loop->even ? 'bg-gray-300' : 'bg-white' }}">
                                 <td class="px-4 py-2">{{ $report->report_id}}</td>
-                                <td class="px-4 py-2">{{ $report->user->name}}</td>
+                                <td class="px-4 py-2">{{ $report->user->first_name}} {{ $report->user->middle_name ?? ''}} {{ $report->user->last_name}}</td>
                                 <td class="px-4 py-2">{{ $report->report_body}}</td>
-                                <!-- no image path yet -->
-                                <td class="px-4 py-2">{{ $report->image_path}}</td>
+                                      <td>             
+                                        @if ($report->image_path)
+                                        <img
+                                            src="{{asset($report->image_path)}}"
+                                            alt="{{ e($report->user->first_name) }}'s report"
+                                            style="width:64px; height:64px; object-fit:cover; border-radius:6px;"
+                                        >
+                                        @else
+                                        <span class="text-gray-500">No image</span>
+                                        @endif
+                                    </td>
                                 <td class="px-4 py-2">{{ $report->created_at}}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <a href="" class="justify-end flex w-full underline text-xs hover:text-blue-500 duration-300 p-1">Download Report</a>
             </div>
         </div> 
     </div>

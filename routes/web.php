@@ -14,6 +14,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DeviceStatusController;
 use App\Http\Controllers\HistoryStatusController;
 use App\Http\Controllers\AqiController;
+use App\Http\Controllers\UserController;
 
 // ======================
 // Public Routes
@@ -29,6 +30,9 @@ Route::get('/weather', fn() => view('weather'));
 // ======================
 
 Route::get('/admin', function () {
+    if(Session::get('logged_in')){
+        return redirect()->route('hardware');
+    }
     return view('login');
 })->name('login');
 
@@ -37,7 +41,7 @@ Route::post('/login', function (Request $request) {
     $password = $request->input('password');
 
     // Hardcoded credentials
-    if ($username === 'admin' && $password === '12345') {
+    if ($username === 'admin' && $password === 'admin') {
         Session::put('logged_in', true);
         return redirect()->route('hardware');
     }
@@ -69,12 +73,11 @@ Route::middleware('auth.admin')->group(function () {
         ->name('hardware.destroy');
     Route::post('/admin_pending_hardware', [HardwareController::class, 'store'])
         ->name('hardware.store');
-
     Route::get('/admin_hardware_data', [HardwareDataController::class, 'index'])->name('hardwareData');
     Route::get('/admin_pending_data', [PendingHardwareDataController::class, 'index'])->name('pendingData');
     Route::get('/admin_pending_hardware', [PendingHardwareController::class, 'index'])->name('pendingHardware');
     Route::get('/admin_report', [ReportController::class, 'index'])->name('report');
-    Route::get('/admin_account', fn() => view('admin.account.admin_account'))->name('account');
+    Route::get('/admin_account', [UserController::class, 'index'])->name('account');
     Route::get('/admin_alert', [AlertsController::class, 'index'])->name('alert');
     Route::get('/admin_device_status', [DeviceStatusController::class, 'index'])->name('device');
     Route::get('/admin_history_status', [HistoryStatusController::class, 'index'])->name('history');

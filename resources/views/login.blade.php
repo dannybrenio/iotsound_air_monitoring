@@ -12,7 +12,7 @@
 
 <body class="w-screen h-screen flex justify-center items-center bg-gradient-to-b from-[#06402b] to-white">
     <div
-        class="h-[60%] w-[80%] md:w-[60%] lg:w-[30%] border border-[#06402b] bg-white rounded-3xl shadow-md flex flex-col justify-center items-center gap-y-5">
+        class="max-h-[350px] h-[60%] w-[80%] md:w-[60%] lg:w-[30%] border border-[#06402b] bg-white rounded-3xl shadow-md flex flex-col justify-center items-center gap-y-5">
         <div class="flex flex-col justify-center items-center gap-y-1">
             <span class="uppercase text-[#06402b] font-extrabold text-3xl">ADMIN</span>
             <div class="border-2 border-[#06402b] w-[60%] rounded-xl"></div>

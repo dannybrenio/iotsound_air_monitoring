@@ -57,6 +57,7 @@ class HardwareDataController extends Controller
                 'db'    => (string)$rawdata["decibels"],
             ]
         );
+
         // return response()->json(['message' => $rawdata], 200);
         $hardware_id = Hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_id');
         
@@ -70,6 +71,8 @@ class HardwareDataController extends Controller
                 'decibels'      => $rawdata['decibels']?? null,
                 'realtime_stamp'=> $rawdata['realtime_stamp'] ?? null,
             ]);
+
+
 
             $pending = Pending_hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_id');
 
@@ -85,6 +88,7 @@ class HardwareDataController extends Controller
             'hardware_info' => $rawdata['hardware_info'],
             'message' => 'Hardware ID not found, added to pending data.'], 200);
          }
+
 
             $hardware_data = Hardware_data::create([
                 'hardware_id' => $hardware_id,
@@ -134,10 +138,12 @@ class HardwareDataController extends Controller
                 //  return response()->json(['message' => 'EMERGENCY!',
                 // 'AQI' => $latestAqi]);
                     $aqiLevel = "emergency, evacuation advised!";
+                    $hardwareIdentifyer = $rawdata['hardware_info'];
                 }
 
                  $alertsController = new AlertsController();
-                 $alertsController->store($aqiLevel);
+                 $alertsController->store($aqiLevel, $hardwareIdentifyer);
+
 
             }
 
@@ -152,4 +158,4 @@ class HardwareDataController extends Controller
     }
 
 
-}
+} 

@@ -15,9 +15,10 @@ class AlertsController extends Controller
         return view('admin.alert.admin_alert', compact('alerts'));
     }
 
-    public function store($aqiLevel){  
+    public function store($aqiLevel, $hardwareIdentifyer){  
 
-    $exists = Alerts::where('alert_body',$aqiLevel)
+    $combined = $aqiLevel . " from " . $hardwareIdentifyer;
+    $exists = Alerts::where('alert_body',$combined)
         ->where('created_at', '>=', Carbon::now()->subHours(3))
         ->exists();
 
@@ -26,7 +27,7 @@ class AlertsController extends Controller
     }
 
         Alerts::create([
-             'alert_body' => $aqiLevel,
+             'alert_body' => $combined,
         ]);
 
         return response()->json(['message' => 'New ALert!']);

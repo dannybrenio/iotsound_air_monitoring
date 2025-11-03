@@ -16,18 +16,17 @@
                     </thead>
                     <tbody>
                         @foreach($pending_hardwares as $pending_hardware) 
-                            <tr>                                  
-                                <td><p>{{$pending_hardware->hardware_id}} </p></td>
-                                <td><p>{{$pending_hardware->hardware_info}}</p></td>
-                                <td><p>{{$pending_hardware->hardware_location}}</p></td>
-                                <td><p>{{$pending_hardware->created_at}}</p></td> 
-                                <td><p>{{$pending_hardware->updated_at}}</p></td>
+                            <tr class="{{ $loop->even ? 'bg-gray-300' : 'bg-white' }}">                                  
+                                <td class="px-4 py-2" >{{$pending_hardware->hardware_id}}</td>
+                                <td class="px-4 py-2" >{{$pending_hardware->hardware_info}}</td>
+                                <td class="px-4 py-2" >{{$pending_hardware->hardware_location}}</td>
+                                <td class="px-4 py-2" >{{$pending_hardware->created_at}}</td> 
+                                <td class="px-4 py-2" >{{$pending_hardware->updated_at}}</td>
                                 <td>
                                 <form action="{{ route('hardware.store') }}" method="POST" style="display:inline;">
                                         @csrf
                                       {{-- //  @method('POST')  --}}
                                           <input type="hidden" name="hardware_info" value="{{ $pending_hardware->hardware_info }}">
-                                          <?php dump($pending_hardware->hardware_info) ?>
                                         <button type="submit" onclick="return confirm('Do you want to register this hardware?')">Register</button>
                                         </form> 
                                 </td>

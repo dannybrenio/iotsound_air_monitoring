@@ -31,6 +31,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                <a href="" class="justify-end flex w-full underline text-xs hover:text-blue-500 duration-300 p-1">Download Data</a>
                 <div class="mt-6 flex justify-center">
                     {{ $hardware_data->onEachSide(1)->links('vendor.pagination.tailwind') }}
                 </div>
