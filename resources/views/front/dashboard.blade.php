@@ -500,12 +500,13 @@
         
         const categories = [
           { max: 25, label: 'Good',                        color: 'text-[#00E400] bg-[#00E400]' },
-          { max: 35, label: 'Fair',                        color: 'text-[#FFC000] bg-[#FFFF00]' },
-          { max: 45, label: 'Unhealthy for Sensitive',     color: 'text-[#FF7E00] bg-[#FF7E00]' },
-          { max: 55, label: 'Very Unhealthy',              color: 'text-[#FF0000] bg-[#FF0000]' },
-          { max: 90, label: 'Acutely Unhealthy',           color: 'text-[#8F3F97] bg-[#8F3F97]' },
+          { max: 35, label: 'Moderate',                        color: 'text-[#FFC000] bg-[#FFFF00]' },
+          { max: 45, label: 'Poor',     color: 'text-[#FF7E00] bg-[#FF7E00]' },
+          { max: 55, label: 'Unhealthy',              color: 'text-[#FF0000] bg-[#FF0000]' },
+          { max: 90, label: 'Severe',           color: 'text-[#8F3F97] bg-[#8F3F97]' },
           { min: 91, label: 'Emergency',                   color: 'text-[#7E0023] bg-[#7E0023]' },
         ];
+        
         const category = categories.find(c => latestAqi <= c.max) || categories[categories.length - 1];
         slider.value = latestAqi;
         valueEl.textContent = latestAqi;
