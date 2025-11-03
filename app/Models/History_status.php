@@ -8,7 +8,7 @@ class History_status extends Model
 {
     protected $table = 'history_status';
     protected $primaryKey = 'history_id';
-    protected $fillable = ['status_id', 'sensor_type', 'sensor_status'];
+    protected $fillable = ['status_id', 'sensor_type', 'sensor_status', 'isRead'];
 
      public function device_status()
     {

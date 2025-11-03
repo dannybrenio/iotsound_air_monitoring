@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\AqiCalculator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -45,55 +46,74 @@ class ExportsController extends Controller
         }, 200, $headers);
     }
 
-    public function downloadAqi(AqiCalculator $aqi): StreamedResponse
+    public function downloadAqi(AqiCalculator $aqi/*, Collection $window */): StreamedResponse
     {
-        $file = 'aqi-'.now()->timezone('Asia/Manila')->format('Y-m-d_H-i-s').'.csv';
+        // You need to provide a Collection $window of readings for the NowCast window.
+        // It must have fields: pm2_5, pm10, co, no2 (and optionally a timestamp field you use elsewhere).
+        // Example: $window = $this->readingRepo->lastHours(12); // <- however you already fetch it
+        $window = $this->getNowcastWindow(); // <- implement this to return an Illuminate\Support\Collection
+
+        $file = 'aqi-' . now()->timezone('Asia/Manila')->format('Y-m-d_H-i-s') . '.csv';
 
         $headers = [
             'Content-Type'        => 'text/csv',
-            'Content-Disposition' => "attachment; filename=\"$file\"",
+            'Content-Disposition' => "attachment; filename=\"{$file}\"",
             'Cache-Control'       => 'no-store, no-cache',
         ];
 
-        return response()->stream(function () use ($aqi) {
+        return response()->stream(function () use ($aqi, $window) {
             $out = fopen('php://output', 'w');
 
-            $result = $aqi->compute(); // Create separate function since currently 144 readings lang kinukuha, will change this when there's a range
-            if (!$result) {
+            // New: compute using the current service
+            $result = $aqi->computeNowCast($window); // returns per-pollutant AQI + overall_aqi
+
+            // If all values are null (no usable data), write a friendly message and exit
+            $allNull = empty(array_filter([
+                $result['pm2_5'] ?? null,
+                $result['pm10']  ?? null,
+                $result['no2']   ?? null,
+                $result['co']    ?? null,
+                $result['overall_aqi'] ?? null,
+            ], fn ($v) => !is_null($v)));
+
+            if ($allNull) {
                 fputcsv($out, ['message']);
                 fputcsv($out, ['No data available to compute AQI.']);
                 fclose($out);
                 return;
             }
 
+            // CSV header (kept compatible with your previous file shape)
             fputcsv($out, [
                 'type','pm2_5_aqi','pm10_aqi','no2_aqi','co_aqi','overall_aqi','computed_at',
             ]);
 
             $ts = now()->timezone('Asia/Manila')->toDateTimeString();
 
-            fputcsv($out, [
-                'instant',
-                $result['pollutants']['pm2_5']['instant'] ?? null,
-                $result['pollutants']['pm10']['instant'] ?? null,
-                $result['pollutants']['no2']['instant'] ?? null,
-                $result['pollutants']['co']['instant'] ?? null,
-                $result['overall']['instant'] ?? null,
-                $ts,
-            ]);
-
+            // Only 'nowcast' exists with the new service
             fputcsv($out, [
                 'nowcast',
-                $result['pollutants']['pm2_5']['nowcast'] ?? null,
-                $result['pollutants']['pm10']['nowcast'] ?? null,
-                $result['pollutants']['no2']['nowcast'] ?? null,
-                $result['pollutants']['co']['nowcast'] ?? null,
-                $result['overall']['nowcast'] ?? null,
+                $result['pm2_5'] ?? null,
+                $result['pm10']  ?? null,
+                $result['no2']   ?? null,
+                $result['co']    ?? null,
+                $result['overall_aqi'] ?? null,
                 $ts,
             ]);
 
             fclose($out);
         }, 200, $headers);
+    }
+
+    /**
+     * Example stub — replace with your real data source.
+     * Must return Illuminate\Support\Collection of items having pm2_5, pm10, co, no2.
+     */
+    private function getNowcastWindow(): Collection
+    {
+        // e.g., query your readings for the last 12–24h depending on your NowCast window
+        // return Reading::where('realtime_stamp', '>=', now('UTC')->subHours(12))->get();
+        return collect(); // placeholder
     }
 
     public function downloadSensorHistory(Request $request): StreamedResponse

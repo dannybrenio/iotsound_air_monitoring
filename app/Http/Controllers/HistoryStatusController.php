@@ -53,19 +53,20 @@ class HistoryStatusController extends Controller
 
             $history_status_create = History_status::create([
                 'status_id' => $device_status_id,
-                'sensor_type' => $rawdata['sensor_pointer'],
+                'sensor_type' => $rawdata['sensor_type'],
                 'sensor_status' => $rawdata['sensor_status'],
+                'isRead' => 0
             ]);
 
             if($history_status_create){
             
-                $pointer_column = self::POINTER_MAP[$rawdata['sensor_pointer']];
+                $pointer_column = self::POINTER_MAP[$rawdata['sensor_type']];
                 Device_status::where('status_id', $device_status_id)->update([$pointer_column => $rawdata['sensor_status']]);
 
                 return response()->json([
                     'sucess' => true,
                     'hardware_info' => $rawdata['hardware_info'],
-                    'sensor_type' => $rawdata['sensor_pointer'],
+                    'sensor_type' => $rawdata['sensor_type'],
                     'sensor_status' => $rawdata['sensor_status'],
                     'message' => 'Device Status Added' 
                 ], 200);

@@ -1,3 +1,5 @@
+@props(['notifs' => null])
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('bglogo.png') }}" type="image/png">
     <link rel="icon" href="{{ asset('bglogo.png') }}" type="image/png">
+    
     <title>
         ADMIN
     </title>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         /* Sidebar Slide (Fix: Left to Right) - ONLY APPLY ON MOBILE */
@@ -75,10 +79,11 @@
         <button id="close-menu" class="absolute top-5 right-4 text-gray-700 text-4xl lg:hidden cursor-pointer">&times;</button>
         <div class="flex flex-row justify-start items-center gap-x-3 w-[85%]">
             <img src="{{ asset('bglogo.png') }}" alt="" class="size-6">
-            <span class="text-[#06402b] font-extrabold text-xl">ADMIN</span>
+            <span class="text-[#06402b] font-extrabold text-xl">ADMIN </span>
         </div>
         <div class="rounded border border-[#06402b] w-[85%]"></div>
         <div class="flex flex-col w-[85%] justify-center items-start gap-y-2 ">
+
             <a href="{{ route('hardware') }}"
                 class="flex flex-row gap-x-3 justify-center items-center text-sm truncate h-10
                         {{ request()->routeIs('hardware') ? 'text-white  duration-300 bg-[#06402b] font-semibold w-full rounded justify-start px-2' : 'text-[#06402b] font-semibold hover:text-black hover:bg-[#a9b3da] w-full rounded flex justify-start duration-300 px-2' }}">
@@ -235,9 +240,10 @@
                 </svg>
 
                 <!-- Badge -->
-                <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">5</span>
+                {{-- Display the number of unread messages --}}
+                <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">{{ count($notifs) }}</span>
             </button>
-
+            
             <!-- Notification Modal -->
             <div 
                 x-show="open"
@@ -249,13 +255,16 @@
                     <span class="font-semibold">Notifications</span>
                     <!-- <button @click="open = false" class="text-sm">✕</button> -->
                 </div>
+                
                 <div class="max-h-120 overflow-y-auto p-3 space-y-2">
-                    <template x-for="n in 35" :key="n">
+                    @forelse($notifs as $notif)
                         <div class="p-2 rounded-md border border-gray-200 hover:bg-gray-100 cursor-pointer">
-                            <p class="text-sm text-gray-800">Notification message #<span x-text="n"></span></p>
-                            <p class="text-xs text-gray-500">2 minutes ago</p>
+                            <p class="text-sm text-gray-800">Notification message: <span x-text="">{{ $notif->sensor_status }}</span></p>
+                            <p class="text-xs text-gray-500">{{ $notif->created_at }}</p>
                         </div>
-                    </template>
+                    @empty
+                        <div class="py-4 text-gray-500">No unread notifications.</div>
+                    @endforelse
                 </div>
             </div>
         </div>

@@ -7,14 +7,17 @@ use App\Models\Hardware_data;
 use App\Models\Pending_hardware;
 use App\Models\Pending_hardware_data;
 use App\Models\Device_status;
+use App\Models\History_status;
 use Illuminate\Http\Request;
 
 class HardwareController extends Controller
 {
 
     public function index(){
+        $notifs = History_status::where('isRead', 0)->get();
         $hardwares = Hardware::paginate(10);
-        return view('admin.hardware.admin_hardware', compact('hardwares'));
+            
+        return view('admin.hardware.admin_hardware', compact('hardwares', 'notifs'));
     }
 
     public function create(){

@@ -26,26 +26,24 @@ class ReportController extends Controller
       ]);
       
       $file = $request->file('image');
-        
-        Log::info('receive-report', [
-            'has_file'   => $file !== null,
-            'orig_name'  => $file?->getClientOriginalName(),
-            'mime'       => $file?->getMimeType(),
-            'size'       => $file?->getSize(),
-            'desc'       => $validated['description'],
-        ]);
+      
+      Log::info('receive-report', [
+          'has_file'   => $file !== null,
+          'orig_name'  => $file?->getClientOriginalName(),
+          'mime'       => $file?->getMimeType(),
+          'size'       => $file?->getSize(),
+          'desc'       => $validated['description'],
+      ]);
 
       $path = null;
       if ($request->hasFile('image')) {
-        // store to storage/app/public/reports
         $path = $request->file('image')->store('reports', 'public');
       }
+  
+      Log::info('receive-report', [
+          'path'   =>  $path ? Storage::url($path) : null,
+      ]);
     
-        Log::info('receive-report', [
-            'path'   =>  $path ? Storage::url($path) : null,
-        ]);
-    
-      // TODO: Save to DB if you want
       Report::create([
         "user_id" =>  $validated["user_id"],
         "report_body" =>  $validated["description"],

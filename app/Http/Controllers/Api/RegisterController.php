@@ -30,7 +30,7 @@ class RegisterController extends Controller
         // Let Laravel send 422 JSON errors back
         throw $e;
     }
-Log::info('validation passed', ['email' => $validated['email']]);
+        Log::info('validation passed', ['email' => $validated['email']]);
 
         try {
             // Create the user
@@ -43,7 +43,8 @@ Log::info('validation passed', ['email' => $validated['email']]);
                 'username'      => $validated['username'],
                 'password'      => Hash::make($validated['password']),
             ]);
-   Log::info('user created', ['id' => $user->id]);
+            
+            Log::info('user created', ['id' => $user->id]);
           } catch (\Throwable $e) {
             Log::error('User create failed', ['error' => $e->getMessage()]);
             return response()->json(['error' => $e->getMessage()], 500);
