@@ -8,6 +8,7 @@ use App\Models\Hardware_data;
 use App\Models\Alerts;
 use App\Http\Controllers\AlertsController;
 use App\Http\Controllers\PendingHardwareDataController;
+use App\Models\Pending_hardware;
 use App\Models\Pending_hardware_data;
 use App\Services\AqiCalculator;
 use Exception;
@@ -68,6 +69,17 @@ class HardwareDataController extends Controller
                 'decibels'      => $rawdata['decibels']?? null,
                 'realtime_stamp'=> $rawdata['realtime_stamp'] ?? null,
             ]);
+
+            $pending = Pending_hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_id');
+
+            if (empty($pending)){
+                Pending_hardware::create([
+                    'hardware_info' => $rawdata['hardware_info'],
+                    'longitude' => $rawdata['longitude'],
+                    'latitude' => $rawdata['latitude']
+                ]);
+            }
+
             return response()->json(['success' => true, 
             'hardware_info' => $rawdata['hardware_info'],
             'message' => 'Hardware ID not found, added to pending data.'], 200);

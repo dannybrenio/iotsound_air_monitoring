@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
+
 class ReportController extends Controller
 {
     public function index()
@@ -25,7 +26,7 @@ class ReportController extends Controller
       ]);
       
       $file = $request->file('image');
-
+        
         Log::info('receive-report', [
             'has_file'   => $file !== null,
             'orig_name'  => $file?->getClientOriginalName(),
@@ -39,9 +40,17 @@ class ReportController extends Controller
         // store to storage/app/public/reports
         $path = $request->file('image')->store('reports', 'public');
       }
-
+    
+        Log::info('receive-report', [
+            'path'   =>  $path ? Storage::url($path) : null,
+        ]);
+    
       // TODO: Save to DB if you want
-      // Report::create([...]);
+      Report::create([
+        "user_id" =>  $validated["user_id"],
+        "report_body" =>  $validated["description"],
+        "image_path" =>  $path ? Storage::url($path) : null,
+      ]);
 
       return response()->json([
         'ok'          => true,
