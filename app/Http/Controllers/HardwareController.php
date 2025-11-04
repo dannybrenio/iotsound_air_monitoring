@@ -21,8 +21,9 @@ class HardwareController extends Controller
     }
 
     public function create(){
+        $notifs = History_status::where('isRead', 0)->get();
         $pending_list = Pending_hardware::all(); 
-        return view('admin.hardware.hardware_create', compact('pending_list'));
+        return view('admin.hardware.hardware_create', compact('pending_list', 'notifs'));
     }
 
     public function store(Request $request){
@@ -76,8 +77,9 @@ class HardwareController extends Controller
         }
 
     public function edit($hardware_id){
+        $notifs = History_status::where('isRead', 0)->get();
         $hardware = Hardware::findOrFail($hardware_id);
-        return view('admin.hardware.hardware_update', compact('hardware'));
+        return view('admin.hardware.hardware_update', compact('hardware', 'notifs'));
     }
 
     public function update(Request $request, $hardware_id){   

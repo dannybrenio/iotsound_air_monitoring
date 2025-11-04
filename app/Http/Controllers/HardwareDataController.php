@@ -8,12 +8,12 @@ use App\Models\Hardware_data;
 use App\Models\Alerts;
 use App\Http\Controllers\AlertsController;
 use App\Http\Controllers\PendingHardwareDataController;
-use App\Models\Pending_hardware;
 use App\Models\Pending_hardware_data;
+use App\Models\Pending_hardware;
 use App\Services\AqiCalculator;
+    use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class HardwareDataController extends Controller
 {
@@ -30,12 +30,12 @@ class HardwareDataController extends Controller
 
  public function receiveData(Request $request){
     try{
-        $provided = $request->header('X-Device-Key');         // string|null
-        $expected = config('services.device.key') ?? '';       // string ('' if unset)
-
-        if (!$provided || !hash_equals($expected, $provided)) {
-            return response()->json(['message' => 'Unauthorized Access!'], 401);
-        }
+        // $provided = $request->header('X-Device-Key');         // string|null
+        // $expected = config('services.device.key') ?? '';       // string ('' if unset)
+        
+        // if (!$provided || !hash_equals($expected, $provided)) {
+        //     return response()->json(['message' => 'Unauthorized Access!'], 401);
+        // }
 
         $rawdata = $request->json()->all();
         //     ReadingReceived::dispatch([
@@ -47,6 +47,9 @@ class HardwareDataController extends Controller
         //         'decibels'       => $rawdata["decibels"],
         //         'realtime_stamp' => $rawdata["realtime_stamp"],
         //     ]);
+        $rtPht = isset($rawdata['realtime_stamp'])
+            ? Carbon::parse($rawdata['realtime_stamp'], 'UTC')->setTimezone('Asia/Manila')
+            : null;
 
         FCMv1Controller::send(
             'New reading',
@@ -58,7 +61,6 @@ class HardwareDataController extends Controller
             ]
         );
 
-        // return response()->json(['message' => $rawdata], 200);
         $hardware_id = Hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_id');
         
          if(empty($hardware_id)){ 
@@ -69,12 +71,10 @@ class HardwareDataController extends Controller
                 'co'            => $rawdata['co']      ?? null,
                 'no2'           => $rawdata['no2']     ?? null,
                 'decibels'      => $rawdata['decibels']?? null,
-                'realtime_stamp'=> $rawdata['realtime_stamp'] ?? null,
+                'realtime_stamp'=> $rtPht ?? $rawdata['realtime_stamp'],
             ]);
-
-
-
-            $pending = Pending_hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_id');
+            
+            $pending = Pending_hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_info');
 
             if (empty($pending)){
                 Pending_hardware::create([
@@ -83,12 +83,10 @@ class HardwareDataController extends Controller
                     'latitude' => $rawdata['latitude']
                 ]);
             }
-
             return response()->json(['success' => true, 
             'hardware_info' => $rawdata['hardware_info'],
             'message' => 'Hardware ID not found, added to pending data.'], 200);
          }
-
 
             $hardware_data = Hardware_data::create([
                 'hardware_id' => $hardware_id,
@@ -97,7 +95,7 @@ class HardwareDataController extends Controller
                 'co' => $rawdata['co'] ?? null,
                 'no2' => $rawdata['no2'] ?? null,
                 'decibels' => $rawdata['decibels'] ?? null,
-                'realtime_stamp' => $rawdata['realtime_stamp'] ?? null,
+                'realtime_stamp' =>  $rtPht ?? $rawdata['realtime_stamp'] ?? null,
             ]);
 
             ReadingReceived::dispatch([
@@ -110,42 +108,45 @@ class HardwareDataController extends Controller
                 'realtime_stamp' => $hardware_data->realtime_stamp,
             ]);
 
+            // if ($hardware_data) {
+            //     $aqiService = new AqiCalculator();
+            //     $alertData = $aqiService->compute();
 
-            if($hardware_data){
+            //     // 1) Normalize payload whether compute() returned array or JsonResponse
+            //     $payload = $alertData instanceof \Illuminate\Http\JsonResponse
+            //         ? $alertData->getData(true)   // associative array
+            //         : $alertData;
 
-                 $aqiService = new AqiCalculator();
-        
-                $today = Carbon::today();
-                $todayData = Hardware_data::whereDate('realtime_stamp', $today)->get();
-                $latestNowcast  = $aqiService->computeNowCast($todayData);
-                $latestAqi      = $latestNowcast['overall_aqi'] ?? null;
+            //     // 2) Pull overall nowcast AQI
+            //     $overallNowcast = $payload['overall']['nowcast'] ?? null;
 
-                //DONT KNOW WHAT TO DO WITH DECIBELS
-                
-                if($latestAqi <= 35){
-                   // return response()->json(['message' => 'MODERATE AIR!']);
-                    $aqiLevel = "moderate air quality";
-                }elseif($latestAqi <= 45){
-                   // return response()->json(['message' => 'POOR AIR!']);
-                    $aqiLevel = "poor air quality";
-                }elseif($latestAqi <= 55){
-                    //return response()->json(['message' => 'UNHEALTHY AIR!']);
-                    $aqiLevel = "unhealthy air quality";
-                }elseif($latestAqi <= 90){
-                    //return response()->json(['message' => 'SEVERE AIR!']);
-                    $aqiLevel = "severe air quality";
-                }elseif($latestAqi > 100){
-                //  return response()->json(['message' => 'EMERGENCY!',
-                // 'AQI' => $latestAqi]);
-                    $aqiLevel = "emergency, evacuation advised!";
-                    $hardwareIdentifyer = $rawdata['hardware_info'];
-                }
+            //     // 3) Map to your 6-level thresholds
+            //     $aqiLevel = null;
+            //     if ($overallNowcast !== null) {
+            //         $aqi = (int) $overallNowcast;
+            //         $aqiLevel = match (true) {
+            //             $aqi <= 25 => 'good',
+            //             $aqi <= 35 => 'fair',
+            //             $aqi <= 45 => 'unhealthy',
+            //             $aqi <= 55 => 'very unhealthy',
+            //             $aqi <= 300 => 'acutely unhealthy',
+            //             default => 'emergency',
+            //         };
+            //     }
 
-                 $alertsController = new AlertsController();
-                 $alertsController->store($aqiLevel, $hardwareIdentifyer);
+            //     //4) (Optional) Call your alert logic (uncomment if you want to persist alerts)
+            //     $alertsController = new AlertsController();
+            //     $alertsController->store($aqiLevel);
 
+            //     // 5) Return original payload + computed level (without changing AqiCalculator)
+            //     $final = $payload ?? [];
+            //     $final['overall'] = array_merge($final['overall'] ?? [], [
+            //         'nowcast_level' => $aqiLevel,
+            //     ]);
 
-            }
+            //     return response()->json(['message' => 'New ALert!']);
+            // }
+
 
         } catch (Exception $e) {
             return response()->json([
@@ -158,4 +159,4 @@ class HardwareDataController extends Controller
     }
 
 
-} 
+}

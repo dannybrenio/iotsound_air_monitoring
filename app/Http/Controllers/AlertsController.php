@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Events\SensorMalfunctioned;
 use App\Models\Alerts;
+use App\Models\History_status;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 class AlertsController extends Controller
 {
-    
+
     public function index(){
+        $notifs = History_status::where('isRead', 0)->get();
+
         $alerts = Alerts::paginate(5);
-        return view('admin.alert.admin_alert', compact('alerts'));
+        return view('admin.alert.admin_alert', compact('alerts', 'notifs'));
     }
 
     public function store($aqiLevel, $hardwareIdentifyer){  
@@ -30,13 +33,9 @@ class AlertsController extends Controller
              'alert_body' => $combined,
         ]);
 
-        
-
         return response()->json(['message' => 'New ALert!']);
     }
     
-
-
     public function receiveSensorStatus(Request $request){
         $rawdata = $request->json()->all();
 

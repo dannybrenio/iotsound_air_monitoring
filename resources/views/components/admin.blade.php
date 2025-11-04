@@ -260,7 +260,7 @@
                     @forelse($notifs as $notif)
                         <div class="p-2 rounded-md border border-gray-200 hover:bg-gray-100 cursor-pointer">
                             <p class="text-sm text-gray-800">Notification message: <span x-text="">{{ $notif->sensor_status }}</span></p>
-                            <p class="text-xs text-gray-500">{{ $notif->created_at }}</p>
+                            <p class="text-xs text-gray-500">{{ $notif->created_at->diffForHumans() }}</p>
                         </div>
                     @empty
                         <div class="py-4 text-gray-500">No unread notifications.</div>

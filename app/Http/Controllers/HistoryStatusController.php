@@ -13,10 +13,12 @@ class HistoryStatusController extends Controller
    
     public function index()
     {
+        $notifs = History_status::where('isRead', 0)->get();
+
         $history_statuses = History_status::with('device_Status')
          ->latest('status_id') // or any ordering you need
         ->get();
-        return view('admin.history_status.admin_history_status', compact('history_statuses'));
+        return view('admin.history_status.admin_history_status', compact('history_statuses', 'notifs'));
     }
 
    private const POINTER_MAP = [

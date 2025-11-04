@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History_status;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -12,8 +13,10 @@ class ReportController extends Controller
 {
     public function index()
     {
+        $notifs = History_status::where('isRead', 0)->get();
+
         $reports = Report::all();
-        return view('admin.report.admin_report', compact('reports'));
+        return view('admin.report.admin_report', compact('reports', 'notifs'));
     }
 
     // api to receive report from mobile

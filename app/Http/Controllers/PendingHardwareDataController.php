@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History_status;
 use App\Models\Pending_hardware_data;
 use Exception;
 use Illuminate\Http\Request;
@@ -11,8 +12,9 @@ class PendingHardwareDataController extends Controller
 
     public function index()
     {
+       $notifs = History_status::where('isRead', 0)->get();
        $pending_data = Pending_hardware_data::all();
-        return view('admin.pending.admin_pending_data', compact('pending_data'));
+        return view('admin.pending.admin_pending_data', compact('pending_data', 'notifs'));
     }
 
     public function store($pending_hardware_info, $pm2_5, $pm10, $co, $no2, $decibels, $realtime_stamp)

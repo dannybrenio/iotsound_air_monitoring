@@ -1,4 +1,4 @@
-<x-admin>
+<x-admin :$notifs>
     <div class="h-screen flex justify-center items-start p-5">
         <div class="container mx-auto">
             <h1 class="text-2xl font-bold mb-4">Pending Hardware</h1>
