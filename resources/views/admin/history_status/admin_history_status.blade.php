@@ -15,12 +15,12 @@
                     </thead>
                     <tbody>
                         @foreach($history_statuses as $history_status) 
-                            <tr>                                  
-                                <td><p> {{$history_status->history_id}} </p></td>
-                                <td><p> {{$history_status->device_status?->hardware_info}} </p></td>
-                                <td><p> {{$history_status->sensor_type}} </p></td>
-                                <td><p> {{$history_status->sensor_status}} </p></td>
-                                <td><p> {{$history_status->created_at}} </p></td>
+                            <tr class="{{ $loop->even ? 'bg-gray-300' : 'bg-white' }}">                                  
+                                <td class="px-4 py-2">{{$history_status->history_id}}</td>
+                                <td class="px-4 py-2">{{$history_status->device_status?->hardware_info}}</td>
+                                <td class="px-4 py-2">{{$history_status->sensor_type}}</td>
+                                <td class="px-4 py-2">{{$history_status->sensor_status}}</td>
+                                <td class="px-4 py-2">{{$history_status->created_at}}</td>
                             </tr>
                         @endforeach
                     </tbody>

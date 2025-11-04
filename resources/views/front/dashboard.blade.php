@@ -67,10 +67,9 @@
                                     </div>
                                 </div>
                             </div> -->
-                            <div
-                                class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6 z-10">
-                                <div class="flex flex-row gap-y-5 w-[90%] lg:w-[80%]">
-                                    <div class="flex flex-col w-[30%] items-center justify-center">
+                            <div class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6 z-10">
+                                <div class="flex items-center justify-center flex-row w-[90%] lg:w-[80%]">
+                                    <div class="flex flex-col w-[45%] lg:w-[30%] items-center justify-center lg:gap-y-0 gap-y-3">
                                         <div class="flex flex-row gap-x-2 items-center">
                                             <div class="w-4 h-4 rounded-full bg-red-600 animate-pulse duration-100">
                                             </div>
@@ -78,7 +77,7 @@
                                         </div>
                                         <span id="aqi-value">0</span>
                                     </div>
-                                    <div class="flex flex-col w-[70%] gap-y-2 justify-center items-center">
+                                    <div class="flex flex-col w-[55%] lg:w-[70%] gap-y-2 justify-center items-center">
                                         <span class="text-sm font-semibold">Air Quality is</span>
                                         <span id="aqi-category">Good</span>
                                     </div>
@@ -143,17 +142,17 @@
                                 </div>
 
                                 <div class="flex flex-row justify-evenly w-[90%] lg:w-[80%] mt-6">
-                                    <span class="text-sm text-black font-bold">PM2.5: <span
-                                            class="text-black font-normal" id="pm2.5Label">16 µg/m³</span></span>
+                                    <span class="text-center text-sm text-black font-bold">PM2.5: <span
+                                            class="text-black font-normal">16 µg/m³</span></span>
                                     <div class="h-4 border border-white"></div>
-                                    <span class="text-sm text-black font-bold">PM10: <span
-                                            class="text-black font-normal" id="pm2.5Label">18 µg/m³</span></span>
+                                    <span class="text-center text-sm text-black font-bold">PM10: <span
+                                            class="text-black font-normal">18 µg/m³</span></span>
                                     <div class="h-4 border border-white"></div>
-                                    <span class="text-sm text-black font-bold">CO: <span
-                                            class="text-black font-normal" id="pm2.5Label">62 ppm</span></span>
+                                    <span class="text-center text-sm text-black font-bold">CO: <span
+                                            class="text-black font-normal">62 ppm</span></span>
                                     <div class="h-4 border border-white"></div>
-                                    <span class="text-sm text-black font-bold">NO₂: <span
-                                            class="text-black font-normal" id="pm2.5Label">7 ppb</span></span>
+                                    <span class="text-center text-sm text-black font-bold">NO₂: <span
+                                            class="text-black font-normal">7 ppb</span></span>
                                 </div>
                             </div>
                             <div
@@ -180,25 +179,25 @@
                                     </div>
                                     <div class="h-full border border-white"></div>
                                     <div class="w-[70%] h-full flex flex-col items-center justify-center">
-                                        <div class="flex flex-row w-full h-[50%] justify-center items-center gap-x-5">
-                                            <span class="text-black font-semibold text-xl uppercase">Sound Level</span>
-                                            <span class="text-blue-500 font-bold text-4xl" id="latestDbLbl">70<span
-                                                    class="text-lg text-black">db</span></span>
+                                        <div class="flex flex-row w-full h-[40%] lg:h-[50%] justify-center items-center gap-x-2 lg:gap-x-5 px-1">
+                                            <span class="text-black font-semibold text-sm lg:text-xl uppercase">Sound Level</span>
+                                            <span class="text-blue-500 font-bold text-xl lg:text-4xl">70<span
+                                                    class="text-xs lg:text-lg text-black">db</span></span>
                                         </div>
                                         <div class="w-full border border-white"></div>
-                                        <div class="flex flex-col w-full h-[50%] justify-evenly items-center py-3">
-                                            <div class="flex w-full h-[30%] justify-center items-center">
-                                                <span class="text-black text-xs italic" id="asOfLbl">As of this Date:
+                                        <div class="flex flex-col w-full h-[60%] lg:h-[50%] justify-evenly items-center py-3">
+                                            <div class="flex w-full h-auto justify-center items-center">
+                                                <span class="text-gray-500 text-xs italic">As of this Date:
                                                     2025-09-25</span>
                                             </div>
-                                            <div class="flex flex-row w-full h-[70%] justify-evenly items-center">
+                                            <div class="flex flex-col lg:flex-row w-full h-auto justify-evenly items-center">
                                                 <div class="w-full justify-center items-center flex flex-row gap-x-3">
                                                     <span
                                                         class="text-xs lg:text-base text-center font-semibold uppercase">Average
                                                         dB:</span>
                                                     <span class="text-xl text-center font-bold text-green-600" id="avgDbLbl">70</span>
                                                 </div>
-                                                <div class="h-[50%] border border-white"></div>
+                                                <div class="w-[50%] h-0 lg:w-0 lg:h-[50%] border border-white"></div>
                                                 <div class="w-full justify-center items-center flex flex-row gap-x-3">
                                                     <span
                                                         class="text-xs lg:text-base text-center font-semibold uppercase">Peak
@@ -511,13 +510,13 @@
         slider.value = latestAqi;
         valueEl.textContent = latestAqi;
         catEl.textContent = category.label;
-        valueEl.className = `text-7xl font-bold bg-transparent text-center ${category.color}`;
-        catEl.className   = `text-2xl font-bold p-2 w-[81%] bg-white/20 h-14 flex justify-center items-center text-center rounded-xl ${category.color}`;
-        backColor.className = `w-full h-[500px] lg:h-[350px] flex flex-col lg:flex-row bg-gradient-to-t from-${category.color} to-white rounded-3xl gap-y-5 py-5 lg:py-0 shadow-lg`;
-        
-        /* =========================
-         * CHARTS (spanGaps + proper order)
-         * ========================= */
+        valueEl.className = `text-5xl lg:text-7xl font-bold bg-transparent text-center ${category.color}`;
+        catEl.className = `text-lg lg:text-2xl font-bold p-2 w-[81%] bg-white/20 h-14 flex justify-center items-center text-center rounded-xl ${category.color}`;
+        backColor.className = `w-full h-[500px] lg:h-[350px] relative flex flex-col lg:flex-row bg-gradient-to-t from-${category.color} to-white rounded-3xl gap-y-5 py-5 lg:py-0 shadow-lg`;
+
+        // Chart Analysis
+        // Sample label sets for each time range
+        // Default
         let currentRange = "12h";
         const toNum = v => (v == null ? null : Math.floor(v));
         

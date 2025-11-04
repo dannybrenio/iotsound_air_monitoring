@@ -40,8 +40,7 @@ class HardwareController extends Controller
         $hardware_created = Hardware::create([
                 'hardware_info' => $hardwareInfo,
                 'longitude' => $longitude,
-                'latitude' => $latitude,
-                'status' => 'active', 
+                'latitude' => $latitude, 
             ]);
 
             if($hardware_created){

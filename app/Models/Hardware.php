@@ -8,5 +8,5 @@ class Hardware extends Model
 {
     protected $table = 'hardware';
     protected $primaryKey = 'hardware_id';  
-    protected $fillable = ['hardware_info', 'longitude', 'latitude', 'status'];
+    protected $fillable = ['hardware_info', 'longitude', 'latitude'];
 }

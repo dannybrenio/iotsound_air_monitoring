@@ -15,17 +15,19 @@ class AlertsController extends Controller
         return view('admin.alert.admin_alert', compact('alerts'));
     }
 
-    public function store($aqiLevel){  
-        $exists = Alerts::where('alert_body',$aqiLevel)
-            ->where('created_at', '>=', Carbon::now()->subHours(3))
-            ->exists();
+    public function store($aqiLevel, $hardwareIdentifyer){  
+
+    $combined = $aqiLevel . " from " . $hardwareIdentifyer;
+    $exists = Alerts::where('alert_body',$combined)
+        ->where('created_at', '>=', Carbon::now()->subHours(3))
+        ->exists();
 
         if ($exists) {
             return response()->json(['message' => 'Downtime!']); // still cooling down
         }
 
         Alerts::create([
-                'alert_body' => $aqiLevel,
+             'alert_body' => $combined,
         ]);
 
         

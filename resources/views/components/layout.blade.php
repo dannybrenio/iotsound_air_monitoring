@@ -55,16 +55,16 @@
 
         @keyframes marquee {
             0% {
-                transform: translateX(0%);
+                transform: translateX(100%);
             }
 
             100% {
-                transform: translateX(-50%);
+                transform: translateX(-100%);
             }
         }
 
         .animate-marquee {
-            animation: marquee 5s linear infinite;
+            animation: marquee 15s linear infinite;
         }
     </style>
 </head>
