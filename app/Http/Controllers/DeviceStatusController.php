@@ -10,7 +10,7 @@ class DeviceStatusController extends Controller
 {
     public function index()
     {
-       $notifs = History_status::where('isRead', 0)->get();
+       $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
 
        $device_statuses = Device_status::all();
        return view('admin.device_status.admin_device_status', compact('device_statuses', 'notifs'));

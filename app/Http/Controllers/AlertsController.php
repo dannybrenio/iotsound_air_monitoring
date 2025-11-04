@@ -12,7 +12,7 @@ class AlertsController extends Controller
 {
 
     public function index(){
-        $notifs = History_status::where('isRead', 0)->get();
+        $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
 
         $alerts = Alerts::paginate(5);
         return view('admin.alert.admin_alert', compact('alerts', 'notifs'));

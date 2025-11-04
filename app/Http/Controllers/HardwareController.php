@@ -14,14 +14,14 @@ class HardwareController extends Controller
 {
 
     public function index(){
-        $notifs = History_status::where('isRead', 0)->get();
+        $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
         $hardwares = Hardware::paginate(10);
             
         return view('admin.hardware.admin_hardware', compact('hardwares', 'notifs'));
     }
 
     public function create(){
-        $notifs = History_status::where('isRead', 0)->get();
+        $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
         $pending_list = Pending_hardware::all(); 
         return view('admin.hardware.hardware_create', compact('pending_list', 'notifs'));
     }
@@ -77,7 +77,7 @@ class HardwareController extends Controller
         }
 
     public function edit($hardware_id){
-        $notifs = History_status::where('isRead', 0)->get();
+        $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
         $hardware = Hardware::findOrFail($hardware_id);
         return view('admin.hardware.hardware_update', compact('hardware', 'notifs'));
     }

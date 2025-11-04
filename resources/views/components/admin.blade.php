@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('bglogo.png') }}" type="image/png">
     <link rel="icon" href="{{ asset('bglogo.png') }}" type="image/png">
-    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>
         ADMIN
     </title>
@@ -256,16 +257,24 @@
                     <!-- <button @click="open = false" class="text-sm">✕</button> -->
                 </div>
                 
-                <div class="max-h-120 overflow-y-auto p-3 space-y-2">
+                <div id="notifList" class="max-h-120 overflow-y-auto p-3 space-y-2">
                     @forelse($notifs as $notif)
-                        <div class="p-2 rounded-md border border-gray-200 hover:bg-gray-100 cursor-pointer">
-                            <p class="text-sm text-gray-800">Notification message: <span x-text="">{{ $notif->sensor_status }}</span></p>
-                            <p class="text-xs text-gray-500">{{ $notif->created_at->diffForHumans() }}</p>
+                        <div
+                        class="p-2 rounded-md border border-gray-200 hover:bg-gray-100 cursor-pointer"
+                        data-history-id="{{ $notif->history_id }}"   {{-- hidden identifier --}}
+                        data-is-read="{{ (int) $notif->isRead }}"
+                        >
+                        <p class="text-sm text-gray-800">
+                            Notification message:
+                            <span>{{ $notif->sensor_type }} is {{ $notif->sensor_status }}</span>
+                        </p>
+                        <p class="text-xs text-gray-500">{{ $notif->created_at->diffForHumans() }}</p>
                         </div>
                     @empty
-                        <div class="py-4 text-gray-500">No unread notifications.</div>
+                        <div class="py-4 text-gray-500" data-empty>No unread notifications.</div>
                     @endforelse
                 </div>
+
             </div>
         </div>
     </main>
@@ -297,6 +306,138 @@
             mobileMenu.classList.remove('active');
             overlay.classList.remove('active');
         });
+
+        // Turn an ISO/time-like value into "x minutes ago"
+        function relativeTimeFrom(dateInput) {
+        try {
+            const d = (dateInput instanceof Date) ? dateInput : new Date(dateInput);
+            const diffMs = d.getTime() - Date.now();
+            const abs = Math.abs(diffMs);
+            const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' });
+
+            const sec = Math.round(diffMs / 1000);
+            const min = Math.round(diffMs / (1000 * 60));
+            const hr  = Math.round(diffMs / (1000 * 60 * 60));
+            const day = Math.round(diffMs / (1000 * 60 * 60 * 24));
+
+            if (abs < 60 * 1000) return rtf.format(sec, 'second');
+            if (abs < 60 * 60 * 1000) return rtf.format(min, 'minute');
+            if (abs < 24 * 60 * 60 * 1000) return rtf.format(hr, 'hour');
+            return rtf.format(day, 'day');
+        } catch {
+            return typeof dateInput === 'string' ? dateInput : new Date().toLocaleString();
+        }
+        }
+
+        function extractNotifPayload(evt) {
+        const raw = evt && typeof evt === 'object' ? evt : {};
+        const p = raw.payload && typeof raw.payload === 'object' ? raw.payload : raw;
+        return {
+            sensor_status: p.sensor_status ?? p.status ?? 'Unknown status',
+            sensor_type:   p.sensor_type   ?? 'Unknown sensor',
+            created_at:    p.created_at    ?? new Date().toISOString(),
+        };
+        }
+
+        function buildNotifCard({ sensor_status, created_at, sensor_type }) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'p-2 rounded-md border border-gray-200 hover:bg-gray-100 cursor-pointer';
+
+        const p1 = document.createElement('p');
+        p1.className = 'text-sm text-gray-800';
+        p1.textContent = 'Notification message: ';
+        const msg = document.createElement('span');
+        msg.textContent = sensor_type + " is " + sensor_status;
+        p1.appendChild(msg);
+
+        const p2 = document.createElement('p');
+        p2.className = 'text-xs text-gray-500';
+        p2.textContent = relativeTimeFrom(created_at);
+
+        wrapper.appendChild(p1);
+        wrapper.appendChild(p2);
+        return wrapper;
+        }
+
+        function prependNotifCard(card, { maxItems = 100 } = {}) {
+        const list = document.getElementById('notifList');
+        if (!list) return;
+        const emptyNode = list.querySelector('[data-empty]');
+        if (emptyNode) emptyNode.remove();
+        list.insertBefore(card, list.firstChild);
+
+        const cards = [...list.children].filter(el => !el.hasAttribute('data-empty'));
+        if (cards.length > maxItems) {
+            for (let i = maxItems; i < cards.length; i++) cards[i].remove();
+        }
+        }
+
+        // --- Echo subscription (PUBLIC channel) ---
+        (function subscribeToNotifications() {
+        if (!window.Echo) {
+            console.warn('Echo is not available. Skipping notif subscription.');
+            return;
+        }
+
+        const handler = (evt) => {
+            const payload = extractNotifPayload(evt);
+            const card = buildNotifCard(payload);
+            prependNotifCard(card, { maxItems: 100 });
+        };
+
+        // If you used broadcastAs(): return 'NotificationReceived' → dot form
+        window.Echo.channel('notif-received')
+            .listen('.NotificationReceived', handler)     // with broadcastAs()
+            .listen('NotificationReceived', handler);     // without broadcastAs()
+        })();
+
+        (function () {
+            const list = document.getElementById('notifList');
+            if (!list) return;
+
+            const CSRF = document.querySelector('meta[name="csrf-token"]')?.content || '';
+            const REDIRECT_URL = 'http://127.0.0.1:8000/admin_history_status'; // <- target page
+
+            async function markRead(historyId) {
+                // If you named the route, you can use @json(route('notifications.markRead')) instead
+                const url = '{{ route('notifications.markRead') }}';
+                const res = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': CSRF,
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ history_id: historyId }),
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.json();
+            }
+
+            list.addEventListener('click', async (e) => {
+                const card = e.target.closest('[data-history-id]');
+                if (!card) return;
+
+                // prevent double submits
+                if (card.dataset.busy === '1') return;
+                card.dataset.busy = '1';
+
+                const historyId = card.getAttribute('data-history-id');
+
+                // slight visual feedback
+                card.style.opacity = '0.6';
+
+                try {
+                await markRead(historyId);
+                // success → go to admin page
+                window.location.href = REDIRECT_URL;
+                } catch (err) {
+                console.error('markRead failed:', err);
+                // still redirect so the user reaches the page
+                window.location.href = REDIRECT_URL;
+                }
+            });
+        })();
     });
 </script>
 

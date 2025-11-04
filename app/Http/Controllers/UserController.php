@@ -10,7 +10,7 @@ class UserController extends Controller
 {
      public function index()
     {
-        $notifs = History_status::where('isRead', 0)->get();
+        $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
 
         $users = User::all();
         return view('admin.account.admin_account', compact('users', 'notifs'));

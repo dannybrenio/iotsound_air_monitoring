@@ -8,6 +8,7 @@ use App\Models\Hardware_data;
 use App\Models\Alerts;
 use App\Http\Controllers\AlertsController;
 use App\Http\Controllers\PendingHardwareDataController;
+use App\Models\History_status;
 use App\Models\Pending_hardware_data;
 use App\Models\Pending_hardware;
 use App\Services\AqiCalculator;
@@ -20,11 +21,13 @@ class HardwareDataController extends Controller
 
     public function index()
     {
+        $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
+
         $hardware_data = Hardware_data::with('hardware')
             ->latest('data_id') // or any ordering you need
             ->paginate(10);
 
-        return view('admin.hardware.admin_hardware_data', compact('hardware_data'));
+        return view('admin.hardware.admin_hardware_data', compact('hardware_data', 'notifs'));
     }
 
 
