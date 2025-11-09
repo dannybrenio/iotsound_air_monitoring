@@ -29,6 +29,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-6 flex justify-center">
+                    {{ $users->onEachSide(1)->links('vendor.pagination.tailwind') }}
+                </div>
             </div>
         </div> 
     </div>

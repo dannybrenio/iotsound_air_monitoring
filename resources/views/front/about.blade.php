@@ -1,7 +1,7 @@
 <x-layout>
     <div class="flex flex-col w-full h-auto justify-center items-center bg-white">
         <div class="flex flex-col h-auto w-full bg-white shadow-xl">
-            <div class="flex flex-col lg:flex-row w-full h-[800px] lg:h-[600px] gap-x-5">
+            <div class="flex flex-col lg:flex-row w-full h-[800px] lg:h-screen gap-x-5">
                 <div class="flex flex-col w-full lg:w-[50%] h-[50%] lg:h-full justify-center items-center gap-y-4 md:gap-y-6 lg:gap-y-10 p-10 lg:p-20">
                     <span class="text-[#06402b] font-extrabold text-2xl md:text-4xl lg:text-6xl uppercase">About 
                         <span class="text-[#d4af37] uppercase text-2xl md:text-4xl lg:text-6xl font-extrabold">Us</span></span>

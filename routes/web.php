@@ -56,7 +56,7 @@ Route::get('/logout', function () {
 })->name('logout');
 
 // ======================
-// Protected Admin Routes
+// Protected Admin Routess
 // ======================
 
 // Define a custom middleware inline
@@ -86,3 +86,9 @@ Route::middleware('auth.admin')->group(function () {
 
 Route::post('/notifications/mark-read', [NotificationController::class, 'markRead'])
     ->name('notifications.markRead');
+
+
+Route::get('/test-alert', function () {
+    $ctrl = new AlertsController();
+    return $ctrl->store('hw-aeroson-001', 'Emergency, Evacuation Advised!', 'High Noise Level');
+});

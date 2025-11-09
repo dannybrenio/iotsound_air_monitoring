@@ -62,6 +62,7 @@
 </head>
 
 <body>
+    
     <!-- Mobile Navbar -->
     <div class="lg:hidden fixed top-4 left-4 z-30">
         <button id="hamburger-btn"
@@ -309,24 +310,24 @@
 
         // Turn an ISO/time-like value into "x minutes ago"
         function relativeTimeFrom(dateInput) {
-        try {
-            const d = (dateInput instanceof Date) ? dateInput : new Date(dateInput);
-            const diffMs = d.getTime() - Date.now();
-            const abs = Math.abs(diffMs);
-            const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' });
+            try {
+                const d = (dateInput instanceof Date) ? dateInput : new Date(dateInput);
+                const diffMs = d.getTime() - Date.now();
+                const abs = Math.abs(diffMs);
+                const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' });
 
-            const sec = Math.round(diffMs / 1000);
-            const min = Math.round(diffMs / (1000 * 60));
-            const hr  = Math.round(diffMs / (1000 * 60 * 60));
-            const day = Math.round(diffMs / (1000 * 60 * 60 * 24));
+                const sec = Math.round(diffMs / 1000);
+                const min = Math.round(diffMs / (1000 * 60));
+                const hr  = Math.round(diffMs / (1000 * 60 * 60));
+                const day = Math.round(diffMs / (1000 * 60 * 60 * 24));
 
-            if (abs < 60 * 1000) return rtf.format(sec, 'second');
-            if (abs < 60 * 60 * 1000) return rtf.format(min, 'minute');
-            if (abs < 24 * 60 * 60 * 1000) return rtf.format(hr, 'hour');
-            return rtf.format(day, 'day');
-        } catch {
-            return typeof dateInput === 'string' ? dateInput : new Date().toLocaleString();
-        }
+                if (abs < 60 * 1000) return rtf.format(sec, 'second');
+                if (abs < 60 * 60 * 1000) return rtf.format(min, 'minute');
+                if (abs < 24 * 60 * 60 * 1000) return rtf.format(hr, 'hour');
+                return rtf.format(day, 'day');
+            } catch {
+                return typeof dateInput === 'string' ? dateInput : new Date().toLocaleString();
+            }
         }
 
         function extractNotifPayload(evt) {
@@ -396,7 +397,7 @@
             if (!list) return;
 
             const CSRF = document.querySelector('meta[name="csrf-token"]')?.content || '';
-            const REDIRECT_URL = 'http://127.0.0.1:8000/admin_history_status'; // <- target page
+            const REDIRECT_URL = 'https://aeroson-monitoring.com/admin_history_status'; // <- target page
 
             async function markRead(historyId) {
                 // If you named the route, you can use @json(route('notifications.markRead')) instead

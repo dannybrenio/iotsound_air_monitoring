@@ -12,7 +12,9 @@ class PendingHardwareController extends Controller
     public function index(){
         $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
 
-        $pending_hardwares = Pending_hardware::all();
+        $pending_hardwares = Pending_hardware::latest('pending_id') // or any ordering you need
+            ->paginate(10);
+            
         return view('admin.pending.admin_pending_hardware', compact('pending_hardwares', 'notifs'));
     }
 }

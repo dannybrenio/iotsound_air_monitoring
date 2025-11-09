@@ -35,7 +35,7 @@ class AqiCalculator
 
             $weightedSum = 0.0;
             $weightTotal = 0.0;
-            $count = count($values);
+            $count = count($values);    
 
             foreach ($values as $idx => $val) {
                 $weight = pow($weightFactor, $count - $idx - 1);
@@ -139,9 +139,9 @@ class AqiCalculator
     {
         switch ($preset) {
             case '12h':
-                return $start->format('h:i A');
+                return $end->format('h:i A');
             case '24h':
-                return $end->format('H:i');
+                return $end->format('h:i A');
             case '7d':
             case '30d':
                 return $start->format('Y-m-d');
@@ -254,6 +254,14 @@ class AqiCalculator
      */
     private function convertToAQI(string $pollutant, float $value): ?float
     {
+            // 'pm2_5' => [
+            //     [0.0,   25.0,   0,   50],   // Good
+            //     [25.1,  35.0,  51,  100],   // Fair
+            //     [35.1,  45.0, 101,  150],   // Poor
+            //     [45.1,  55.0, 151,  200],   // Unhealthy
+            //     [55.1,  90.0, 201,  300],   // Severe
+            //     [90.1,  INF,  301,  500],   // Emergency
+            // ],
         $breakpoints = [
             'pm2_5' => [
                 [0.0, 12.0,    0,  50],
@@ -350,5 +358,17 @@ class AqiCalculator
                 // return $start->toDateTimeString() . '–' . $end->toDateTimeString();
                 return $start->toDateTimeString();
         }
+    }
+    
+    public function convertInstantAQIForRow(object|array $row): array
+    {
+        $get = fn(string $k) => is_array($row) ? ($row[$k] ?? null) : ($row->$k ?? null);
+
+        return [
+            'pm2_5' => is_null($get('pm2_5')) ? null : $this->convertToAQI('pm2_5', (float)$get('pm2_5')),
+            'pm10'  => is_null($get('pm10'))  ? null : $this->convertToAQI('pm10',  (float)$get('pm10')),
+            'co'    => is_null($get('co'))    ? null : $this->convertToAQI('co',    (float)$get('co')),
+            'no2'   => is_null($get('no2'))   ? null : $this->convertToAQI('no2',   (float)$get('no2')),
+        ];
     }
 }

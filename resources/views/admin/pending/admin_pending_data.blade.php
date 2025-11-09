@@ -32,6 +32,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-6 flex justify-center">
+                    {{ $pending_data->onEachSide(1)->links('vendor.pagination.tailwind') }}
+                </div>
             </div>
         </div> 
     </div>
