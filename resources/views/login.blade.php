@@ -6,16 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('bglogo.png') }}" type="image/png">
     <link rel="icon" href="{{ asset('bglogo.png') }}" type="image/png">
-    <title>LOGIN</title>
+    <title>Admin Login</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="w-screen h-screen flex justify-center items-center bg-gradient-to-b from-[#06402b] to-white">
-    <div
-        class="max-h-[350px] h-[60%] w-[80%] md:w-[60%] lg:w-[30%] border border-[#06402b] bg-white rounded-3xl shadow-md flex flex-col justify-center items-center gap-y-5">
-        <div class="flex flex-col justify-center items-center gap-y-1">
+    <div class="max-h-[500px] h-[73%] w-[80%] md:w-[60%] lg:w-[30%] border border-[#06402b] bg-white rounded-3xl shadow-md flex flex-col justify-center items-center gap-y-5">
+        <div class="flex flex-col justify-center items-center gap-y-1 gap-x-3">
+            <img src="{{ asset('bglogo.png') }}" alt="" class="size-24">
+            <!-- <div class="border-2 border-[#06402b] h-[60%] rounded-xl"></div> -->
             <span class="uppercase text-[#06402b] font-extrabold text-3xl">ADMIN</span>
-            <div class="border-2 border-[#06402b] w-[60%] rounded-xl"></div>
+            <div class="border-2 border-[#06402b] w-[40%] rounded-xl"></div>
         </div>
         <form action="{{ route('login.post') }}" method="POST" class="w-full gap-y-3 flex justify-center items-center flex-col">
             @csrf
@@ -35,7 +36,7 @@
             </div>
             <div class="relative flex flex-col items-center gap-y-2 justify-center w-[70%]">
                 <button
-                    class="bg-[#06402b] w-full text-white font-bold h-10 flex justify-center items-center rounded-lg px-9">
+                    class="bg-[#06402b] w-full text-white font-bold h-10 flex justify-center items-center rounded-lg px-9 cursor-pointer">
                     Log In
                 </button>
                 <a href="{{ route('dashboard') }}" class="underline hover:text-blue-500 duration-300 text-xs">Back to

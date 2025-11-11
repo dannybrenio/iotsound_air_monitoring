@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="{{ asset('bglogo.png') }}" type="image/png">
     <link rel="icon" href="{{ asset('bglogo.png') }}" type="image/png">
     <title>
-        ADMIN
+        AeroSon Admin
     </title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
@@ -60,7 +60,7 @@
     <!-- Mobile Navbar -->
     <div class="lg:hidden fixed top-4 left-4 z-30">
         <button id="hamburger-btn"
-            class="hamburger flex flex-col justify-center items-center p-2 text-white rounded w-8 h-8 space-y-1 focus:outline-none cursor-pointer">
+            class="hamburger flex flex-col justify-center items-center p-2 text-white rounded w-8 h-10 space-y-1 focus:outline-none cursor-pointer">
             <span class="hamburger-line line1 block w-6 h-0.5 bg-[#06402b]"></span>
             <span class="hamburger-line line2 block w-6 h-0.5 bg-[#06402b]"></span>
             <span class="hamburger-line line3 block w-6 h-0.5 bg-[#06402b]"></span>
@@ -69,16 +69,17 @@
     <!-- ADD THIS OVERLAY DIV -->
     <div id="overlay" class="fixed inset-0 bg-black/90 bg-opacity-50 z-30 lg:hidden"></div>
     <!-- Sidebar -->
-    <div id="mobile-menu" class="bg-white fixed h-screen w-[50%] lg:w-[20%] flex flex-col justify-start items-center py-6 gap-y-5 
-        shadow-[2px_0_15px_-5px_rgba(0,0,0,0.3)] z-40">
+    <div id="mobile-menu" class="bg-[#E0EBDC] fixed h-screen w-[80%] lg:w-[20%] flex flex-col justify-between items-center py-6 gap-y-5 
+        shadow-[0px_0_15px_5px_rgba(0,0,0,0.3)] z-40">
         <!-- Add Close Button Here -->
         <button id="close-menu" class="absolute top-5 right-4 text-gray-700 text-4xl lg:hidden cursor-pointer">&times;</button>
-        <div class="flex flex-row justify-start items-center gap-x-3 w-[85%]">
-            <img src="{{ asset('bglogo.png') }}" alt="" class="size-6">
+        <div class="flex flex-row justify-start items-center gap-x-2 w-[85%]">
+            <img src="{{ asset('bglogo.png') }}" alt="" class="size-8">
             <span class="text-[#06402b] font-extrabold text-xl">ADMIN</span>
         </div>
-        <div class="rounded border border-[#06402b] w-[85%]"></div>
-        <div class="flex flex-col w-[85%] justify-center items-start gap-y-2 ">
+        <!-- <div class="rounded border border-[#06402b] w-[85%]"></div> -->
+        <div class="flex flex-col w-[85%] justify-start h-full items-start">
+            <span class="text-sm text-[#06402b] uppercase">Menu</span>
             <a href="{{ route('hardware') }}"
                 class="flex flex-row gap-x-3 justify-center items-center text-sm truncate h-10
                         {{ request()->routeIs('hardware') ? 'text-white  duration-300 bg-[#06402b] font-semibold w-full rounded justify-start px-2' : 'text-[#06402b] font-semibold hover:text-black hover:bg-[#a9b3da] w-full rounded flex justify-start duration-300 px-2' }}">
@@ -207,8 +208,11 @@
                 </svg>
                 Alerts
             </a>
+        </div>
+        <div class="w-full flex flex-col justify-center items-center gap-y-2">
+            <div class="rounded border border-[#06402b] w-[90%]"></div>
             <a href="{{ route('logout') }}"
-                class="px-2.5 text-[#06402b] text-sm truncate flex flex-row gap-x-3 items-center font-semibold hover:text-black hover:bg-[#a9b3da] w-full h-10 rounded justify-start duration-300">
+                class="px-2.5 text-[#FFF] text-sm flex flex-row gap-x-1 bg-[#06402b] items-center font-semibold hover:text-[#06402b] hover:bg-[#a9b3da] w-[90%] h-10 rounded justify-center duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="currentColor">
                     <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2">
