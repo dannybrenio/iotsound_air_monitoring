@@ -82,37 +82,37 @@
                     class="text-center h-full flex justify-center items-center hidden lg:flex cursor-pointer uppercase">AeroSon</a>
             </div>
             <div class="h-full w-[80%] flex justify-end items-center gap-x-4">
-                <div class="h-full w-[70%] flex-row items-center justify-between hidden lg:flex">
+                <div class="h-full w-[55%] flex-row items-center justify-between hidden lg:flex">
                     <a href="{{ route('dashboard') }}"
-                        class="flex flex-row gap-x-2 justify-center items-center text-sm uppercase h-[80%]
-                                {{ request()->routeIs('dashboard') ? 'text-green-500 border-b-2 font-semibold border-green-500 hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        class="flex flex-row gap-x-2 justify-center items-center text-sm h-[80%]
+                                {{ request()->routeIs('dashboard') ? 'text-[#06402b] border-b-2 font-semibold border-[#06402b] hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5">
                             <line x1="4" y1="21" x2="20" y2="21" />
                             <rect x="6" y="10" width="4" height="7" />
                             <rect x="14" y="6" width="4" height="11" />
-                        </svg>
+                        </svg> -->
                         Dashboard
                     </a>
                     <a href="{{ route('about') }}"
-                        class="flex flex-row gap-x-2 justify-center items-center text-sm uppercase h-[80%]
-                                {{ request()->routeIs('about') ? 'text-green-500 border-b-2 font-semibold border-green-500 hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        class="flex flex-row gap-x-2 justify-center items-center text-sm h-[80%]
+                                {{ request()->routeIs('about') ? 'text-[#06402b] border-b-2 font-semibold border-[#06402b] hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4">
                             <circle cx="12" cy="12" r="10" />
                             <line x1="12" y1="16" x2="12" y2="12" />
                             <line x1="12" y1="8" x2="12.01" y2="8" />
-                        </svg>
+                        </svg> -->
                         About Us
                     </a>
                     <a href="{{ route('help') }}"
-                        class="flex flex-row gap-x-2 justify-center items-center text-sm uppercase h-[80%]
-                                {{ request()->routeIs('help') ? 'text-green-500 border-b-2 font-semibold border-green-500 hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+                        class="flex flex-row gap-x-2 justify-center items-center text-sm h-[80%]
+                                {{ request()->routeIs('help') ? 'text-[#06402b] border-b-2 font-semibold border-[#06402b] hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
                             <path fill="#E0EBDC" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="2"
                                 d="M3 12h1m8-9v1m8 8h1M5.6 5.6l.7.7m12.1-.7l-.7.7M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0-1 3a2 2 0 0 1-4 0a3.5 3.5 0 0 0-1-3m.7 1h4.6" />
-                        </svg>
+                        </svg> -->
                         Knowledge Hub
                     </a>
                     <a href="{{ route('login') }}"
@@ -153,48 +153,48 @@
             <nav class="flex flex-col flex-1 p-6 space-y-4">
                 <a href="{{route('dashboard')}}"
                     class="mobile-nav-link flex items-center space-x-3 p-4 text-lg font-medium text-gray-700 hover:text-green-500 hover:bg-green-50 transition-colors duration-200
-                        {{ request()->routeIs('dashboard') ? 'text-green-500 border-b-2 font-semibold border-green-500 hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        {{ request()->routeIs('dashboard') ? 'text-[#06402b] border-b-2 font-semibold border-[#06402b]. hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5">
                         <line x1="4" y1="21" x2="20" y2="21" />
                         <rect x="6" y="10" width="4" height="7" />
                         <rect x="14" y="6" width="4" height="11" />
-                    </svg>
-                    <span class="uppercase">Dashboard</span>
+                    </svg> -->
+                    <span class="">Dashboard</span>
                 </a>
 
                 <a href="{{route('about')}}"
                     class="mobile-nav-link flex items-center space-x-3 p-4 text-lg font-medium text-gray-700 hover:text-green-500 hover:bg-green-50 transition-colors duration-200
-                        {{ request()->routeIs('about') ? 'text-green-500 border-b-2 font-semibold border-green-500 hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        {{ request()->routeIs('about') ? 'text-[#06402b] border-b-2 font-semibold border-[#06402b]. hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5">
                         <circle cx="12" cy="12" r="10" />
                         <line x1="12" y1="16" x2="12" y2="12" />
                         <line x1="12" y1="8" x2="12.01" y2="8" />
-                    </svg>
-                    <span class="uppercase">About Us</span>
+                    </svg> -->
+                    <span class="">About Us</span>
                 </a>
 
                 <a href="{{route('help')}}"
                     class="mobile-nav-link flex items-center space-x-3 p-4 text-lg font-medium text-gray-700 hover:text-green-500 hover:bg-green-50 transition-colors duration-200
-                        {{ request()->routeIs('help') ? 'text-green-500 border-b-2 font-semibold border-green-500 hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+                        {{ request()->routeIs('help') ? 'text-[#06402b] border-b-2 font-semibold border-[#06402b]. hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
                         <path fill="#E0EBDC" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                             stroke-width="2"
                             d="M3 12h1m8-9v1m8 8h1M5.6 5.6l.7.7m12.1-.7l-.7.7M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0-1 3a2 2 0 0 1-4 0a3.5 3.5 0 0 0-1-3m.7 1h4.6" />
-                    </svg>
-                    <span class="uppercase">Knowledge Hub</span>
+                    </svg> -->
+                    <span class="">Knowledge Hub</span>
                 </a>
 
                 <a href="{{ route('login') }}"
-                    class="mobile-nav-link flex gap-x-2 justify-center items-center text-base bg-[#06402b] rounded text-white font-bold w-full h-16 uppercase hover:scale-105 duration-300">
+                    class="mobile-nav-link flex gap-x-2 justify-center items-center text-base bg-[#06402b] rounded text-white font-bold w-full h-16 hover:scale-105 duration-300">
                     Sign In
                 </a>
             </nav>
 
             <!-- Menu Footer -->
             <div class="p-6 border-t border-gray-500">
-                <p class="text-sm text-gray-500 text-center">AEROSON © 2025</p>
+                <p class="text-sm text-gray-500 text-center">© 2025 AeroSon</p>
             </div>
         </div>
     </div>

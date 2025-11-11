@@ -22,7 +22,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/about', fn() => view('front.about'))->name('about');
-Route::get('/help', fn() => view('front.help'))->name('help');
+Route::get('/knowledge_hub', fn() => view('front.help'))->name('help');
 Route::get('/weather', fn() => view('weather'));
 
 // ======================

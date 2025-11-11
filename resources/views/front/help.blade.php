@@ -35,16 +35,11 @@
                         </div>
                         <div class="flex flex-col lg:flex-row w-full justify-center gap-x-8 gap-y-3 items-start">
                             <!-- Box1 -->
-                            <div x-data="{ open: false}"
-                                class="bg-white w-full lg:w-[48%] py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                                <button @click="open = !open"
-                                    class="flex w-full justify-between items-center h-auto px-2">
-                                    <span class="text-sm font-semibold uppercase text-start">How is AQI measured
+                            <div 
+                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                <span class="text-center uppercase text-lg text-[#06402b] font-semibold">How is AQI measured
                                         (PM2.5, PM10, CO, NO₂)?</span>
-                                    <span x-show="!open" class="text-xl cursor-pointer">+</span>
-                                    <span x-show="open" class="text-xl cursor-pointer">−</span>
-                                </button>
-                                <div x-show="open" x-transition class="">
+                                <div class="">
                                     <p class="text-sm indent-8 text-justify leading-relaxed">AQI is measured by taking
                                         hourly readings of specific pollutants like PM2.5, PM10, CO, and NO₂, converting
                                         each concentration into a sub-index, and then using the highest sub-index value
@@ -55,16 +50,11 @@
                                 </div>
                             </div>
                             <!-- Box2 -->
-                            <div x-data="{ open: false}"
-                                class="bg-white w-full lg:w-[48%] py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                                <button @click="open = !open"
-                                    class="flex w-full justify-between items-center h-auto px-2">
-                                    <span class="text-sm font-semibold uppercase text-start">Common sources of Air
+                            <div 
+                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Common sources of Air
                                         Pollution</span>
-                                    <span x-show="!open" class="text-xl cursor-pointer">+</span>
-                                    <span x-show="open" class="text-xl cursor-pointer">−</span>
-                                </button>
-                                <div x-show="open" x-transition class="">
+                                <div  class="">
                                     <p class="text-sm indent-8 text-justify leading-relaxed">Common sources of air
                                         pollution include human activities like vehicle and industrial emissions (from
                                         factories and power plants burning fossil fuels) and area sources such as
@@ -75,16 +65,11 @@
                         </div>
                         <div class="flex flex-col lg:flex-row w-full justify-center gap-x-8 gap-y-3 items-start">
                             <!-- Box3 -->
-                            <div x-data="{ open: false}"
-                                class="bg-white w-full lg:w-[48%] py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                                <button @click="open = !open"
-                                    class="flex w-full justify-between items-center h-auto px-2">
-                                    <span class="text-sm font-semibold uppercase text-start">Ideal Air Quality
+                            <div 
+                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Ideal Air Quality
                                         Ranges</span>
-                                    <span x-show="!open" class="text-xl cursor-pointer">+</span>
-                                    <span x-show="open" class="text-xl cursor-pointer">−</span>
-                                </button>
-                                <div x-show="open" x-transition class="">
+                                <div  class="">
                                     <p class="text-sm indent-8 text-justify leading-relaxed">Ideal air quality is
                                         considered "Good" (0-25 on the Air Quality Index or AQI), posing little to no
                                         risk to health. As the AQI increases, air quality becomes "Fair" (25.1-35),
@@ -95,16 +80,11 @@
                                 </div>
                             </div>
                             <!-- Box4 -->
-                            <div x-data="{ open: false}"
-                                class="bg-white w-full lg:w-[48%] py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                                <button @click="open = !open"
-                                    class="flex w-full justify-between items-center h-auto px-2">
-                                    <span class="text-sm font-semibold uppercase text-start">How air quality affects
+                            <div 
+                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                <span class="text-center uppercase text-lg text-[#06402b] font-semibold">How air quality affects
                                         human health</span>
-                                    <span x-show="!open" class="text-xl cursor-pointer">+</span>
-                                    <span x-show="open" class="text-xl cursor-pointer">−</span>
-                                </button>
-                                <div x-show="open" x-transition class="">
+                                <div  class="">
                                     <p class="text-sm indent-8 text-justify leading-relaxed">Poor air quality affects
                                         human health by causing a range of issues, from respiratory illnesses like
                                         asthma and pneumonia to cardiovascular diseases, strokes, and lung cancer. Small
@@ -129,16 +109,11 @@
                         </div>
                         <div class="flex flex-col lg:flex-row w-full justify-center gap-x-8 gap-y-3 items-start">
                             <!-- Box1 -->
-                            <div x-data="{ open: false}"
-                                class="bg-white w-full lg:w-[48%] py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                                <button @click="open = !open"
-                                    class="flex w-full justify-between items-center h-auto px-2">
-                                    <span class="text-sm font-semibold uppercase text-start">Common noise sources and
+                            <div 
+                                class="bg-white w-full lg:w-[48%] min-h-65 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Common noise sources and
                                         their decibels values</span>
-                                    <span x-show="!open" class="text-xl cursor-pointer">+</span>
-                                    <span x-show="open" class="text-xl cursor-pointer">−</span>
-                                </button>
-                                <div x-show="open" x-transition class="">
+                                <div  class="">
                                     <p class="text-sm indent-8 text-justify leading-relaxed">Common noise sources range
                                         from a quiet room at 30 dB to loud concerts and sirens at 110–130 dB. Sounds
                                         like a normal conversation are around 60 dB, while a lawnmower or a power tool
@@ -148,16 +123,11 @@
                                 </div>
                             </div>
                             <!-- Box2 -->
-                            <div x-data="{ open: false}"
-                                class="bg-white w-full lg:w-[48%] py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                                <button @click="open = !open"
-                                    class="flex w-full justify-between items-center h-auto px-2">
-                                    <span class="text-sm font-semibold uppercase text-start">Safe exposure
+                            <div 
+                                class="bg-white w-full lg:w-[48%] min-h-65 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Safe exposure
                                         limits</span>
-                                    <span x-show="!open" class="text-xl cursor-pointer">+</span>
-                                    <span x-show="open" class="text-xl cursor-pointer">−</span>
-                                </button>
-                                <div x-show="open" x-transition class="">
+                                <div  class="">
                                     <p class="text-sm indent-8 text-justify leading-relaxed">Safe exposure limits vary
                                         depending on the substance and the context (e.g., workplace, emergency) and are
                                         defined by different organizations like OSHA, NIOSH, and ACGIH. Key terms
@@ -217,43 +187,37 @@
                 <div class="flex flex-col w-full h-auto items-center gap-y-5">
                     <span class="text-xl font-semibold uppercase text-center text-[#06402b]">Specific effects on wellbeing</span>   
                     <!-- Box1 -->
-                    <div x-data="{ open: false}"
+                    <div 
                         class="bg-white w-full py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-l-5 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                        <button @click="open = !open"
+                        <button 
                             class="flex w-full justify-between items-center h-auto px-2">
                             <span class="text-sm font-semibold uppercase text-start">Mental health</span>
-                            <span x-show="!open" class="text-xl cursor-pointer">+</span>
-                            <span x-show="open" class="text-xl cursor-pointer">−</span>
                         </button>
-                        <div x-show="open" x-transition class="gap-y-2">
+                        <div  class="gap-y-2">
                             <p class="text-sm text-justify leading-relaxed"><span class="font-semibold">• Anxiety and depression: </span>Higher exposure to both air and noise pollution is linked to a greater risk of developing anxiety, depression, and other mental health issues. This is particularly concerning for young people during adolescence, a critical period for psychological development.</p>
                             <p class="text-sm text-justify leading-relaxed"><span class="font-semibold">• Cognitive impairment: </span>The combined effects can lead to cognitive impairment and distraction, impacting learning and overall cognitive function.</p>
                         </div>
                     </div>
                     <!-- Box2 -->
-                    <div x-data="{ open: false}"
+                    <div 
                         class="bg-white w-full py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-l-5 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                        <button @click="open = !open"
+                        <button 
                             class="flex w-full justify-between items-center h-auto px-2">
                             <span class="text-sm font-semibold uppercase text-start">Physical health</span>
-                            <span x-show="!open" class="text-xl cursor-pointer">+</span>
-                            <span x-show="open" class="text-xl cursor-pointer">−</span>
                         </button>
-                        <div x-show="open" x-transition class="gap-y-2">
+                        <div  class="gap-y-2">
                             <p class="text-sm text-justify leading-relaxed"><span class="font-semibold">• Cardiovascular and metabolic issues: </span>Co-exposure increases the risk of developing metabolic syndrome (MetS) and its components, such as high blood pressure, high triglycerides, and low HDL cholesterol. Chronic exposure to noise pollution alone is also linked to cardiovascular diseases like ischemic heart disease.</p>
                             <p class="text-sm text-justify leading-relaxed"><span class="font-semibold">• Sleep disturbance: </span>Co-exposure increases the risk of developing metabolic syndrome (MetS) and its components, such as high blood pressure, high triglycerides, and low HDL cholesterol. Chronic exposure to noise pollution alone is also linked to cardiovascular diseases like ischemic heart disease.</p>
                         </div>
                     </div>
                     <!-- Box3 -->
-                    <div x-data="{ open: false}"
+                    <div 
                         class="bg-white w-full py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-l-5 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                        <button @click="open = !open"
+                        <button 
                             class="flex w-full justify-between items-center h-auto px-2">
                             <span class="text-sm font-semibold uppercase text-start">Vulnerable Populations</span>
-                            <span x-show="!open" class="text-xl cursor-pointer">+</span>
-                            <span x-show="open" class="text-xl cursor-pointer">−</span>
                         </button>
-                        <div x-show="open" x-transition class="gap-y-2">
+                        <div  class="gap-y-2">
                             <p class="text-sm text-justify leading-relaxed">Children and adolescents are particularly vulnerable. For example, aircraft noise has been linked to reading impairment in school children, and both air and noise pollution can have a greater impact on their developing nervous systems and mental wellbeing.</p>
                         </div>
                     </div>

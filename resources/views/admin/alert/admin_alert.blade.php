@@ -13,8 +13,8 @@
                  <tbody>
                     @foreach($alerts as $alert)
                         <tr class="{{ $loop->even ? 'bg-gray-300' : 'bg-white' }}">
-                            <td class="px-4 py-2"><p>{{$alert->alert_id}}</p></td>
-                            <td class="px-4 py-2"><p>{{$alert->alert_body}}</p></td>
+                            <td class="px-4 py-2 text-start"><p>{{$alert->alert_id}}</p></td>
+                            <td class="px-4 py-2 text-start"><p>{{$alert->alert_body}}</p></td>
                         </tr>
                         @endforeach
                     </tbody>

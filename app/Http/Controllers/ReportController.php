@@ -12,7 +12,7 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $reports = Report::all();
+        $reports = Report::paginate(5);
         return view('admin.report.admin_report', compact('reports'));
     }
 

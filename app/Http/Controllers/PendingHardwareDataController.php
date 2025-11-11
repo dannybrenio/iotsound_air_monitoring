@@ -11,7 +11,7 @@ class PendingHardwareDataController extends Controller
 
     public function index()
     {
-       $pending_data = Pending_hardware_data::all();
+       $pending_data = Pending_hardware_data::paginate(10);
         return view('admin.pending.admin_pending_data', compact('pending_data'));
     }
 
