@@ -294,7 +294,7 @@
                     <div x-show="activeTab === 'weather'" x-transition
                         class="flex flex-col h-full w-full justify-center items-center">
                         <div id="weather"
-                            class="h-auto bg-white flex flex-col justify-center items-center w-full shadow-xl z-0 py-5 lg:gap-y-5">
+                            class="h-auto bg-white flex flex-col justify-center rounded-b-2xl items-center w-full shadow-xl z-0 py-5 lg:gap-y-5">
                         </div>
                     </div>
                 </div>
@@ -496,7 +496,7 @@
         }).join('');
 
         container.innerHTML = `
-          <div class="flex flex-col justify-center items-center mb-4">
+          <div class="flex flex-col justify-center items-center mb-1">
             <h2 class="text-2xl font-bold text-[#06402b] uppercase">${city}, Philippines</h2>
             <p class="text-lg text-[#a8a8a8]">( Current: ${currentTemp} – ${theInfo.text} )</p>
             <button id="toggleUnit" class="mt-2 bg-green-700 text-white px-3 py-1 rounded-lg hover:bg-green-800 transition">

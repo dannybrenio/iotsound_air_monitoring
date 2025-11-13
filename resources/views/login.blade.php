@@ -55,11 +55,15 @@
             x-transition:leave-start="translate-y-0 opacity-100"
             x-transition:leave-end="translate-x-20 opacity-0"
             x-init="setTimeout(() => show = false, 3000)"
-            class="fixed top-1 right-1 w-auto p-3 bg-white border-2 border-red-600 rounded-md flex flex-row items-center justify-center gap-x-2">
+            class="fixed top-2 right-2 w-auto p-3 bg-white border-l-8 border-red-600 rounded-md flex flex-row items-center justify-center gap-x-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="size-5 text-red-600" viewBox="0 0 20 20"><path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm1.13 9.38l.35-6.46H8.52l.35 6.46h2.26zm-.09 3.36c.24-.23.37-.55.37-.96c0-.42-.12-.74-.36-.97s-.59-.35-1.06-.35s-.82.12-1.07.35s-.37.55-.37.97c0 .41.13.73.38.96c.26.23.61.34 1.06.34s.8-.11 1.05-.34z"/></svg>
             <span class="text-red-600 text-xs font-semibold uppercase">{{ session('error') }}</span>
+            <div class="absolute bottom-0 left-0 h-1 bg-red-600"
+                x-init="$el.style.width = '0%';
+                        setTimeout(() => $el.style.width = '100%', 10);
+                        $el.style.transition = 'width 3s linear';">
+            </div>
         </div>
     @endif
 </body>
-
 </html>
