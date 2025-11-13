@@ -1,8 +1,8 @@
 
 <x-admin>
-    <div class="h-screen flex justify-center items-start p-5">
+    <div class="h-screen flex justify-center items-start px-7">
         <div class="container mx-auto">
-            <h1 class="text-2xl font-bold mb-4">Pending Data</h1>
+            <h1 class="text-xl font-bold mb-10">Pending Data</h1>
             <div class="overflow-x-auto">
                 <table class="w-full bg-white border border-gray-200 rounded-lg shadow">
                     <thead>

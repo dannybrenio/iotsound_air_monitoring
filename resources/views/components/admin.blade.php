@@ -80,7 +80,7 @@
         <!-- <div class="rounded border border-[#06402b] w-[85%]"></div> -->
         <div class="flex flex-col w-[85%] justify-start h-full items-start gap-y-1">
             <div class="flex items-center w-full justify-center">
-                <span class="text-base text-[#06402b] uppercase mb-2 font-bold">Admin Panel</span>
+                <span class="text-lg text-[#06402b] uppercase mb-2 font-bold">Admin Panel</span>
             </div>
             <a href="{{ route('hardware') }}"
                 class="flex flex-row gap-x-3 justify-center items-center text-sm truncate h-10
@@ -227,7 +227,7 @@
         </div>
     </div>
     <main class="lg:pl-[20%] pl-0">
-        <div class="px-4 py-8">
+        <div class="px-4 py-6">
             {{ $slot }}
         </div>
         <div x-data="{ open: false }" class="fixed right-5 top-5">

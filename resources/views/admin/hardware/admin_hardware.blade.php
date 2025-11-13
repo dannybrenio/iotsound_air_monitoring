@@ -1,7 +1,7 @@
 <x-admin>
-    <div class="h-screen flex justify-center items-start p-5">
+    <div class="h-screen flex justify-center items-start px-7">
         <div class="container mx-auto">
-            <h1 class="text-2xl font-bold mb-4">Hardware</h1>
+            <h1 class="text-xl font-bold mb-10">Hardware</h1>
             <div class="overflow-x-auto">
                 <table class="w-[1000px] lg:w-full bg-white border border-gray-200 rounded-lg shadow">
                     <thead>
@@ -11,7 +11,7 @@
                             <th class="px-4 py-2 text-start">Location</th>
                             <th class="px-4 py-2 text-start">Created At</th>
                             <th class="px-4 py-2 text-start">Updated At</th>
-                            <th class="px-4 py-2 text-start">Actions</th>
+                            <th class="px-4 py-2 text-start w-10">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,7 +32,7 @@
                                 <td class="px-4 py-2 text-start">
                                     <p>{{$hardware->updated_at}}</p>
                                 </td>
-                                <td class="px-4 py-2 text-start">
+                                <td class="px-4 py-2 text-center w-10">
                                     {{-- <td><a href="{{ route('hardware.edit', $hardware->hardware_id) }}">Update</a> --}}
                                     <form action="{{ route('hardware.destroy', $hardware->hardware_id) }}" method="POST"
                                         style="display:inline;">

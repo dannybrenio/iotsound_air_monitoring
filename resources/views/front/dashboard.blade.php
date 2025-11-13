@@ -157,8 +157,7 @@
                             </div>
                             <div
                                 class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6 z-10">
-                                <div
-                                    class="flex flex-row bg-white/70 border border-white w-[80%] h-[90%] lg:h-[50%] rounded-xl items-center justify-evenly">
+                                <div class="flex flex-row bg-white/70 border border-white w-[80%] h-[90%] lg:h-[50%] rounded-xl items-center justify-evenly">
                                     <div class="w-[30%] h-full flex flex-col items-center justify-center">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             class="size-12 animate-pulse duration-100 text-black" viewBox="0 0 100 100"
@@ -190,14 +189,14 @@
                                                 <span class="text-gray-500 text-xs italic">As of this Date:
                                                     2025-09-25</span>
                                             </div>
-                                            <div class="flex flex-col lg:flex-row w-full h-auto justify-evenly items-center">
+                                            <div class="flex flex-col md:flex-row w-full h-auto justify-evenly items-center">
                                                 <div class="w-full justify-center items-center flex flex-row gap-x-3">
                                                     <span
                                                         class="text-xs lg:text-base text-center font-semibold uppercase">Average
                                                         dB:</span>
                                                     <span class="text-xl text-center font-bold text-green-600" id="avgDbLbl">70</span>
                                                 </div>
-                                                <div class="w-[50%] h-0 lg:w-0 lg:h-[50%] border border-white"></div>
+                                                <div class="w-[50%] h-0 md:w-0 md:h-[50%] border border-white"></div>
                                                 <div class="w-full justify-center items-center flex flex-row gap-x-3">
                                                     <span
                                                         class="text-xs lg:text-base text-center font-semibold uppercase">Peak

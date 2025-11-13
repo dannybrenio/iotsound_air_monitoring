@@ -82,7 +82,7 @@
                     class="text-center h-full flex justify-center items-center hidden lg:flex cursor-pointer uppercase">AeroSon</a>
             </div>
             <div class="h-full w-[80%] flex justify-end items-center gap-x-4">
-                <div class="h-full w-[55%] flex-row items-center justify-between hidden lg:flex">
+                <div class="h-full w-[48%] flex-row items-center justify-between hidden lg:flex">
                     <a href="{{ route('dashboard') }}"
                         class="flex flex-row gap-x-2 justify-center items-center text-sm h-[80%]
                                 {{ request()->routeIs('dashboard') ? 'text-[#06402b] border-b-2 font-semibold border-[#06402b] hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
@@ -228,7 +228,7 @@
                 </h3>
                 <div class="flex flex-row gap-x-3 justify-center items-center">
                     <!-- Facebook Logo -->
-                    <a href="https://facebook.com/maribeth.barros.2024" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="size-8 hover:scale-105 duration-300 cursor-pointer" viewBox="0 0 24 24"><path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669c1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     </a>
                     <!-- Instagram Logo -->
