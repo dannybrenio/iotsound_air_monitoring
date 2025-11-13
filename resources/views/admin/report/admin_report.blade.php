@@ -1,4 +1,4 @@
-<x-admin>
+<x-admin :$notifs>
     <div class="h-screen flex justify-center items-start px-7">
         <div class="container mx-auto">
             <h1 class="text-xl font-bold mb-10">Reports</h1>
@@ -21,11 +21,11 @@
                                 <td class="px-4 py-2 text-start">{{ $report->report_body}}</td>
                                       <td>             
                                         @if ($report->image_path)
-                                        <img
-                                            src="{{asset($report->image_path)}}"
-                                            alt="{{ e($report->user->first_name) }}'s report"
-                                            style="width:64px; height:64px; object-fit:cover; border-radius:6px;"
-                                        >
+                                        @if($report->image_path)
+                                          <a class="text-blue-500" href="{{ Storage::disk('web')->url($report->image_path) }}" target="_blank">View Image</a>
+                                        @else
+                                          <span class="text-gray-500 text-sm">No image</span>
+                                        @endif
                                         @else
                                         <span class="text-gray-500">No image</span>
                                         @endif

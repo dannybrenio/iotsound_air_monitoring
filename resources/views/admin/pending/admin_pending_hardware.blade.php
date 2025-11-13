@@ -1,4 +1,4 @@
-<x-admin>
+<x-admin :$notifs>
     <div class="h-screen flex justify-center items-start px-7">
         <div class="container mx-auto">
             <h1 class="text-xl font-bold mb-10">Pending Hardware</h1>
@@ -46,6 +46,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-6 flex justify-center">
+                    {{ $pending_hardwares->onEachSide(1)->links('vendor.pagination.tailwind') }}
+                </div>
             </div>
         </div>
     </div>

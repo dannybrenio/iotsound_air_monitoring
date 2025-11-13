@@ -1,5 +1,5 @@
 
-<x-admin>
+<x-admin :$notifs>
     <div class="h-screen flex justify-center items-start px-7">
         <div class="container mx-auto">
             <h1 class="text-xl font-bold mb-10">Pending Data</h1>
