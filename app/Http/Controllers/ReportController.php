@@ -13,15 +13,7 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $reports = Report::paginate(5);
-        return view('admin.report.admin_report', compact('reports'));
         $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
-
-        $reports = Report::paginate(10);
-        return view('admin.report.admin_report', compact('reports', 'notifs'));
-    }
-        $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
-
         $reports = Report::paginate(10);
         return view('admin.report.admin_report', compact('reports', 'notifs'));
     }
