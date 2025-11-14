@@ -14,6 +14,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DeviceStatusController;
 use App\Http\Controllers\HistoryStatusController;
 use App\Http\Controllers\AqiController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 
 // ======================
@@ -22,7 +23,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/about', fn() => view('front.about'))->name('about');
-Route::get('/help', fn() => view('front.help'))->name('help');
+Route::get('/knowledge_hub', fn() => view('front.help'))->name('help');
 Route::get('/weather', fn() => view('weather'));
 
 // ======================
@@ -55,7 +56,7 @@ Route::get('/logout', function () {
 })->name('logout');
 
 // ======================
-// Protected Admin Routes
+// Protected Admin Routess
 // ======================
 
 // Define a custom middleware inline
@@ -81,4 +82,13 @@ Route::middleware('auth.admin')->group(function () {
     Route::get('/admin_alert', [AlertsController::class, 'index'])->name('alert');
     Route::get('/admin_device_status', [DeviceStatusController::class, 'index'])->name('device');
     Route::get('/admin_history_status', [HistoryStatusController::class, 'index'])->name('history');
+});
+
+Route::post('/notifications/mark-read', [NotificationController::class, 'markRead'])
+    ->name('notifications.markRead');
+
+
+Route::get('/test-alert', function () {
+    $ctrl = new AlertsController();
+    return $ctrl->store('hw-aeroson-001', 'Emergency, Evacuation Advised!', 'High Noise Level');
 });

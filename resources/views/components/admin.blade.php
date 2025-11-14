@@ -1,3 +1,5 @@
+@props(['notifs' => null])
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('bglogo.png') }}" type="image/png">
     <link rel="icon" href="{{ asset('bglogo.png') }}" type="image/png">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>
-        ADMIN
+        AeroSon Admin
     </title>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         /* Sidebar Slide (Fix: Left to Right) - ONLY APPLY ON MOBILE */
@@ -57,10 +62,11 @@
 </head>
 
 <body>
+    
     <!-- Mobile Navbar -->
     <div class="lg:hidden fixed top-4 left-4 z-30">
         <button id="hamburger-btn"
-            class="hamburger flex flex-col justify-center items-center p-2 text-white rounded w-8 h-8 space-y-1 focus:outline-none cursor-pointer">
+            class="hamburger flex flex-col justify-center items-center p-2 text-white rounded w-8 h-10 space-y-1 focus:outline-none cursor-pointer">
             <span class="hamburger-line line1 block w-6 h-0.5 bg-[#06402b]"></span>
             <span class="hamburger-line line2 block w-6 h-0.5 bg-[#06402b]"></span>
             <span class="hamburger-line line3 block w-6 h-0.5 bg-[#06402b]"></span>
@@ -69,16 +75,19 @@
     <!-- ADD THIS OVERLAY DIV -->
     <div id="overlay" class="fixed inset-0 bg-black/90 bg-opacity-50 z-30 lg:hidden"></div>
     <!-- Sidebar -->
-    <div id="mobile-menu" class="bg-white fixed h-screen w-[50%] lg:w-[20%] flex flex-col justify-start items-center py-6 gap-y-5 
-        shadow-[2px_0_15px_-5px_rgba(0,0,0,0.3)] z-40">
+    <div id="mobile-menu" class="bg-[#E0EBDC] fixed h-screen w-[80%] lg:w-[20%] flex flex-col justify-between items-center py-6 gap-y-5 
+        shadow-[0px_0_15px_1px_rgba(0,0,0,0.3)] z-40">
         <!-- Add Close Button Here -->
         <button id="close-menu" class="absolute top-5 right-4 text-gray-700 text-4xl lg:hidden cursor-pointer">&times;</button>
-        <div class="flex flex-row justify-start items-center gap-x-3 w-[85%]">
-            <img src="{{ asset('bglogo.png') }}" alt="" class="size-6">
-            <span class="text-[#06402b] font-extrabold text-xl">ADMIN</span>
+        <div class="flex flex-row justify-start items-center gap-x-2 w-[85%]">
+            <img src="{{ asset('bglogo.png') }}" alt="" class="size-8">
+            <span class="text-[#06402b] font-extrabold text-xl">AEROSON</span>
         </div>
-        <div class="rounded border border-[#06402b] w-[85%]"></div>
-        <div class="flex flex-col w-[85%] justify-center items-start gap-y-2 ">
+        <!-- <div class="rounded border border-[#06402b] w-[85%]"></div> -->
+        <div class="flex flex-col w-[85%] justify-start h-full items-start gap-y-1">
+            <div class="flex items-center w-full justify-center">
+                <span class="text-lg text-[#06402b] uppercase mb-2 font-bold">Admin Panel</span>
+            </div>
             <a href="{{ route('hardware') }}"
                 class="flex flex-row gap-x-3 justify-center items-center text-sm truncate h-10
                         {{ request()->routeIs('hardware') ? 'text-white  duration-300 bg-[#06402b] font-semibold w-full rounded justify-start px-2' : 'text-[#06402b] font-semibold hover:text-black hover:bg-[#a9b3da] w-full rounded flex justify-start duration-300 px-2' }}">
@@ -207,8 +216,11 @@
                 </svg>
                 Alerts
             </a>
+        </div>
+        <div class="w-full flex flex-col justify-center items-center gap-y-2">
+            <div class="rounded border border-[#06402b] w-[80%]"></div>
             <a href="{{ route('logout') }}"
-                class="px-2.5 text-[#06402b] text-sm truncate flex flex-row gap-x-3 items-center font-semibold hover:text-black hover:bg-[#a9b3da] w-full h-10 rounded justify-start duration-300">
+                class="px-2.5 text-[#FFF] text-sm flex flex-row gap-x-1 bg-[#06402b] items-center font-semibold hover:text-[#06402b] hover:bg-[#a9b3da] w-[80%] h-10 rounded justify-center duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="currentColor">
                     <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2">
@@ -221,7 +233,7 @@
         </div>
     </div>
     <main class="lg:pl-[20%] pl-0">
-        <div class="px-4 py-8">
+        <div class="px-4 py-6">
             {{ $slot }}
         </div>
         <div x-data="{ open: false }" class="fixed right-5 top-5">
@@ -235,9 +247,10 @@
                 </svg>
 
                 <!-- Badge -->
-                <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">5</span>
+                {{-- Display the number of unread messages --}}
+                <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">{{ count($notifs) }}</span>
             </button>
-
+            
             <!-- Notification Modal -->
             <div 
                 x-show="open"
@@ -249,14 +262,25 @@
                     <span class="font-semibold">Notifications</span>
                     <!-- <button @click="open = false" class="text-sm">✕</button> -->
                 </div>
-                <div class="max-h-120 overflow-y-auto p-3 space-y-2">
-                    <template x-for="n in 35" :key="n">
-                        <div class="p-2 rounded-md border border-gray-200 hover:bg-gray-100 cursor-pointer">
-                            <p class="text-sm text-gray-800">Notification message #<span x-text="n"></span></p>
-                            <p class="text-xs text-gray-500">2 minutes ago</p>
+                
+                <div id="notifList" class="max-h-120 overflow-y-auto p-3 space-y-2">
+                    @forelse($notifs as $notif)
+                        <div
+                        class="p-2 rounded-md border border-gray-200 hover:bg-gray-100 cursor-pointer"
+                        data-history-id="{{ $notif->history_id }}"   {{-- hidden identifier --}}
+                        data-is-read="{{ (int) $notif->isRead }}"
+                        >
+                        <p class="text-sm text-gray-800">
+                            Notification message:
+                            <span>{{ $notif->sensor_type }} is {{ $notif->sensor_status }}</span>
+                        </p>
+                        <p class="text-xs text-gray-500">{{ $notif->created_at->diffForHumans() }}</p>
                         </div>
-                    </template>
+                    @empty
+                        <div class="py-4 text-gray-500" data-empty>No unread notifications.</div>
+                    @endforelse
                 </div>
+
             </div>
         </div>
     </main>
@@ -288,6 +312,138 @@
             mobileMenu.classList.remove('active');
             overlay.classList.remove('active');
         });
+
+        // Turn an ISO/time-like value into "x minutes ago"
+        function relativeTimeFrom(dateInput) {
+            try {
+                const d = (dateInput instanceof Date) ? dateInput : new Date(dateInput);
+                const diffMs = d.getTime() - Date.now();
+                const abs = Math.abs(diffMs);
+                const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' });
+
+                const sec = Math.round(diffMs / 1000);
+                const min = Math.round(diffMs / (1000 * 60));
+                const hr  = Math.round(diffMs / (1000 * 60 * 60));
+                const day = Math.round(diffMs / (1000 * 60 * 60 * 24));
+
+                if (abs < 60 * 1000) return rtf.format(sec, 'second');
+                if (abs < 60 * 60 * 1000) return rtf.format(min, 'minute');
+                if (abs < 24 * 60 * 60 * 1000) return rtf.format(hr, 'hour');
+                return rtf.format(day, 'day');
+            } catch {
+                return typeof dateInput === 'string' ? dateInput : new Date().toLocaleString();
+            }
+        }
+
+        function extractNotifPayload(evt) {
+        const raw = evt && typeof evt === 'object' ? evt : {};
+        const p = raw.payload && typeof raw.payload === 'object' ? raw.payload : raw;
+        return {
+            sensor_status: p.sensor_status ?? p.status ?? 'Unknown status',
+            sensor_type:   p.sensor_type   ?? 'Unknown sensor',
+            created_at:    p.created_at    ?? new Date().toISOString(),
+        };
+        }
+
+        function buildNotifCard({ sensor_status, created_at, sensor_type }) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'p-2 rounded-md border border-gray-200 hover:bg-gray-100 cursor-pointer';
+
+        const p1 = document.createElement('p');
+        p1.className = 'text-sm text-gray-800';
+        p1.textContent = 'Notification message: ';
+        const msg = document.createElement('span');
+        msg.textContent = sensor_type + " is " + sensor_status;
+        p1.appendChild(msg);
+
+        const p2 = document.createElement('p');
+        p2.className = 'text-xs text-gray-500';
+        p2.textContent = relativeTimeFrom(created_at);
+
+        wrapper.appendChild(p1);
+        wrapper.appendChild(p2);
+        return wrapper;
+        }
+
+        function prependNotifCard(card, { maxItems = 100 } = {}) {
+        const list = document.getElementById('notifList');
+        if (!list) return;
+        const emptyNode = list.querySelector('[data-empty]');
+        if (emptyNode) emptyNode.remove();
+        list.insertBefore(card, list.firstChild);
+
+        const cards = [...list.children].filter(el => !el.hasAttribute('data-empty'));
+        if (cards.length > maxItems) {
+            for (let i = maxItems; i < cards.length; i++) cards[i].remove();
+        }
+        }
+
+        // --- Echo subscription (PUBLIC channel) ---
+        (function subscribeToNotifications() {
+        if (!window.Echo) {
+            console.warn('Echo is not available. Skipping notif subscription.');
+            return;
+        }
+
+        const handler = (evt) => {
+            const payload = extractNotifPayload(evt);
+            const card = buildNotifCard(payload);
+            prependNotifCard(card, { maxItems: 100 });
+        };
+
+        // If you used broadcastAs(): return 'NotificationReceived' → dot form
+        window.Echo.channel('notif-received')
+            .listen('.NotificationReceived', handler)     // with broadcastAs()
+            .listen('NotificationReceived', handler);     // without broadcastAs()
+        })();
+
+        (function () {
+            const list = document.getElementById('notifList');
+            if (!list) return;
+
+            const CSRF = document.querySelector('meta[name="csrf-token"]')?.content || '';
+            const REDIRECT_URL = 'https://aeroson-monitoring.com/admin_history_status'; // <- target page
+
+            async function markRead(historyId) {
+                // If you named the route, you can use @json(route('notifications.markRead')) instead
+                const url = '{{ route('notifications.markRead') }}';
+                const res = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': CSRF,
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ history_id: historyId }),
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.json();
+            }
+
+            list.addEventListener('click', async (e) => {
+                const card = e.target.closest('[data-history-id]');
+                if (!card) return;
+
+                // prevent double submits
+                if (card.dataset.busy === '1') return;
+                card.dataset.busy = '1';
+
+                const historyId = card.getAttribute('data-history-id');
+
+                // slight visual feedback
+                card.style.opacity = '0.6';
+
+                try {
+                await markRead(historyId);
+                // success → go to admin page
+                window.location.href = REDIRECT_URL;
+                } catch (err) {
+                console.error('markRead failed:', err);
+                // still redirect so the user reaches the page
+                window.location.href = REDIRECT_URL;
+                }
+            });
+        })();
     });
 </script>
 

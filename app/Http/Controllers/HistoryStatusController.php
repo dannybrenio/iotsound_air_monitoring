@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationReceived;
 use App\Events\SensorMalfunctioned;
 use App\Models\History_status;
 use App\Models\Device_status;
@@ -13,10 +14,13 @@ class HistoryStatusController extends Controller
    
     public function index()
     {
+        $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
+
         $history_statuses = History_status::with('device_Status')
-         ->latest('status_id') // or any ordering you need
-        ->get();
-        return view('admin.history_status.admin_history_status', compact('history_statuses'));
+            ->latest('history_id') // or any ordering you need
+            ->paginate(10); // or any ordering you need
+
+        return view('admin.history_status.admin_history_status', compact('history_statuses', 'notifs'));
     }
 
    private const POINTER_MAP = [
@@ -53,19 +57,27 @@ class HistoryStatusController extends Controller
 
             $history_status_create = History_status::create([
                 'status_id' => $device_status_id,
-                'sensor_type' => $rawdata['sensor_pointer'],
+                'sensor_type' => $rawdata['sensor_type'],
                 'sensor_status' => $rawdata['sensor_status'],
+                'isRead' => 0
+            ]);
+
+            NotificationReceived::dispatch([
+                'sensor_type'   => $history_status_create->sensor_type,
+                'sensor_status' => $history_status_create->sensor_status,
+                'created_at'    => $history_status_create->created_at, 
+                'isRead'     => $history_status_create->isRead, 
             ]);
 
             if($history_status_create){
             
-                $pointer_column = self::POINTER_MAP[$rawdata['sensor_pointer']];
+                $pointer_column = self::POINTER_MAP[$rawdata['sensor_type']];
                 Device_status::where('status_id', $device_status_id)->update([$pointer_column => $rawdata['sensor_status']]);
 
                 return response()->json([
                     'sucess' => true,
                     'hardware_info' => $rawdata['hardware_info'],
-                    'sensor_type' => $rawdata['sensor_pointer'],
+                    'sensor_type' => $rawdata['sensor_type'],
                     'sensor_status' => $rawdata['sensor_status'],
                     'message' => 'Device Status Added' 
                 ], 200);
