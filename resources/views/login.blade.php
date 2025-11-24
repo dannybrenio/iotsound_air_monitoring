@@ -22,14 +22,16 @@
             @csrf
             <!-- User Input -->
             <div class="relative flex items-center w-[70%] justify-center">
-                <img src="{{ asset('user.png') }}" alt="" class="absolute left-3 size-4">
+                <!-- <img src="{{ asset('user.png') }}" alt="" class="absolute left-3 size-4"> -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="absolute size-4 left-3" viewBox="0 0 24 24"><path fill="currentColor" d="M15.71 12.71a6 6 0 1 0-7.42 0a10 10 0 0 0-6.22 8.18a1 1 0 0 0 2 .22a8 8 0 0 1 15.9 0a1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1a10 10 0 0 0-6.25-8.19ZM12 12a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"/></svg>
                 <input type="text" name="username"
                     class="w-full h-9 px-9 border border-[#06402b] focus:outline-none focus:ring-0 rounded-lg font-semibold"
                     placeholder="Username" required>
             </div>
             <!-- Password Input -->
             <div class="relative flex items-center w-[70%] justify-center">
-                <img src="{{ asset('password.png') }}" alt="" class="absolute left-3 size-4">
+                <!-- <img src="{{ asset('password.png') }}" alt="" class="absolute left-3 size-4"> -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="absolute size-4 left-3" viewBox="0 0 24 24"><path fill="currentColor" d="M17 9V7A5 5 0 0 0 7 7v2a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3ZM9 7a3 3 0 0 1 6 0v2H9Zm9 12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1Z"/></svg>
                 <input type="password" name="password"
                     class="w-full h-9 pl-9 pr-3 border border-[#06402b] focus:outline-none focus:ring-0 rounded-lg font-semibold"
                     placeholder="Password" required>

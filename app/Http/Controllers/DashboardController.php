@@ -36,7 +36,7 @@ class DashboardController extends Controller
             ->where('realtime_stamp', '<', $nowLocal)
             ->orderBy('realtime_stamp')
             ->get();
-
+    
         // --- Rolling 12h window for "latest" nowcast
         $winStartLocal = $nowLocal->copy()->subHours(12);
         $windowData  = $rangeData->filter(function ($row) use ($winStartLocal, $nowLocal, $appTz) {
@@ -47,7 +47,14 @@ class DashboardController extends Controller
         $latestRecord  = $windowData->sortByDesc(function ($row) use ($appTz) {
             return Carbon::parse($row->realtime_stamp, $appTz);
         })->first();
-
+        
+        $latestVals = $latestRecord ? [
+            'pm2_5' => $latestRecord->pm2_5,
+            'pm10'  => $latestRecord->pm10,
+            'co'    => $latestRecord->co,
+            'no2'   => $latestRecord->no2,
+        ] : null;
+    
         $latestNowcast = $aqiService->computeNowCast($windowData);
         $latestAqi     = $latestNowcast['overall_aqi'] ?? null;
         $latestDecibel = $latestRecord->decibels ?? null;
@@ -75,10 +82,11 @@ class DashboardController extends Controller
         $seg24h = $aqiService->computeSegmentedAverages($rangeData, '24h', $nowLocal);
         $seg7d  = $aqiService->computeSegmentedAverages($rangeData, '7d',  $endLocalDay);
         $seg30d = $aqiService->computeSegmentedAverages($rangeData, '30d', $nowLocal);
-
+    
         return view('front.dashboard', [
             'latest_aqi'      => $latestAqi,
             'latest_nowcast'  => $latestNowcast,
+            'latest_vals' => $latestVals,
             'latest_decibel'  => $latestDecibel,
             'peak_decibel'    => $peakDecibel,
             'latest_datetime' => $latestDateTime,

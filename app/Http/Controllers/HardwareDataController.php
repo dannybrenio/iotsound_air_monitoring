@@ -254,6 +254,13 @@ class HardwareDataController extends Controller
             // get the latest row by timestamp defensively
             $latest = $window->sortByDesc('realtime_stamp')->first();
 
+            $latestVals = $latest ? [
+                'pm2_5' => $latest->pm2_5,
+                'pm10'  => $latest->pm10,
+                'co'    => $latest->co,
+                'no2'   => $latest->no2,
+            ] : null;
+
             $latestTs = null;
             if (!empty($latest?->realtime_stamp)) {
                 // handle both string and Carbon cases
@@ -288,6 +295,7 @@ class HardwareDataController extends Controller
                 'hardware_id'      => $hardwareId,
                 'latest_aqi'       => $overallAqi,
                 'latest_nowcast'   => $nowcast,
+                'latest_vals' => $latestVals,
                 'latest_decibel'   => $latest->decibels ?? null,
                 'average_decibel'  => $avgDecibelToday,
                 'peak_decibel'     => $peakDecibel,

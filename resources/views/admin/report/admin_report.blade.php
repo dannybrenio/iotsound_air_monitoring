@@ -19,17 +19,17 @@
                                 <td class="px-4 py-2 text-start">{{ $report->report_id}}</td>
                                 <td class="px-4 py-2 text-start">{{ $report->user->first_name}} {{ $report->user->middle_name ?? ''}} {{ $report->user->last_name}}</td>
                                 <td class="px-4 py-2 text-start">{{ $report->report_body}}</td>
-                                      <td>             
-                                        @if ($report->image_path)
+                                <td class="px-4 py-2 text-start">             
+                                    @if ($report->image_path)
                                         @if($report->image_path)
-                                          <a class="text-blue-500" href="{{ Storage::disk('web')->url($report->image_path) }}" target="_blank">View Image</a>
+                                            <a class="text-blue-500" href="{{ Storage::disk('web')->url($report->image_path) }}" target="_blank">View Image</a>
                                         @else
-                                          <span class="text-gray-500 text-sm">No image</span>
+                                            <span class="text-gray-500 text-sm">No image</span>
                                         @endif
-                                        @else
+                                    @else
                                         <span class="text-gray-500">No image</span>
-                                        @endif
-                                    </td>
+                                    @endif
+                                </td>
                                 <td class="px-4 py-2 text-start">{{ $report->created_at}}</td>
                             </tr>
                         @endforeach

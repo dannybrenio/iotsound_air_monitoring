@@ -17,7 +17,7 @@
                     <tbody>
                         @foreach($pending_hardwares as $pending_hardware)
                             <tr class="{{ $loop->even ? 'bg-gray-300' : 'bg-white' }}">
-                                <td class="px-4 py-2 text-start">{{$pending_hardware->hardware_id}}</td>
+                                <td class="px-4 py-2 text-start">{{$pending_hardware->pending_id}}</td>
                                 <td class="px-4 py-2 text-start">{{$pending_hardware->hardware_info}}</td>
                                 <td class="px-4 py-2 text-start">{{$pending_hardware->hardware_location}}</td>
                                 <td class="px-4 py-2 text-start">{{$pending_hardware->created_at}}</td>

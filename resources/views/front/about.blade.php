@@ -1,15 +1,14 @@
 <x-layout>
     <div class="flex flex-col w-full h-auto justify-center items-center bg-white">
         <!-- First Layer -->
-        <div
-            class="opacity-0 translate-y-10 transition-all duration-700 ease-out section flex flex-col h-auto w-full bg-white shadow-xl">
+        <div class="opacity-0 translate-y-10 transition-all duration-700 ease-out section flex flex-col h-auto w-full bg-white shadow-xl">
             <div class="flex flex-col lg:flex-row w-full h-[800px] lg:h-screen gap-x-5">
                 <img src="{{ asset('hall.jpg') }}" alt="" class="w-full h-full relative">
-                <div class="absolute flex flex-col w-full h-[50%] lg:h-full justify-center items-center gap-y-4 md:gap-y-6 lg:gap-y-10 p-10 lg:p-20 bg-black/60">
-                    <span class="text-green-600 font-extrabold text-2xl md:text-4xl lg:text-7xl uppercase">About
-                        <span class="text-[#d4af37] uppercase text-2xl md:text-4xl lg:text-7xl font-extrabold">Us</span>
+                <div class="absolute flex flex-col w-full h-full justify-center items-center gap-y-4 md:gap-y-6 lg:gap-y-10 p-10 lg:p-20 bg-black/60">
+                    <span class="text-green-600 font-extrabold text-4xl lg:text-7xl uppercase">About
+                        <span class="text-[#d4af37] uppercase text-4xl lg:text-7xl font-extrabold">Us</span>
                     </span>
-                    <span class="text-white text-sm md:text-base lg:text-3xl whitespace-normal text-center px-10">
+                    <span class="text-white text-xl lg:text-3xl whitespace-normal text-center px-10">
                         At AeroSon: Smart Real-Time Air and Sound Monitoring with Predictive Analytics in Barangay 115, we are committed to creating
                         healthier and safer living environments through innovation. Our Air and Sound Monitoring System
                         is designed to provide real-time data on pollution and noise levels, empowering people with the
@@ -39,16 +38,12 @@
             </div>
         </div>
         <!-- Second Layer -->
-        <div
-            class="opacity-0 translate-y-10 transition-all duration-700 ease-out section flex flex-col h-[800px] lg:h-screen w-full justify-center items-center p-5">
-            <div
-                class="flex flex-col lg:flex-row h-[90%] w-[95%] bg-white shadow-xl rounded-xl justify-center items-center border-2 border-[#06402b]">
+        <div class="opacity-0 translate-y-10 transition-all duration-700 ease-out section flex flex-col h-[800px] lg:h-screen w-full justify-center items-center">
+            <div class="flex flex-col lg:flex-row h-[90%] w-[95%] bg-white shadow-xl rounded-xl justify-center items-center border-2 border-[#06402b]">
                 <div class="flex flex-col w-full lg:w-[50%] h-[45%] lg:h-[80%] justify-center items-center">
                     <div class="border-4 border-[#d4af37] w-[30%] lg:w-[50%]"></div>
-                    <div
-                        class="flex flex-col w-full h-full justify-center items-center gap-y-4 md:gap-y-6 lg:gap-y-10 p-10 lg:p-20">
-                        <span
-                            class="text-[#06402b] font-extrabold text-2xl md:text-4xl lg:text-6xl uppercase">Mission</span>
+                    <div class="flex flex-col w-full h-full justify-center items-center gap-y-4 md:gap-y-6 lg:gap-y-10 p-10 lg:p-20">
+                        <span class="text-[#06402b] font-extrabold text-2xl md:text-4xl lg:text-6xl uppercase">Mission</span>
                         <span class="text-black text-base md:text-xl lg:text-2xl whitespace-normal text-center">
                             Our mission is to improve community health and environmental awareness by delivering
                             accurate, accessible, and reliable air and sound monitoring solutions.
@@ -57,8 +52,7 @@
                 </div>
                 <div class="flex flex-col w-full lg:w-[50%] h-[45%] lg:h-[80%] justify-between items-center">
                     <div class="border-4 border-[#d4af37] w-[30%] lg:w-[50%]"></div>
-                    <div
-                        class="flex flex-col w-full h-full justify-center items-center gap-y-4 md:gap-y-6 lg:gap-y-10 p-10 lg:p-20">
+                    <div class="flex flex-col w-full h-full justify-center items-center gap-y-4 md:gap-y-6 lg:gap-y-10 p-10 lg:p-20">
                         <span
                             class="text-[#06402b] font-extrabold text-2xl md:text-4xl lg:text-6xl uppercase">Vision</span>
                         <span class="text-black text-base md:text-xl lg:text-2xl whitespace-normal text-center">
@@ -70,10 +64,9 @@
             </div>
         </div>
         <!-- Third Layer -->
-        <div class="opacity-0 translate-y-10 transition-all duration-700 ease-out section p-5 flex justify-center items-center h-[800px] lg:h-screen w-full">
-            <div class="flex flex-col lg:flex-row h-[90%] w-[95%] rounded-xl justify-evenly items-center bg-[#06402b]">
-                <div
-                    class="flex flex-col bg-white/20 h-[45%] lg:h-[70%] w-[80%] lg:w-[45%] rounded-4xl justify-center items-center gap-y-8 px-10 ">
+        <div class="opacity-0 translate-y-10 transition-all duration-700 ease-out section flex justify-center items-center h-auto lg:h-screen w-full">
+            <div class="flex flex-col lg:flex-row h-auto lg:h-[90%] w-[95%] gap-y-10 rounded-xl justify-evenly items-center bg-[#06402b] py-10 lg:py-0">
+                <div class="flex flex-col bg-white/20 h-auto lg:h-[80%] w-[90%] lg:w-[45%] rounded-4xl justify-center items-center gap-y-5 lg:gap-y-8 p-5 lg:px-10 ">
                     <span class="text-white font-extrabold text-2xl md:text-3xl lg:text-5xl uppercase">THE
                         <span
                             class="text-[#d4af37] uppercase text-2xl md:text-3xl lg:text-5xl font-extrabold">PROBLEM</span>
@@ -84,9 +77,8 @@
                         and respond to these issues effectively.
                     </span>
                 </div>
-                <div
-                    class="flex flex-col bg-white/20 h-[45%] lg:h-[70%] w-[80%] lg:w-[45%] rounded-4xl justify-center items-center gap-y-8 px-10">
-                    <span class="text-white font-extrabold text-2xl md:text-3xl lg:text-5xl uppercase">OUR
+                <div class="flex flex-col bg-white/20 h-auto lg:h-[80%] w-[90%] lg:w-[45%] rounded-4xl justify-center items-center gap-y-5 lg:gap-y-8 p-8 lg:px-10">
+                    <span class="text-white font-extrabold text-2xl md:text-3xl lg:text-5xl uppercase text-center">OUR
                         <span
                             class="text-[#d4af37] uppercase text-2xl md:text-3xl lg:text-5xl font-extrabold">SOLUTION</span>
                     </span>
@@ -99,13 +91,10 @@
             </div>
         </div>
         <!-- Fourth Layer -->
-        <div
-            class="opacity-0 translate-y-10 transition-all duration-700 ease-out section flex flex-col h-[800px] md:h-[650px] lg:h-screen w-full justify-center items-center lg:p-5">
-            <div
-                class="flex flex-row h-[90%] w-[95%] bg-white shadow-xl rounded-xl justify-center items-center border-2 border-[#06402b]">
-                <div class="flex flex-col w-[90%] h-[90%] lg:h-[80%] justify-center items-center">
-                    <div
-                        class="flex flex-col w-full h-full justify-start items-center gap-y-4 md:gap-y-6 lg:gap-y-10 px-10">
+        <div class="opacity-0 translate-y-10 transition-all duration-700 ease-out section flex flex-col h-auto my-10 lg:my-0 lg:h-screen w-full justify-center items-center">
+            <div class="flex flex-row h-auto lg:h-[90%] w-[95%] bg-white shadow-xl rounded-xl justify-center items-center border-2 border-[#06402b] py-10 lg:py-0">
+                <div class="flex flex-col w-[90%] h-[90%] lg:h-[80%] justify-between items-center gap-y-10 lg:gap-y-0">
+                    <div class="flex flex-col w-full h-auto justify-start items-center gap-y-4 md:gap-y-6 lg:gap-y-10 px-5 lg:px-10">
                         <span class="text-[#06402b] font-extrabold text-2xl md:text-4xl lg:text-6xl uppercase">WHO
                             <span
                                 class="text-[#d4af37] font-extrabold text-2xl md:text-4xl lg:text-6xl uppercase">WE</span>

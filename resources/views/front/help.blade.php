@@ -150,7 +150,7 @@
                 <div class="w-[30%] border rounded-full border-[#06402b]"></div>
             </div>
             <!-- Combined Impact -->
-            <div class="flex flex-col w-[90%] h-auto items-center gap-y-8 px-3 lg:px-10 py-10 bg-[#06402b] rounded-3xl">
+            <div class="flex flex-col w-[90%] h-auto items-center gap-y-8 px-3 lg:px-10 py-14 bg-[#06402b] rounded-3xl">
                 <div class="flex flex-col w-[85%] items-center gap-y-3">
                     <span class="text-3xl font-bold uppercase text-center text-white">How air and noise pollution
                         together affect wellbeing</span>
@@ -161,35 +161,35 @@
                         exposure creates a heightened "allostatic load," where the body's stress-coping systems are
                         overwhelmed.</p>
                 </div>
-                <div class="flex flex-col w-full h-auto items-center gap-y-8">
+                <div class="flex flex-col w-[90%] h-auto items-center gap-y-8">
                     <span class="text-2xl font-bold uppercase text-center text-white">How they interact</span>
                     <div class="flex flex-col lg:flex-row justify-between w-full items-start gap-y-5">
-                        <div class="flex flex-col items-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[32%] h-70 overflow-hidden p-5 gap-y-2 hover:scale-105 duration-300">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                        <div class="flex flex-col items-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[32%] h-auto lg:h-70 overflow-hidden p-5 gap-y-2 hover:scale-105 duration-300">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-h-auto lg:transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Amplified stress response</span>
                             <p class="text-sm indent-4 text-justify leading-relaxed">Both air and noise pollution are stressors that trigger the body's stress response system (e.g., the HPA axis and sympathetic nervous system). When combined, they can accelerate the progression to "allostatic overload," a state where the body's ability to cope is overwhelmed, increasing the risk of disease.</p>
                         </div>
-                        <div class="flex flex-col items-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[32%] h-70 overflow-hidden p-5 gap-y-2 hover:scale-105 duration-300">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                        <div class="flex flex-col items-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[32%] h-auto lg:h-70 overflow-hidden p-5 gap-y-2 hover:scale-105 duration-300">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Increased inflammation and oxidative stress</span>
                             <p class="text-sm indent-4 text-justify leading-relaxed">Air pollution induces a persistent, low-grade inflammatory state, while noise pollution can trigger similar inflammatory and oxidative stress responses. Their combined effects can worsen these processes, potentially exacerbating respiratory issues and systemic inflammation.</p>
                         </div>
-                        <div class="flex flex-col items-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[32%] h-70 overflow-hidden p-5 gap-y-2 hover:scale-105 duration-300">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                        <div class="flex flex-col items-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[32%] h-auto lg:h-70 overflow-hidden p-5 gap-y-2 hover:scale-105 duration-300">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Synergistic impact on health outcomes</span>
                             <p class="text-sm indent-4 text-justify leading-relaxed">Studies show that co-exposure to air and noise pollution has stronger associations with negative health outcomes than exposure to either one alone. For example, one study found a stronger association between the combination of high noise and high (NO₂) and an increased risk of ischemic stroke.</p>
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col w-full h-auto items-center gap-y-8">
+                <div class="flex flex-col w-[90%] h-auto items-center gap-y-8">
                     <span class="text-2xl font-bold uppercase text-center text-white">Specific effects on wellbeing</span>   
                     <div class="flex flex-col lg:flex-row w-full justify-between items-start gap-y-5">
                         <!-- Box1 -->
-                        <div class="group relative overflow-hidden bg-white w-full lg:w-[32%] h-auto lg:min-h-90 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-2 hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                        <div class="group relative overflow-hidden bg-white w-full lg:w-[32%] h-auto lg:min-h-96 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-2 hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <div class="flex w-full justify-center items-center h-auto px-2">
                                 <span class="text-lg text-[#06402b] font-semibold uppercase">Mental health</span>
@@ -200,8 +200,8 @@
                             </div>
                         </div>
                         <!-- Box2 -->
-                        <div class="group relative overflow-hidden bg-white w-full lg:w-[32%] h-auto lg:min-h-90 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-2 hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                        <div class="group relative overflow-hidden bg-white w-full lg:w-[32%] h-auto lg:min-h-96 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-2 hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <div class="flex w-full justify-center items-center h-auto px-2">
                                 <span class="text-lg text-[#06402b] font-semibold uppercase">Physical health</span>
@@ -212,11 +212,11 @@
                             </div>
                         </div>
                         <!-- Box3 -->
-                        <div class="group relative overflow-hidden bg-white w-full lg:w-[32%] h-auto lg:min-h-90 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-2 hover:-translate-y-2 hover:scale-101 duration-300 transform">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                        <div class="group relative overflow-hidden bg-white w-full lg:w-[32%] h-auto lg:min-h-96 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-2 hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <div class="flex w-full justify-center items-center h-auto px-2">
-                                <span class="text-lg text-[#06402b] font-semibold uppercase">Vulnerable Populations</span>
+                                <span class="text-lg text-[#06402b] font-semibold uppercase text-center">Vulnerable Populations</span>
                             </div>
                             <div  class="gap-y-2">
                                 <p class="text-sm text-justify leading-relaxed">• Children and adolescents are particularly vulnerable. For example, aircraft noise has been linked to reading impairment in school children, and both air and noise pollution can have a greater impact on their developing nervous systems and mental wellbeing.</p>
@@ -240,37 +240,37 @@
                     </div>
                     <div class="flex flex-col lg:flex-row justify-between w-full h-auto items-start gap-y-5">
                         <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">1</span>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Air and water pollution</span>
                         </div>
                         <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">2</span>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Habitat loss and biodiversity reduction</span>
                         </div>
                         <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">3</span>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Resource depletion</span>
                         </div>
                         <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">4</span>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Waste generation</span>
                         </div>
                         <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">5</span>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Urban heat island effect</span>
                         </div>
                         <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">6</span>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Climate change contribution</span>
@@ -279,7 +279,7 @@
                 </div>
                 <div class="flex flex-col lg:flex-row w-full h-auto items-start justify-between gap-y-5">
                     <div class="group flex flex-col w-full lg:w-[49%] min-h-80 gap-y-5 p-5 bg-white rounded-lg shadow-lg relative overflow-hidden hover:scale-102 duration-300">
-                        <div class="absolute top-0 left-0 w-full h-[4px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100"></div>
+                        <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100"></div>
                         <span class="text-xl font-semibold uppercase text-center text-[#06402b]">Addressing the impacts</span>  
                         <div class="flex flex-col justify-between w-full items-start gap-y-4">
                             <p class="text-sm text-justify leading-relaxed"><span class="font-semibold">• Sustainable urban planning: </span> Implementing thoughtful urban planning is essential for managing growth, preserving natural resources, and protecting residents.</p>
@@ -289,7 +289,7 @@
                         </div>  
                     </div>
                     <div class="group flex flex-col w-full lg:w-[49%] min-h-80 gap-y-5 p-5 bg-white rounded-lg shadow-lg relative overflow-hidden hover:scale-102 duration-300">
-                        <div class="absolute top-0 left-0 w-full h-[4px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100"></div>
+                        <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100"></div>
                         <span class="text-xl font-semibold uppercase text-center text-[#06402b]">Impacts on natural hazards</span>  
                         <div class="flex flex-col justify-between w-full items-start gap-x-5 gap-y-5">
                             <p class="text-sm text-justify leading-relaxed"><span class="font-semibold">• Increased vulnerability: </span>Urban expansion and the modification of landscapes make cities more vulnerable to natural hazards like floods and hurricanes.</p>
@@ -305,7 +305,7 @@
                 <div class="w-[30%] border rounded-full border-[#06402b]"></div>
             </div>
             <!-- Environmental -->
-            <div class="flex flex-col w-[90%] h-auto items-center gap-y-8 px-3 lg:px-10 py-10 bg-[#06402b] rounded-3xl">
+            <div class="flex flex-col w-[90%] h-auto items-center gap-y-8 px-3 lg:px-10 py-14 bg-[#06402b] rounded-3xl">
                 <div class="flex flex-col w-full items-center gap-y-5">
                     <div class="flex flex-col w-[80%] items-center gap-y-3">
                         <span class="text-3xl font-bold uppercase text-center text-white">How to monitor air and sound using sensors or apps</span>
@@ -325,25 +325,25 @@
                     </div>
                     <div class="flex flex-col lg:flex-row justify-between w-[90%] h-auto items-start gap-y-5">
                         <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 p-3 text-white bg-[#06402B] rounded-full group-hover:bg-yellow-500" viewBox="0 0 24 24"><path fill="currentColor" d="M22 18a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4v-2h12v2M4 3h10a2 2 0 0 1 2 2v9H8v5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m0 3v2h2V6H4m10 2V6H8v2h6M4 10v2h2v-2H4m4 0v2h6v-2H8m-4 4v2h2v-2H4Z"/></svg>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Nutrition</span>
                         </div>
                         <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 p-3 text-white bg-[#06402B] rounded-full group-hover:bg-yellow-500" viewBox="0 0 24 24"><path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12h1m3-4H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2m0-9v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 5h6m0-5v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1zm3 1h2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2m4-4h-1"/></svg>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Physical Activity</span>
                         </div>
                         <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 p-3 text-white bg-[#06402B] rounded-full group-hover:bg-yellow-500" viewBox="0 0 50 50"><path fill="currentColor" d="M49 17c0-.55-.45-1-1-1H35c-.55 0-1-.45-1-1V2c0-.55-.45-1-1-1H17c-.55 0-1 .45-1 1v13c0 .55-.45 1-1 1H2c-.55 0-1 .45-1 1v16c0 .55.45 1 1 1h13c.55 0 1 .45 1 1v13c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V35c0-.55.45-1 1-1h13c.55 0 1-.45 1-1V17z"/></svg>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Sleep and Mental Health</span>
                         </div>
                         <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
-                            <div class="absolute top-0 left-0 w-full h-[4px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
+                            <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 p-3 text-white bg-[#06402B] rounded-full group-hover:bg-yellow-500" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="M14.98 2.5A6.37 6.37 0 0 0 15 2V1h-1.75a6.003 6.003 0 0 0-5.761 4.32A5.99 5.99 0 0 0 2.75 3H1v1a6 6 0 0 0 6 6h.25v4.25a.75.75 0 0 0 1.5 0V8H9a6 6 0 0 0 5.98-5.5Zm-6.203 4a4.5 4.5 0 0 1 4.473-4h.223A4.5 4.5 0 0 1 9 6.5h-.223Zm-6.027-2a4.5 4.5 0 0 1 4.473 4H7a4.5 4.5 0 0 1-4.473-4h.223Z" clip-rule="evenodd"/></svg>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">General Well-being</span>
