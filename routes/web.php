@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AlertsController;
 use App\Http\Controllers\HardwareController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\HistoryStatusController;
 use App\Http\Controllers\AqiController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
+use App\Models\History_status;
 
 // ======================
 // Public Routes
@@ -32,7 +34,7 @@ Route::get('/weather', fn() => view('weather'));
 
 Route::get('/admin', function () {
     if(Session::get('logged_in')){
-        return redirect()->route('hardware');
+        return redirect()->route('adminDashboard');
     }
     return view('login');
 })->name('login');
@@ -44,7 +46,7 @@ Route::post('/login', function (Request $request) {
     // Hardcoded credentials
     if ($username === 'admin' && $password === 'admin') {
         Session::put('logged_in', true);
-        return redirect()->route('hardware');
+        return redirect()->route('adminDashboard');
     }
 
     return back()->with('error', 'Invalid username or password');
@@ -69,6 +71,7 @@ $authMiddleware = function (Request $request, \Closure $next) {
 
 // Apply the middleware group properly
 Route::middleware('auth.admin')->group(function () {
+    Route::get('/admin_dashboard', [AdminDashboardController::class, 'index'])->name('adminDashboard');
     Route::get('/admin_hardware', [HardwareController::class, 'index'])->name('hardware');
     Route::delete('/admin_hardware/{hardware}', [HardwareController::class, 'destroy'])
         ->name('hardware.destroy');
@@ -84,10 +87,10 @@ Route::middleware('auth.admin')->group(function () {
     Route::get('/admin_history_status', [HistoryStatusController::class, 'index'])->name('history');
 });
 
-Route::post('/notifications/mark-read', [NotificationController::class, 'markRead'])
-    ->name('notifications.markRead');
-
-
+Route::post('/notifications/mark-all-read', function() {
+    History_status::where('isRead', 0)->update(['isRead' => 1]);
+    return response()->json(['success' => true]);
+});
 Route::get('/test-alert', function () {
     $ctrl = new AlertsController();
     return $ctrl->store('hw-aeroson-001', 'Emergency, Evacuation Advised!', 'High Noise Level');

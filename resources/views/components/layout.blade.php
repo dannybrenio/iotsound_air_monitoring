@@ -73,16 +73,15 @@
     <!-- Fixed Header -->
     <header class="fixed top-0 left-0 right-0 shadow-md w-full h-[60px] px-10 py-2 bg-[#E0EBDC] z-50">
         <div class="flex flex-row w-full h-full justify-between items-center">
-            <div
-                class="h-full text-[#06402b] w-[50%] flex flex-row justify-start items-center text-xl font-extrabold gap-x-2 group">
+            <div class="h-full text-[#06402b] w-[50%] flex flex-row justify-start items-center text-xl font-extrabold gap-x-2 group">
                 <a href="{{ route('dashboard') }}">
                     <img src="{{ asset('bglogo.png') }}" alt="" class="size-10 cursor-pointer">
                 </a>
                 <a href="{{ route('dashboard') }}"
-                    class="text-center h-full flex justify-center items-center hidden lg:flex cursor-pointer uppercase">AeroSon</a>
+                    class="text-center h-full flex justify-center items-center hidden md:flex cursor-pointer uppercase">AeroSon</a>
             </div>
             <div class="h-full w-[80%] flex justify-end items-center gap-x-4">
-                <div class="h-full w-[48%] flex-row items-center justify-between hidden lg:flex">
+                <div class="h-full w-auto gap-x-5 flex-row items-center justify-between hidden md:flex">
                     <a href="{{ route('dashboard') }}"
                         class="flex flex-row gap-x-2 justify-center items-center text-sm h-[80%]
                                 {{ request()->routeIs('dashboard') ? 'text-[#06402b] border-b-2 font-semibold border-[#06402b] hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
@@ -92,7 +91,7 @@
                             <rect x="6" y="10" width="4" height="7" />
                             <rect x="14" y="6" width="4" height="11" />
                         </svg> -->
-                        Dashboard
+                        Home
                     </a>
                     <a href="{{ route('about') }}"
                         class="flex flex-row gap-x-2 justify-center items-center text-sm h-[80%]
@@ -122,7 +121,7 @@
                 </div>
                 <!-- Mobile Hamburger Button -->
                 <button id="hamburger-btn"
-                    class="hamburger lg:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1 focus:outline-none cursor-pointer">
+                    class="hamburger md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1 focus:outline-none cursor-pointer">
                     <span class="hamburger-line line1 block w-6 h-0.5 bg-[#060033]"></span>
                     <span class="hamburger-line line2 block w-6 h-0.5 bg-[#060033]"></span>
                     <span class="hamburger-line line3 block w-6 h-0.5 bg-[#060033]"></span>
@@ -135,7 +134,7 @@
     <div id="overlay" class="overlay fixed inset-0 bg-black/90 bg-opacity-50 z-40 opacity-0 invisible"></div>
 
     <!-- Mobile Menu Sidebar -->
-    <div id="mobile-menu" class="menu-slide-in fixed top-0 right-0 h-full w-[80%] bg-[#E0EBDC] shadow-lg z-50 lg:hidden">
+    <div id="mobile-menu" class="menu-slide-in fixed top-0 right-0 h-full w-[65%] bg-[#E0EBDC] shadow-lg z-50 md:hidden">
         <div class="flex flex-col h-full">
             <!-- Menu Header -->
             <div class="flex justify-between items-center p-6 border-b border-gray-200">
@@ -160,7 +159,7 @@
                         <rect x="6" y="10" width="4" height="7" />
                         <rect x="14" y="6" width="4" height="11" />
                     </svg> -->
-                    <span class="">Dashboard</span>
+                    <span class="">Home</span>
                 </a>
 
                 <a href="{{route('about')}}"
@@ -207,25 +206,28 @@
     </main>
 
     <!-- Footer -->
-    <footer
-        class="bg-[#E0EBDC] w-full text-black h-auto flex flex-col items-center justify-center gap-y-10 py-8 lg:px-4 border-t border-[#638559]">
-        <div class="w-[80%] h-auto flex flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-between gap-y-10">
+    <footer class="bg-[#E0EBDC] w-full text-black h-auto flex flex-col items-center justify-center gap-y-10 py-8 md:px-4 border-t border-[#638559]">
+        <div class="w-[80%] h-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-y-10">
             <div class="flex flex-col">
-                <h3 class="text-[#06402b] text-xl font-bold mb-4 relative inline-block mx-auto md:mx-0">
-                    Quick Links
-                    <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-yellow-500"></span>
-                </h3>
-                <div class="flex flex-col gap-y-1 items-center lg:items-start">
-                    <a href="{{ route('dashboard') }}" class="hover:text-green-500">Dashboard</a>
+                <div class="text-center md:text-start">
+                    <h3 class="text-[#06402b] text-xl font-bold mb-4 relative inline-block mx-auto md:mx-0">
+                        Quick Links
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-yellow-500"></span>
+                    </h3>
+                </div>
+                <div class="flex flex-col gap-y-1 items-center md:items-start">
+                    <a href="{{ route('dashboard') }}" class="hover:text-green-500">Home</a>
                     <a href="{{ route('about') }}" class="hover:text-green-500">About</a>
                     <a href="{{ route('help') }}" class="hover:text-green-500">Knowledge Hub</a>
                 </div>
             </div>
             <div class="flex flex-col">
-                <h3 class="text-[#06402b] text-xl font-bold mb-4 relative inline-block mx-auto md:mx-0">
-                    Follow Us
-                    <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-yellow-500"></span>
-                </h3>
+                <div class="text-center md:text-start">
+                    <h3 class="text-[#06402b] text-xl font-bold mb-4 relative inline-block mx-auto md:mx-0">
+                        Follow Us
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-yellow-500"></span>
+                    </h3>
+                </div>
                 <div class="flex flex-row gap-x-3 justify-center items-center">
                     <!-- Facebook Logo -->
                     <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2">
@@ -238,27 +240,31 @@
                 </div>
             </div>
             <div class="flex flex-col">
-                <h3 class="text-[#06402b] text-xl font-bold mb-4 relative inline-block mx-auto md:mx-0">
-                    Contact Us
-                    <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-yellow-500"></span>
-                </h3>
-                <div class="flex flex-row gap-x-1 items-center">
+                <div class="text-center md:text-start">
+                    <h3 class="text-[#06402b] text-xl font-bold mb-4 relative inline-block mx-auto md:mx-0">
+                        Contact Us
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-yellow-500"></span>
+                    </h3>
+                </div>
+                <div class="flex flex-row gap-x-1 text-center md:text-start items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 100 100"><path fill="currentColor" d="M84.96 70.237c-.167-1.032-.814-1.914-1.783-2.438l-14.335-8.446l-.118-.066a4.256 4.256 0 0 0-1.937-.45c-1.201 0-2.348.455-3.144 1.253l-4.231 4.233c-.181.172-.771.421-.95.43c-.049-.004-4.923-.355-13.896-9.329c-8.957-8.955-9.337-13.844-9.34-13.844c.005-.25.251-.838.426-1.02l3.608-3.607c1.271-1.274 1.652-3.386.898-5.022L32.19 16.938c-.579-1.192-1.704-1.928-2.952-1.928c-.883 0-1.735.366-2.401 1.031l-9.835 9.813c-.943.938-1.755 2.578-1.932 3.898c-.086.631-1.831 15.693 18.819 36.346C51.42 83.627 65.09 84.989 68.865 84.989a10.7 10.7 0 0 0 1.376-.071c1.316-.176 2.954-.986 3.891-1.925l9.827-9.826c.802-.806 1.168-1.871 1.001-2.93z"/></svg>
                     <h3 class="hover:underline cursor-pointer hover:text-green-500">0912-345-6789</h3>
                 </div>
             </div>
             <div class="flex flex-col">
-                <h3 class="text-[#06402b] text-xl font-bold mb-4 relative inline-block mx-auto md:mx-0">
-                    Feedback
-                    <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-yellow-500"></span>
-                </h3>
-                <div class="flex flex-row gap-x-2 items-center">
+                <div class="text-center md:text-start">
+                    <h3 class="text-[#06402b] text-xl font-bold mb-4 relative inline-block mx-auto md:mx-0">
+                        Feedback
+                        <span class="absolute bottom-0 left-0 w-1/2 h-0.5 bg-yellow-500"></span>
+                    </h3>
+                </div>
+                <div class="flex flex-row gap-x-2 text-center md:text-start items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 432 384"><path fill="currentColor" d="M384 21q18 0 30.5 12.5T427 64v256q0 18-12.5 30.5T384 363H43q-18 0-30.5-12.5T0 320V64q0-18 12.5-30.5T43 21h341zm0 86V64L213 171L43 64v43l170 106z"/></svg>
                     <a href="" class="hover:text-green-500 hover:underline">aeroson@gmail.com</a>
                 </div>
             </div>
         </div>
-        <p class="text-gray-500 h-auto upppercase font-semibold border-t border-gray-400 w-[80%] text-center pt-7">© 2025 AeroSon. All rights reserved.</p>
+        <p class="text-gray-500 h-auto upppercase border-t border-gray-400 w-[80%] text-center pt-7">© 2025 AeroSon. All rights reserved.</p>
     </footer>
 </body>
 <script>
