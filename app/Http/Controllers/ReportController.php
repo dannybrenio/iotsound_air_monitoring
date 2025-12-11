@@ -14,6 +14,7 @@ class ReportController extends Controller
     public function index()
     {
         $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
+
         $reports = Report::paginate(10);
         return view('admin.report.admin_report', compact('reports', 'notifs'));
     }
@@ -37,7 +38,8 @@ class ReportController extends Controller
         Log::info('receive-report', [
             'disk' => 'web',
             'path' => $path,
-            'url'  => $path ? Storage::disk('web')->url($path) : null,
+            // 'url'  => $path ? Storage::disk('web')->url($path) : null,
+             'url'  => $path ? "testing": null,
         ]);
     
         // Save only the relative path (e.g., "reports/foo.png")
@@ -49,7 +51,8 @@ class ReportController extends Controller
     
         return response()->json([
             'ok'         => true,
-            'image_url'  => $path ? Storage::disk('web')->url($path) : null,
+            // 'image_url'  => $path ? Storage::disk('web')->url($path) : null,
+            'image_url'  => $path ? "testing" : null,
             'id'         => $report->id ?? null,
         ]);
     }

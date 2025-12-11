@@ -222,7 +222,7 @@ class ExportsController extends Controller
     
                 fclose($out);
             } catch (\Throwable $e) {
-                \Log::error('downloadAqi() stream failed: ' . $e->getMessage(), [
+                Log::error('downloadAqi() stream failed: ' . $e->getMessage(), [
                     'trace' => $e->getTraceAsString(),
                 ]);
                 $out = fopen('php://output', 'w');

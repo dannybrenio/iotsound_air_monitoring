@@ -65,7 +65,7 @@ class HardwareDataController extends Controller
                 : null;
 
 
-            Log::info("Time received", ["Time" => $rtPht]);
+            Log::info("Data received", ["Data " => $rawdata]);
 
             $hardware_id = Hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_id');
 
@@ -92,10 +92,9 @@ class HardwareDataController extends Controller
                 // $latestAqi      = $latestNowcast['overall_aqi'] ?? null;
                 // $aqiLevel       = $this->mapAqiToLabel($latestAqi);
 
-                // Log::info("HARDWARE (pending)", [
-                //     "hardware" => $rawdata['hardware_info'],
-                //     "aqi"      => $latestAqi,
-                // ]);
+                Log::info("HARDWARE (pending)", [
+                    "hardware" => $rawdata['hardware_info'],
+                ]);
 
                 $pending = Pending_hardware::where('hardware_info', $rawdata['hardware_info'])->value('hardware_info');
                 if (empty($pending)) {
@@ -254,6 +253,13 @@ class HardwareDataController extends Controller
             // get the latest row by timestamp defensively
             $latest = $window->sortByDesc('realtime_stamp')->first();
 
+            $latestVals = $latest ? [
+                'pm2_5' => $latest->pm2_5,
+                'pm10'  => $latest->pm10,
+                'co'    => $latest->co,
+                'no2'   => $latest->no2,
+            ] : null;
+
             $latestTs = null;
             if (!empty($latest?->realtime_stamp)) {
                 // handle both string and Carbon cases
@@ -288,6 +294,7 @@ class HardwareDataController extends Controller
                 'hardware_id'      => $hardwareId,
                 'latest_aqi'       => $overallAqi,
                 'latest_nowcast'   => $nowcast,
+                'latest_vals' => $latestVals,
                 'latest_decibel'   => $latest->decibels ?? null,
                 'average_decibel'  => $avgDecibelToday,
                 'peak_decibel'     => $peakDecibel,
