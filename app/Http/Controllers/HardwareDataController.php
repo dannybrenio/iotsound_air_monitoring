@@ -32,22 +32,47 @@ class HardwareDataController extends Controller
     private function mapAqiToLabel(?float $aqi): ?string
     {
         if ($aqi === null) return null;
-        if ($aqi <= 35)  return "Fair Air Quality";
-        if ($aqi <= 45)  return "Poor Air Quality";
-        if ($aqi <= 55)  return "Unhealthy Air Quality";
-        if ($aqi <= 90) return "Acutely Unhealthy Air Quality";
-        return "Emergency, Evacuation Advised!";
+    
+        if ($aqi <= 100) {
+            return 'Fair air quality – generally acceptable for most people';
+        }
+    
+        if ($aqi <= 150) {
+            return 'Poor air quality – sensitive individuals may experience symptoms';
+        }
+    
+        if ($aqi <= 200) {
+            return 'Unhealthy air quality – increased risk of respiratory irritation';
+        }
+    
+        if ($aqi <= 300) {
+            return 'Acutely unhealthy air quality – health effects likely with continued exposure';
+        }
+    
+        return 'Emergency conditions – avoid outdoor activity if possible';
     }
 
-    private function mapDbToLabel(?float $db): ?string
+    private function mapDbToLabel(?float $noise): ?string
     {
-        if ($db === null) return null;
-
-        // Tweak thresholds to your policy as needed:
-        if ($db <= 60)  return 'Moderate Noise';   // typical conversation / residential daytime
-        if ($db <= 80)  return 'Loud Noise';       // busy traffic
-        if ($db <= 100)  return 'Very Loud Noise';  // risk increases with exposure duration
-        return 'Hazardous Noise';                  // >85 dB: hearing risk w/ prolonged exposure
+        if ($noise === null) return null;
+    
+        if ($noise < 55) {
+            return 'Low noise – unlikely to affect comfort or health';
+        }
+    
+        if ($noise < 70) {
+            return 'Moderate noise – generally comfortable for most people';
+        }
+    
+        if ($noise < 85) {
+            return 'Loud noise – prolonged exposure may contribute to stress or fatigue';
+        }
+    
+        if ($noise < 95) {
+            return 'Very loud noise – extended exposure may increase hearing strain';
+        }
+    
+        return 'Extremely loud noise – avoid prolonged exposure if possible';
     }
 
 
@@ -61,9 +86,11 @@ class HardwareDataController extends Controller
             //     : null;
     
             $rtPht = isset($rawdata['realtime_stamp'])
-                ? Carbon::parse($rawdata['realtime_stamp'])->setTimezone('Asia/Manila')
+                ? Carbon::parse($rawdata['realtime_stamp'])
+                    ->setTimezone('Asia/Manila')
+                    ->subHours(3)
+                    ->subMinutes(10)
                 : null;
-
 
             Log::info("Data received", ["Data " => $rawdata]);
 

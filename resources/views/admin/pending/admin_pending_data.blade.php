@@ -1,6 +1,6 @@
 
 <x-admin :$notifs>
-    <div class="h-auto flex justify-center items-start px-7">
+    <div class="h-auto lg:h-screen flex justify-center items-start px-7">
         <div class="container mx-auto">
             <h1 class="text-xl font-bold mb-10">Pending Data</h1>
             <div class="overflow-x-auto">
@@ -21,7 +21,7 @@
                            @foreach($pending_data as $pending_datum) 
                             <tr class="{{ $loop->even ? 'bg-gray-300' : 'bg-white' }}">                                  
                             <td class="px-4 py-2 text-start">{{$pending_datum->pending_hardware_data_id}}</td>
-                            <td class="px-4 py-2 text-start">{{$pending_datum->pending_hardware_info}}</td>
+                            <td class="px-4 py-2 text-start uppercase">{{$pending_datum->pending_hardware_info}}</td>
                             <td class="px-4 py-2 text-start">{{$pending_datum->pm2_5 }}</td>
                             <td class="px-4 py-2 text-start">{{$pending_datum->pm10 }}</td>
                             <td class="px-4 py-2 text-start">{{$pending_datum->co }}</td>

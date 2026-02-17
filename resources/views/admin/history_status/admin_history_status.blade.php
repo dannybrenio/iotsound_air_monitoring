@@ -1,5 +1,5 @@
 <x-admin :$notifs>
-    <div class="h-auto flex justify-center items-start px-7">
+    <div class="h-auto lg:h-screen flex justify-center items-start px-7">
         <div class="container mx-auto">
             <h1 class="text-xl font-bold mb-10">History Status</h1>
             <div class="overflow-x-auto">
@@ -17,9 +17,9 @@
                         @foreach($history_statuses as $history_status) 
                             <tr class="{{ $loop->even ? 'bg-gray-300' : 'bg-white' }}">                                  
                                 <td class="px-4 py-2 text-start">{{$history_status->history_id}}</td>
-                                <td class="px-4 py-2 text-start">{{$history_status->device_status?->hardware_info}}</td>
-                                <td class="px-4 py-2 text-start">{{$history_status->sensor_type}}</td>
-                                <td class="px-4 py-2 text-start">{{$history_status->sensor_status}}</td>
+                                <td class="px-4 py-2 text-start uppercase">{{$history_status->device_status?->hardware_info}}</td>
+                                <td class="px-4 py-2 text-start uppercase">{{$history_status->sensor_type}}</td>
+                                <td class="px-4 py-2 text-start uppercase">{{$history_status->sensor_status}}</td>
                                 <td class="px-4 py-2 text-start">{{$history_status->created_at}}</td>
                             </tr>
                         @endforeach

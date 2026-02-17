@@ -36,7 +36,7 @@
                         <div class="flex flex-col lg:flex-row w-full justify-center gap-x-8 gap-y-3 items-start">
                             <!-- Box1 -->
                             <div 
-                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-center gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
                                 <span class="text-center uppercase text-lg text-[#06402b] font-semibold">How is AQI measured
                                         (PM2.5, PM10, CO, NO₂)?</span>
                                 <div class="">
@@ -51,7 +51,7 @@
                             </div>
                             <!-- Box2 -->
                             <div 
-                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-center gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
                                 <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Common sources of Air
                                         Pollution</span>
                                 <div  class="">
@@ -66,7 +66,7 @@
                         <div class="flex flex-col lg:flex-row w-full justify-center gap-x-8 gap-y-3 items-start">
                             <!-- Box3 -->
                             <div 
-                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-center gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
                                 <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Ideal Air Quality
                                         Ranges</span>
                                 <div  class="">
@@ -81,7 +81,7 @@
                             </div>
                             <!-- Box4 -->
                             <div 
-                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                class="bg-white w-full lg:w-[48%] min-h-50 py-3 px-5 flex flex-col shadow-lg rounded-lg items-center gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
                                 <span class="text-center uppercase text-lg text-[#06402b] font-semibold">How air quality affects
                                         human health</span>
                                 <div  class="">
@@ -110,7 +110,7 @@
                         <div class="flex flex-col lg:flex-row w-full justify-center gap-x-8 gap-y-3 items-start">
                             <!-- Box1 -->
                             <div 
-                                class="bg-white w-full lg:w-[48%] min-h-65 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                class="bg-white w-full lg:w-[48%] min-h-65 py-3 px-5 flex flex-col shadow-lg rounded-lg items-center gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
                                 <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Common noise sources and
                                         their decibels values</span>
                                 <div  class="">
@@ -124,7 +124,7 @@
                             </div>
                             <!-- Box2 -->
                             <div 
-                                class="bg-white w-full lg:w-[48%] min-h-65 py-3 px-5 flex flex-col shadow-lg rounded-lg items-start gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
+                                class="bg-white w-full lg:w-[48%] min-h-65 py-3 px-5 flex flex-col shadow-lg rounded-lg items-center gap-y-1 border-t-3 border-[#06402b] hover:-translate-y-2 hover:scale-101 duration-300 transform">
                                 <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Safe exposure
                                         limits</span>
                                 <div  class="">
@@ -150,7 +150,7 @@
                 <div class="w-[30%] border rounded-full border-[#06402b]"></div>
             </div>
             <!-- Combined Impact -->
-            <div class="flex flex-col w-[90%] h-auto items-center gap-y-8 px-3 lg:px-10 py-14 bg-[#06402b] rounded-3xl">
+            <div class="flex flex-col w-[85%] h-auto items-center gap-y-8 px-3 lg:px-10 py-14 bg-[#06402b] rounded-3xl">
                 <div class="flex flex-col w-[85%] items-center gap-y-3">
                     <span class="text-3xl font-bold uppercase text-center text-white">How air and noise pollution
                         together affect wellbeing</span>
@@ -232,44 +232,44 @@
                 <div class="w-[30%] border rounded-full border-[#06402b]"></div>
             </div>
             <!-- Environmental -->
-            <div class="flex flex-col w-[90%] h-auto items-center gap-y-8 px-3 lg:px-10 py-5">
+            <div class="flex flex-col w-[85%] h-auto items-center gap-y-8 px-3 lg:px-10 py-5">
                 <div class="flex flex-col w-full items-center gap-y-8">
                     <div class="flex flex-col w-[80%] items-center gap-y-3">
                         <span class="text-3xl font-bold uppercase text-center text-[#06402b]">Environmental and urban impacts</span>
                         <p class="text-base text-center leading-relaxed">Environmental and urban impacts are the significant, often negative, environmental consequences of urbanization, including increased air and water pollution, habitat loss, and the urban heat island effect. These issues are driven by high population density, resource consumption, and waste generation, which are exacerbated by the concentration of people in cities and their contribution to climate change. Effective urban planning is crucial for mitigating these impacts by addressing issues like resource management, waste disposal, and the integration of green spaces.</p>
                     </div>
                     <div class="flex flex-col lg:flex-row justify-between w-full h-auto items-start gap-y-5">
-                        <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
+                        <div class="flex flex-col items-center justify-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
                             <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">1</span>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Air and water pollution</span>
                         </div>
-                        <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
+                        <div class="flex flex-col items-center justify-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
                             <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">2</span>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Habitat loss and biodiversity reduction</span>
                         </div>
-                        <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
+                        <div class="flex flex-col items-center justify-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
                             <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">3</span>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Resource depletion</span>
                         </div>
-                        <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
+                        <div class="flex flex-col items-center justify-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
                             <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">4</span>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Waste generation</span>
                         </div>
-                        <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
+                        <div class="flex flex-col items-center justify-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
                             <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">5</span>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Urban heat island effect</span>
                         </div>
-                        <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
+                        <div class="flex flex-col items-center justify-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[15%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-10 px-5 gap-y-5">
                             <div class="absolute top-0 left-0 w-full h-[6px] bg-[#06402b] origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <span class="text-3xl rounded-full text-white bg-[#06402B] w-14 h-14 flex justify-center items-center group-hover:bg-yellow-500 font-black">6</span>
@@ -304,8 +304,8 @@
                 <div class="w-[40%] border rounded-full border-yellow-500"></div>
                 <div class="w-[30%] border rounded-full border-[#06402b]"></div>
             </div>
-            <!-- Environmental -->
-            <div class="flex flex-col w-[90%] h-auto items-center gap-y-8 px-3 lg:px-10 py-14 bg-[#06402b] rounded-3xl">
+            <!-- How to monitor -->
+            <div class="flex flex-col w-[85%] h-auto items-center gap-y-8 px-3 lg:px-10 py-14 bg-[#06402b] rounded-3xl">
                 <div class="flex flex-col w-full items-center gap-y-5">
                     <div class="flex flex-col w-[80%] items-center gap-y-3">
                         <span class="text-3xl font-bold uppercase text-center text-white">How to monitor air and sound using sensors or apps</span>
@@ -324,25 +324,25 @@
                         <p class="text-base text-center leading-relaxed text-white/90">To improve your health and lifestyle, focus on a balanced diet rich in fruits and vegetables, regular physical activity for at least 150 minutes a week, and adequate sleep of 7-9 hours per night. Other key recommendations include managing stress, maintaining social connections, limiting alcohol, and avoiding smoking.</p>
                     </div>
                     <div class="flex flex-col lg:flex-row justify-between w-[90%] h-auto items-start gap-y-5">
-                        <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
+                        <div class="flex flex-col items-center justify-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
                             <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 p-3 text-white bg-[#06402B] rounded-full group-hover:bg-yellow-500" viewBox="0 0 24 24"><path fill="currentColor" d="M22 18a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4v-2h12v2M4 3h10a2 2 0 0 1 2 2v9H8v5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m0 3v2h2V6H4m10 2V6H8v2h6M4 10v2h2v-2H4m4 0v2h6v-2H8m-4 4v2h2v-2H4Z"/></svg>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Nutrition</span>
                         </div>
-                        <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
+                        <div class="flex flex-col items-center justify-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
                             <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 p-3 text-white bg-[#06402B] rounded-full group-hover:bg-yellow-500" viewBox="0 0 24 24"><path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12h1m3-4H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2m0-9v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 5h6m0-5v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1zm3 1h2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2m4-4h-1"/></svg>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Physical Activity</span>
                         </div>
-                        <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
+                        <div class="flex flex-col items-center justify-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
                             <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 p-3 text-white bg-[#06402B] rounded-full group-hover:bg-yellow-500" viewBox="0 0 50 50"><path fill="currentColor" d="M49 17c0-.55-.45-1-1-1H35c-.55 0-1-.45-1-1V2c0-.55-.45-1-1-1H17c-.55 0-1 .45-1 1v13c0 .55-.45 1-1 1H2c-.55 0-1 .45-1 1v16c0 .55.45 1 1 1h13c.55 0 1 .45 1 1v13c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V35c0-.55.45-1 1-1h13c.55 0 1-.45 1-1V17z"/></svg>
                             <span class="text-center uppercase text-lg text-[#06402b] font-semibold">Sleep and Mental Health</span>
                         </div>
-                        <div class="flex flex-col items-center justify-start group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
+                        <div class="flex flex-col items-center justify-center group relative bg-white shadow-lg rounded-xl w-full lg:w-[23%] h-full lg:min-h-70 overflow-hidden hover:scale-105 duration-300 py-14 px-5 gap-y-5">
                             <div class="absolute top-0 left-0 w-full h-[6px] bg-yellow-500 origin-center scale-x-0 transition-transform duration-700 group-hover:scale-x-100">
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 p-3 text-white bg-[#06402B] rounded-full group-hover:bg-yellow-500" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="M14.98 2.5A6.37 6.37 0 0 0 15 2V1h-1.75a6.003 6.003 0 0 0-5.761 4.32A5.99 5.99 0 0 0 2.75 3H1v1a6 6 0 0 0 6 6h.25v4.25a.75.75 0 0 0 1.5 0V8H9a6 6 0 0 0 5.98-5.5Zm-6.203 4a4.5 4.5 0 0 1 4.473-4h.223A4.5 4.5 0 0 1 9 6.5h-.223Zm-6.027-2a4.5 4.5 0 0 1 4.473 4H7a4.5 4.5 0 0 1-4.473-4h.223Z" clip-rule="evenodd"/></svg>

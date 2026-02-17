@@ -66,7 +66,7 @@
         <!-- Third Layer -->
         <div class="opacity-0 translate-y-10 transition-all duration-700 ease-out section flex justify-center items-center h-auto lg:h-screen w-full">
             <div class="flex flex-col lg:flex-row h-auto lg:h-[90%] w-[95%] gap-y-10 rounded-xl justify-evenly items-center bg-[#06402b] py-10 lg:py-0">
-                <div class="flex flex-col bg-white/20 h-auto lg:h-[80%] w-[90%] lg:w-[45%] rounded-4xl justify-center items-center gap-y-5 lg:gap-y-8 p-5 lg:px-10 ">
+                <div class="flex flex-col bg-white/20 h-[500px] lg:h-[80%] w-[90%] lg:w-[45%] rounded-4xl justify-center items-center gap-y-5 lg:gap-y-8 p-5 lg:px-10 ">
                     <span class="text-white font-extrabold text-2xl md:text-3xl lg:text-5xl uppercase">THE
                         <span
                             class="text-[#d4af37] uppercase text-2xl md:text-3xl lg:text-5xl font-extrabold">PROBLEM</span>
@@ -77,7 +77,7 @@
                         and respond to these issues effectively.
                     </span>
                 </div>
-                <div class="flex flex-col bg-white/20 h-auto lg:h-[80%] w-[90%] lg:w-[45%] rounded-4xl justify-center items-center gap-y-5 lg:gap-y-8 p-8 lg:px-10">
+                <div class="flex flex-col bg-white/20 h-[500px] lg:h-[80%] w-[90%] lg:w-[45%] rounded-4xl justify-center items-center gap-y-5 lg:gap-y-8 p-8 lg:px-10">
                     <span class="text-white font-extrabold text-2xl md:text-3xl lg:text-5xl uppercase text-center">OUR
                         <span
                             class="text-[#d4af37] uppercase text-2xl md:text-3xl lg:text-5xl font-extrabold">SOLUTION</span>
@@ -92,9 +92,9 @@
         </div>
         <!-- Fourth Layer -->
         <div class="opacity-0 translate-y-10 transition-all duration-700 ease-out section flex flex-col h-auto my-10 lg:my-0 lg:h-screen w-full justify-center items-center">
-            <div class="flex flex-row h-auto lg:h-[90%] w-[95%] bg-white shadow-xl rounded-xl justify-center items-center border-2 border-[#06402b] py-10 lg:py-0">
-                <div class="flex flex-col w-[90%] h-[90%] lg:h-[80%] justify-between items-center gap-y-10 lg:gap-y-0">
-                    <div class="flex flex-col w-full h-auto justify-start items-center gap-y-4 md:gap-y-6 lg:gap-y-10 px-5 lg:px-10">
+            <div class="flex flex-col h-auto lg:h-[90%] w-[95%] bg-white shadow-xl rounded-xl justify-center items-center border-2 border-[#06402b] py-10 lg:py-0">
+                <div class="flex flex-col w-[90%] h-[90%] lg:h-[80%] justify-center items-center gap-y-10 lg:gap-y-0">
+                    <div class="flex flex-col w-[90%] h-auto justify-start items-center gap-y-4 md:gap-y-6 lg:gap-y-10 px-5 lg:px-10">
                         <span class="text-[#06402b] font-extrabold text-2xl md:text-4xl lg:text-6xl uppercase">WHO
                             <span
                                 class="text-[#d4af37] font-extrabold text-2xl md:text-4xl lg:text-6xl uppercase">WE</span>
@@ -112,8 +112,8 @@
                             sustainable environment. Together, we can make it happen.
                         </span>
                     </div>
-                    <div class="border-4 border-[#d4af37] w-[30%]"></div>
                 </div>
+                <div class="border-4 border-[#d4af37] w-[30%]"></div>
             </div>
         </div>
     </div>

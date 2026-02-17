@@ -1,67 +1,86 @@
 <x-layout>
   <div class="w-full h-auto flex justify-center items-center flex-col bg-white gap-y-5">
     <!-- Maps -->
-    <div id="map" class="h-[200px] flex w-full shadow-lg z-0"></div>
+    <div id="map" class="h-[300px] flex w-full shadow-lg z-0"></div>
     <!-- AQI -->
     <div class="w-[95%] h-auto rounded-3xl flex">
       <div x-data="{ activeTab: 'barangay' }" class="w-full h-full">
-        <!-- Tab header -->
-        <div class="flex flex-row justify-between h-[50px] w-full">
-          <div class="flex flex-row bg-[#eceaea] rounded-t-lg w-30">
-            <button class=" w-30 rounded-t-lg cursor-pointer" @click="activeTab = 'barangay'" :class="activeTab === 'barangay'
-                                    ? 'text-[#06402b] font-semibold bg-white border-[#06402b] border-t-4'
-                                    : 'text-black border-b border-transparent hover:text-blue-500'">
-              Barangay 115
-            </button>
 
-          </div>
-          <button class=" w-30 rounded-full cursor-pointer" @click="activeTab = 'weather'" :class="activeTab === 'weather'
-                                ? 'text-white font-semibold bg-[#06402b]'
-                                : 'text-[#06402b] bg-[#eceaea] hover:text-white hover:bg-[#06402b]'">
-            Weather
-          </button>
-        </div>
+<!-- Tab header -->
+<div x-data="{ activeTab: 'barangay' }" class="w-full h-full">
+  <div class="flex flex-row justify-between h-[50px] w-full">
+    {{-- Left: hardware tabs --}}
+    <div class="flex flex-row bg-[#eceaea] rounded-t-lg overflow-x-auto">
+      @foreach($hardwares as $hw)
+        @php $isSelected = $selectedHardwareId === $hw->hardware_id; @endphp
+
+        <a href="{{ route('dashboard', ['hardware' => $hw->public_hash]) }}"
+           class="px-4 h-[50px] flex items-center rounded-t-lg cursor-pointer transition-all duration-200 whitespace-nowrap
+            {{ $isSelected
+              ? 'text-[#06402b] font-semibold bg-white border-t-4 border-[#06402b]'
+              : 'text-black border-b border-transparent hover:text-blue-500' }}">
+          {{ $hw->location_name ?? $hw->hardware_id }}
+        </a>
+      @endforeach
+    </div>
+
+    {{-- Right: Weather tab --}}
+    <button type="button"
+            class="w-30 rounded-full cursor-pointer px-4"
+            @click="activeTab = 'weather'"
+            :class="activeTab === 'weather'
+              ? 'text-white font-semibold bg-[#06402b]'
+              : 'text-[#06402b] bg-[#eceaea] hover:text-white hover:bg-[#06402b]'">
+      Weather
+    </button>
+  </div>
+
+  {{-- Barangay content --}}
+  {{-- <div x-show="activeTab === 'barangay'" x-transition>
+    ...
+  </div> --}}
+
+  {{-- Weather content --}}
+  <div x-show="activeTab === 'weather'" x-transition
+       class="flex flex-col h-full w-full justify-center items-center py-3">
+    <div id="weather"
+         class="h-auto bg-white flex flex-col justify-center rounded-b-2xl items-center w-full shadow-xl z-0 py-10 lg:gap-y-5">
+    </div>
+  </div>
+</div>
+
+
 
         <!-- Tab content -->
-        <div class="border border-white rounded-b-3xl h-auto bg-white py-5">
-          <div x-show="activeTab === 'barangay'" x-transition
-            class="flex flex-col h-auto w-full justify-between items-center gap-y-2">
-            <div class="w-[98%] h-[120px] flex flex-row justify-between items-center px-1">
-              <div class="flex flex-col w-auto h-full gap-y-1 items-start justify-center">
-                <div
-                  class="w-14 h-4 flex justify-center items-center gap-x-2 bg-red-500 text-black text-center text-xs rounded-md">
-                  <span class="text-xl text-center">•</span>LIVE
+        <div class="border border-white rounded-b-3xl h-auto bg-white py-3">
+            <div x-show="activeTab === 'barangay'" x-transition
+                class="flex flex-col h-auto w-full justify-between items-center gap-y-2">
+                <div class="w-[98%] h-[120px] flex flex-row justify-between items-center px-1">
+                    <div class="flex flex-col w-full h-auto gap-y-1 items-start justify-center">
+                        <div
+                          class="w-14 h-4 flex justify-center items-center gap-x-2 bg-red-500 text-black text-center text-xs rounded-md">
+                          <span class="text-center">•</span>LIVE
+                        </div>
+                        <span class="text-black font-bold text-lg tracking-wide uppercase">Air Quality Index | Sound Level</span>
+                        <span class="text-[#919090] text-sm italic" id="lastUpdatedLbl">Last Updated: 2025-09-25 06:52:16 PM (Local Time)</span>
+                    </div>
                 </div>
-                <span class="text-black font-bold text-lg tracking-wide uppercase">Air Quality Index |
-                  Sound
-                  Level</span>
-                <span class="text-[#919090] text-sm italic" id="lastUpdatedLbl">Last Updated: 2025-09-25 06:52:16 PM
-                  (Local
-                  Time)</span>
-                <div class="overflow-hidden whitespace-nowrap">
-                  <div class="inline-block animate-marquee">
-                    <span class="mx-4 text-xs italic uppercase tracking-widest">For the next hour,
-                      the aqi will be: 48</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="aqi-back" class="">
-              <!-- <div class="absolute flex overflow-hidden whitespace-nowrap w-full h-full">
-                                <div class="inline-block animate-marquee w-[200%] h-full">
-                                    <div class="flex w-full h-full">
-                                       
-                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="h-full object-cover">
-                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="w-1/3 h-full object-cover">
-                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
-
-                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
-                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
-                                        <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
-                                    </div>
+                <div id="aqi-back" class="">
+                  <!--  <div class="absolute flex overflow-hidden whitespace-nowrap w-full h-full">
+                            <div class="inline-block animate-marquee w-[200%] h-full">
+                                <div class="flex w-full h-full">
+                                   
+                                    <img src="{{ asset('newcloud1.png') }}" alt="" class="h-full object-cover">
+                                    <img src="{{ asset('newcloud1.png') }}" alt="" class="w-1/3 h-full object-cover">
+                                    <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
+    
+                                    <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
+                                    <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
+                                    <img src="{{ asset('newcloud1.png') }}" alt="" class="mx-10 w-1/3 h-full object-cover">
                                 </div>
-                            </div> -->
-              <div class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6 z-10">
+                            </div>
+                        </div> -->
+                  <div class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6 z-10">
                 <div class="flex items-center justify-center flex-row w-[90%] lg:w-[80%]">
                   <div class="flex flex-col w-[45%] lg:w-[30%] items-center justify-center lg:gap-y-0 gap-y-3">
                     <div class="flex flex-row gap-x-2 items-center">
@@ -75,42 +94,48 @@
                     <span class="text-sm font-semibold">Air Quality is</span>
                     <span id="aqi-category">Good</span>
                   </div>
+                  <div class="flex flex-col w-[45%] lg:w-[30%] items-center justify-center lg:gap-y-0 gap-y-3">
+                    <div class="flex flex-row gap-x-2 items-center">
+                      <span class="text-sm font-semibold">Predictive AQI</span>
+                    </div>
+                    <span id="aqiPredictionMarquee" class="text-5xl lg:text-7xl font-bold"></span>
+                  </div>
                 </div>
                 <div class="w-[90%] lg:w-[80%] h-auto flex mt-10">
                   <div class="relative w-full max-w-3xl mx-auto">
 
                     <!-- Top Numeric Range Labels -->
                     <div class="absolute -top-5 left-0 w-full flex text-[10px] font-semibold text-gray-700">
-                      <span class="text-center" style="width:10%;">0–50</span>
-                      <span class="text-center" style="width:10%;">51–100</span>
-                      <span class="text-center" style="width:10%;">101–150</span>
-                      <span class="text-center" style="width:10%;">151–200</span>
-                      <span class="text-center" style="width:20%;">201–300</span>
-                      <span class="text-center" style="width:40%;">301–500</span>
+                      <span class="text-center truncate" style="width:10%;">0–50</span>
+                      <span class="text-center truncate" style="width:10%;">51–100</span>
+                      <span class="text-center truncate" style="width:10%;">101–150</span>
+                      <span class="text-center truncate" style="width:10%;">151–200</span>
+                      <span class="text-center truncate" style="width:20%;">201–300</span>
+                      <span class="text-center truncate" style="width:40%;">301–500</span>
                     </div>
 
                     <!-- Slider -->
                     <input id="aqi-slider" type="range" min="0" max="500" value="0" disabled
-                      class="w-full h-3 rounded-lg appearance-none" style="
+                      class="w-full h-3 rounded-lg appearance-none border border-[#FFFFFF]" style="
                                         background: linear-gradient(
                                           to right,
                                           #00E400 0%,   #00E400 10%,
                                           #FFFF00 10%,  #FFFF00 20%,
                                           #FF7E00 20%,  #FF7E00 30%,
                                           #FF0000 30%,  #FF0000 40%,
-                                          #8F3F97 40%,  #8F3F97 65%,
-                                          #7E0023 65%,  #7E0023 100%
+                                          #8F3F97 40%,  #8F3F97 60%,
+                                          #7E0023 60%,  #7E0023 100%
                                         );
-                                      ">
+                                    ">
 
                     <!-- Bottom Category Labels -->
                     <div class="absolute top-7 left-0 w-full flex text-xs font-semibold text-gray-700">
-                      <span class="text-center" style="width:10%;">Good</span>
-                      <span class="text-center" style="width:10%;">Fair</span>
-                      <span class="text-center" style="width:10%;">Poor</span>
-                      <span class="text-center" style="width:10%;">Unhealthy</span>
-                      <span class="text-center" style="width:25%;">Acutely Unhealthy</span>
-                      <span class="text-center" style="width:30%;">Emergency</span>
+                      <span class="text-center truncate" style="width:10%;">Good</span>
+                      <span class="text-center truncate" style="width:10%;">Fair</span>
+                      <span class="text-center truncate" style="width:10%;">Poor</span>
+                      <span class="text-center truncate" style="width:10%;">Unhealthy</span>
+                      <span class="text-center truncate" style="width:25%;">Acutely Unhealthy</span>
+                      <span class="text-center truncate" style="width:30%;">Emergency</span>
                     </div>
 
                   </div>
@@ -131,28 +156,15 @@
                 </div>
 
               </div>
-              <div class="w-full lg:w-[48%] flex flex-col h-full justify-center items-center gap-y-6 z-10">
+              <div class="w-full lg:w-[48%] flex flex-row h-full justify-center items-center gap-x-2 z-10">
                 <div
-                  class="flex flex-row bg-white/70 border border-white w-[80%] h-[90%] lg:h-[50%] rounded-xl items-center justify-evenly">
+                  class="flex flex-row bg-white/70 border border-white w-[90%] h-[90%] lg:h-[50%] rounded-xl items-center justify-evenly">
                   <div class="w-[30%] h-full flex flex-col items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="size-12 animate-pulse duration-100 text-black"
-                      viewBox="0 0 100 100" fill="currentColor">
-                      <path fill="currentColor"
-                        d="M45.697 45.697a6.083 6.083 0 0 0-.002 8.603a6.082 6.082 0 0 0 8.606.001a6.08 6.08 0 0 0 0-8.607a6.08 6.08 0 0 0-8.604.003zm30.852 33.468c15.972-16.109 15.934-42.207-.122-58.263c-.023-.023-.05-.037-.073-.059l.006-.006l-1.696-1.698l-.02.02a2.38 2.38 0 0 0-3.136.141l-.003-.003l-.026.026l-.008.007l-.006.008l-2.773 2.772l-.002.002a.002.002 0 0 1-.002.002l-.2.2l.02.02a2.376 2.376 0 0 0 .01 2.951l-.019.019l.19.19v.001h.001L70.196 27l.027-.027c.022.023.037.05.06.073C82.95 39.714 82.99 60.3 70.405 73.02l-.017-.017l-1.504 1.504l-.003.002l-.002.003l-.188.188l.019.019a2.38 2.38 0 0 0 .141 3.136l-.003.003l.031.031l.002.003l.003.002l1.396 1.396l.002.003l.003.002l1.376 1.376l.002.003l.003.002l.198.198l.02-.02a2.377 2.377 0 0 0 2.952-.009l.019.019l1.567-1.568a.018.018 0 0 1 .005-.004l.018-.019l.107-.107l-.003-.001z" />
-                      <path fill="currentColor"
-                        d="M64.923 67.54c9.561-9.699 9.523-25.365-.123-35.01c-.023-.023-.05-.037-.073-.06l.007-.007l-1.697-1.698l-.02.02a2.382 2.382 0 0 0-3.136.141l-.003-.003l-.029.029l-.005.004l-.004.005l-2.774 2.774l-.004.003l-.003.004l-.198.198l.02.02a2.376 2.376 0 0 0 .009 2.951l-.019.019l.189.189l.002.002l.002.002l1.504 1.505l.027-.027c.022.023.037.05.06.073c6.258 6.257 6.293 16.407.119 22.717l-.013-.013l-1.505 1.505l-.002.001l-.001.002l-.189.189l.019.019a2.38 2.38 0 0 0 .141 3.135l-.004.004l2.816 2.815l.201.201l.02-.02a2.378 2.378 0 0 0 2.951-.009l.02.02l1.572-1.572l.125-.125l-.002-.003z" />
-                      <g fill="currentColor">
-                        <path
-                          d="M54.305 45.7a6.083 6.083 0 0 0-8.606-.001a6.08 6.08 0 0 0 0 8.605a6.08 6.08 0 0 0 8.605-.001a6.084 6.084 0 0 0 .001-8.603z" />
-                        <path
-                          d="m43.109 63.089l.019-.019l-.188-.188l-.003-.004l-.003-.003l-1.503-1.504l-.027.027c-.022-.023-.037-.05-.059-.072c-6.258-6.258-6.293-16.408-.119-22.718l.013.013l1.697-1.696l-.02-.02a2.38 2.38 0 0 0-.141-3.135l.004-.004l-3.018-3.017l-.02.02a2.376 2.376 0 0 0-2.951.009l-.019-.019l-.191.191l-1.381 1.381l-.125.125l.003.003c-9.562 9.699-9.523 25.365.123 35.011c.022.022.049.037.072.059l-.006.006l1.697 1.698l.02-.02a2.382 2.382 0 0 0 3.135-.141l.003.003l.029-.029l.005-.004l.004-.005l2.775-2.775l.003-.002l.002-.002l.199-.199l-.02-.02a2.374 2.374 0 0 0-.009-2.95z" />
-                        <path
-                          d="m31.483 74.715l.019-.019l-.19-.19l-.001-.001l-.001-.001l-1.506-1.505l-.027.027c-.022-.023-.037-.05-.059-.073C17.05 60.284 17.012 39.7 29.597 26.98l.016.016l1.504-1.504l.003-.002l.002-.003l.188-.188l-.019-.019a2.38 2.38 0 0 0-.141-3.136l.004-.004l-1.434-1.434l-.001-.001l-.001-.001l-1.581-1.581l-.02.021a2.376 2.376 0 0 0-2.951.009l-.02-.02l-1.696 1.697l.003.003c-15.974 16.11-15.936 42.209.121 58.265c.023.023.05.037.073.059l-.007.007l1.697 1.698l.02-.02a2.382 2.382 0 0 0 3.136-.142l.003.003l.033-.033l2.778-2.779l.005-.004l.004-.005l.196-.196l-.02-.02a2.376 2.376 0 0 0-.009-2.951z" />
-                      </g>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 lg:h-24 lg:w-24 animate-pulse duration-100 text-black" viewBox="0 0 512 512"><path fill="# 000000" d="M468.53 236.03H486v39.94h-17.47v-39.94zm-34.426 51.634h17.47v-63.328h-17.47v63.328zm-33.848 32.756h17.47V191.58h-17.47v128.84zm-32.177 25.276h17.47V167.483h-17.47v178.17zm-34.448-43.521h17.47v-92.35h-17.47v92.35zm-34.994 69.879h17.47v-236.06h-17.525v236.06zM264.2 405.9h17.47V106.1H264.2v299.8zm-33.848-46.284h17.47V152.383h-17.47v207.234zm-35.016-58.85h17.47v-87.35h-17.47v87.35zm-33.847-20.823h17.47V231.98h-17.47v48.042zm-33.848 25.66h17.47v-99.24h-17.47v99.272zm-33.302 48.04h17.47V152.678H94.34v201zm-33.847-30.702h17.47V187.333h-17.47v135.642zM26 287.664h17.47v-63.328H26v63.328z"/>
                     </svg>
                   </div>
                   <div class="h-full border border-white"></div>
-                  <div class="w-[70%] h-full flex flex-col items-center justify-center">
+                  <div class="w-[60%] h-full flex flex-col items-center justify-center">
                     <div
                       class="flex flex-row w-full h-[40%] lg:h-[50%] justify-center items-center gap-x-2 lg:gap-x-5 px-1">
                       <span class="text-black font-semibold text-sm lg:text-xl uppercase">Sound Level</span>
@@ -180,6 +192,11 @@
                       </div>
                     </div>
                   </div>
+                  <div class="h-full border border-white"></div>
+                  <div class="flex flex-col w-[10%] h-[40%] lg:h-[50%] justify-center items-center gap-y-2 lg:gap-x-5">
+                    <span class="text-black font-semibold text-sm lg:text-lg uppercase text-center w-[70%]">Predictive Sound Level</span>
+                    <span class="font-bold text-xl lg:text-3xl" id="noisePredictionMarquee">20</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -190,7 +207,7 @@
                   <!-- Time range dropdown -->
                   <div class="mb-4 text-center">
                     <select id="aqiTimeSelect"
-                      class="border border-[#06402b] rounded-md p-2 text-sm text-[#06402b] focus:ring-0 focus:outline-none">
+                      class="border border-[#06402b] rounded-md p-2 text-sm text-[#06402b] focus:ring-0 focus:outline-none cursor-pointer">
                       <option value="12h">12 Hrs</option>
                       <option value="24h">24 Hrs</option>
                       <option value="7d">7 Days</option>
@@ -200,7 +217,7 @@
                   <!-- Pollutant dropdown (NO Alpine binding) -->
                   <div class="mb-4 text-center">
                     <select id="gasSelect"
-                      class="border border-[#06402b] text-[#06402b] rounded-md p-2 text-sm focus:ring-0 focus:outline-none">
+                      class="border border-[#06402b] text-[#06402b] rounded-md p-2 text-sm focus:ring-0 focus:outline-none cursor-pointer">
                       <option value="all">All</option>
                       <option value="pm2">PM 2.5</option>
                       <option value="pm10">PM 10</option>
@@ -211,7 +228,7 @@
                 </div>
               </div>
               <!-- Single canvas only -->
-              <canvas id="airChart" height="300" class="w-full"></canvas>
+              <canvas id="airChart" height="400" class="w-full"></canvas>
             </div>
             <div class="w-full h-auto mx-auto bg-white p-4 rounded-xl shadow-md">
               <div class="flex flex-col md:flex-row justify-between items-center lg:px-5">
@@ -219,7 +236,7 @@
                 <div class="flex flex-row gap-x-5">
                   <div class="mb-4 text-center">
                     <select id="timeRangeSelect"
-                      class="border border-[#06402b] rounded-md p-2 text-sm text-[#06402b] focus:ring-0 focus:outline-none">
+                      class="border border-[#06402b] rounded-md p-2 text-sm text-[#06402b] focus:ring-0 focus:outline-none cursor-pointer">
                       <option class="text-start" value="12h">12 Hrs</option>
                       <option class="text-start" value="24h">24 Hrs</option>
                       <option class="text-start" value="7d">7 Days</option>
@@ -228,7 +245,7 @@
                   </div>
                 </div>
               </div>
-              <canvas id="soundChart" height="300" class="w-full"></canvas>
+              <canvas id="soundChart" height="400" class="w-full"></canvas>
             </div>
           </div>
           <!-- <div x-data="{ open: false }" class="flex flex-col mt-1 bg-white w-full gap-y-3 mb-3">
@@ -271,9 +288,9 @@
         </div>
         <!-- Weather -->
         <div x-show="activeTab === 'weather'" x-transition
-          class="flex flex-col h-full w-full justify-center items-center">
+          class="flex flex-col h-full w-full justify-center items-center py-3">
           <div id="weather"
-            class="h-auto bg-white flex flex-col justify-center rounded-b-2xl items-center w-full shadow-xl z-0 py-5 lg:gap-y-5">
+            class="h-auto bg-white flex flex-col justify-center rounded-b-2xl items-center w-full shadow-xl z-0 py-10 lg:gap-y-5">
           </div>
         </div>
       </div>
@@ -330,9 +347,13 @@
     const peakDecibel = Math.floor(@json($peak_decibel));
     const averageDecibel = Math.floor(@json($avgDecibelToday));
     const latestVals = @json($latest_vals);
-
-    console.table(latestVals);
-
+    
+    const selectedHardware = @json($selectedHardware);
+    const selectedLat = Number(@json($selectedLat));
+    const selectedLon = Number(@json($selectedLon));
+    const selectedHardwareId = @json($selectedHardwareId);
+    // console.table(latestVals);
+      console.log(selectedHardwareId);
     document.addEventListener('DOMContentLoaded', () => {
       // Format a value with unit; show an em dash if null/undefined/NaN
       const fmt = (v, unit) => (v == null || Number.isNaN(v) ? '—' : `${Math.floor(Number(v))} ${unit}`);
@@ -359,7 +380,7 @@
       if (lastUpdatedEl) lastUpdatedEl.textContent = formatted;
       // ---- Pollutant labels (match your HTML IDs) ----
 
-      console.table(latestNowcast);
+    //   console.table(latestNowcast);
 
       const pairs = [
         ['pm2Label', latestVals?.pm2_5, 'µg/m³'],
@@ -396,23 +417,39 @@
       }
 
       // ---- Debug logs (optional) ----
-      if (typeof latestAqi !== 'undefined') console.log('Latest AQI:', latestAqi);
+    //   if (typeof latestAqi !== 'undefined') // console.log('Latest AQI:', latestAqi);
     });
     /* =========================
     * MAP
     * ========================= */
-    const map = L.map('map').setView([14.6458, 120.9865], 18);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 15, maxZoom: 18 }).addTo(map);
-    [{ name: 'Barangay 115', coords: [14.6458, 120.9865] }].forEach(loc => {
-      L.marker(loc.coords).addTo(map).bindPopup(`<b>${loc.name}</b>`);
-    });
+    const map = L.map('map').setView([selectedLat, selectedLon], 18);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      minZoom: 15,
+      maxZoom: 18
+    }).addTo(map);
+
+    const marker = L.marker([selectedLat, selectedLon]).addTo(map);
+
+    const markerName =
+      selectedHardware?.location_name
+      ?? selectedHardware?.hardware_id
+      ?? 'Selected Location';
+
+    marker.bindPopup(`<b>${markerName}</b>`).openPopup();
 
     /* =========================
     * WEATHER (unchanged)
     * ========================= */
     document.addEventListener('DOMContentLoaded', () => {
-      const city = "Caloocan";
-      const lat = 14.6514, lon = 120.97;
+      const city =
+        selectedHardware?.location_name
+        ?? selectedHardware?.hardware_id
+        ?? "Selected Location";
+
+      const lat = selectedLat;
+      const lon = selectedLon;
+
       let currentUnit = "C";
       let forecastData = null;
 
@@ -453,6 +490,7 @@
         forecastData = await res.json();
         renderWeather();
       }
+
       function renderWeather() {
         const container = document.getElementById('weather');
         const daily = forecastData.daily;
@@ -466,10 +504,10 @@
           const info = weatherCodeMap[daily.weathercode[i]] || { text: "Unknown", icon: "❓" };
           const max = currentUnit === "C" ? `${daily.temperature_2m_max[i]}°C` : `${toF(daily.temperature_2m_max[i])}°F`;
           const min = currentUnit === "C" ? `${daily.temperature_2m_min[i]}°C` : `${toF(daily.temperature_2m_min[i])}°F`;
-          const highlight = dateStr === todayStr ? 'bg-yellow-200' : 'bg-white';
+          const highlight = dateStr === todayStr ? 'bg-[#E0EBDC]' : 'bg-white';
           return `
             <div class="flex flex-col justify-between items-center border-2 border-[#06402b] rounded-xl p-5 w-40 text-center shadow-xl hover:scale-105 duration-300 ${highlight}">
-              <span class="font-semibold text-blue-700">${weekday}</span>
+              <span class="font-bold text-[#06402b]">${weekday}</span>
               <span class="text-sm text-gray-500 mb-1">${dateStr}</span>
               <img src="${info.icon}" alt="icon" class="size-20">
               <span class="text-red-600">High ${max}</span>
@@ -512,7 +550,7 @@
       { max: 150, label: 'Poor', color: 'text-[#FF7E00] bg-[#FF7E00]' },
       { max: 200, label: 'Unhealthy', color: 'text-[#FF0000] bg-[#FF0000]' },
       { max: 300, label: 'Acutely Unhealthy', color: 'text-[#8F3F97] bg-[#8F3F97]' },
-      { min: 300.1, label: 'Emergency', color: 'text-[#7E0023] bg-[#7E0023]' },
+      { min: 301, label: 'Emergency', color: 'text-[#7E0023] bg-[#7E0023]' },
     ];
 
     const category = categories.find(c => latestAqi <= c.max) || categories[categories.length - 1];
@@ -562,8 +600,9 @@
           animation: { duration: 600, easing: 'easeInOutQuart' },
           plugins: {
             legend: {
-              position: 'top',
-              labels: {
+                onClick: null,
+                position: 'top',
+                labels: {
                 filter: (legendItem, chartOrData) => {
                   const chart = chartOrData && chartOrData.config ? chartOrData : null;
                   if (chart && typeof chart.getDatasetMeta === 'function') {
@@ -607,8 +646,8 @@
         responsive: false,
         spanGaps: true,
         animation: { duration: 600, easing: 'easeInOutQuart' },
-        plugins: { legend: { position: 'top' }, title: { display: true, text: 'Sound Levels' } },
-        scales: { y: { title: { display: true, text: 'Decibels (dB)' } } }
+        plugins: { legend: {onClick: null, position: 'top' }, title: { display: true, text: 'Sound Levels' } },
+        scales: { y: { beginAtZero: true } } 
       }
     });
 
@@ -816,13 +855,14 @@
     * ECHO + LIVE UPDATES (append using segment-style label)
     * ========================= */
     const AQI_BANDS = [
-      { max: 50, label: 'Good', hex: '#00E400', bg: '#00E400' },
-      { max: 100, label: 'Fair', hex: '#FFC000', bg: '#FFFF00' },
-      { max: 150, label: 'Poor', hex: '#FF7E00', bg: '#FF7E00' },
-      { max: 200, label: 'Unhealthy', hex: '#FF0000', bg: '#FF0000' },
-      { max: 300, label: 'Acutely Unhealty', hex: '#8F3F97', bg: '#8F3F97' },
-      { min: 400, label: 'Emergency', hex: '#7E0023', bg: '#7E0023' },
+      { max: 50.0, label: 'Good', hex: '#00E400', bg: '#00E400' },
+      { max: 100.0, label: 'Fair', hex: '#FFC000', bg: '#FFFF00' },
+      { max: 150.0, label: 'Poor', hex: '#FF7E00', bg: '#FF7E00' },
+      { max: 200.0, label: 'Unhealthy', hex: '#FF0000', bg: '#FF0000' },
+      { max: 300.0, label: 'Acutely Unhealty', hex: '#8F3F97', bg: '#8F3F97' },
+      { min: 301.0, label: 'Emergency', hex: '#7E0023', bg: '#7E0023' },
     ];
+    
     const pickBand = aqi =>
       AQI_BANDS.find(b => (b.max != null ? aqi <= b.max : aqi >= (b.min ?? 0))) || AQI_BANDS[AQI_BANDS.length - 1];
 
@@ -864,79 +904,82 @@
 
       window.Echo.channel('dashboard')
         .listen('DashboardUpdated', (d) => {
-          console.table(d);
-          // Cards
-          const fmt = (v, unit) => (v == null ? '—' : `${Math.floor(v)} ${unit}`);
-          //   const pmNodes = document.querySelectorAll('span[id="pm2.5Label"]');
-          //   if (pmNodes[0]) pmNodes[0].textContent = fmt(d.latest_nowcast?.pm2_5, 'µg/m³');
-          //   if (pmNodes[1]) pmNodes[1].textContent = fmt(d.latest_nowcast?.pm10,  'µg/m³');
-          //   if (pmNodes[2]) pmNodes[2].textContent = fmt(d.latest_nowcast?.co,    'ppm');
-          //   if (pmNodes[3]) pmNodes[3].textContent = fmt(d.latest_nowcast?.no2,   'ppb');
+          if (d.hardware_id == selectedHardwareId){
+              console.log("Updating nyehehe");
+              // Cards
+              const fmt = (v, unit) => (v == null ? '—' : `${Math.floor(v)} ${unit}`);
+              //   const pmNodes = document.querySelectorAll('span[id="pm2.5Label"]');
+              //   if (pmNodes[0]) pmNodes[0].textContent = fmt(d.latest_nowcast?.pm2_5, 'µg/m³');
+              //   if (pmNodes[1]) pmNodes[1].textContent = fmt(d.latest_nowcast?.pm10,  'µg/m³');
+              //   if (pmNodes[2]) pmNodes[2].textContent = fmt(d.latest_nowcast?.co,    'ppm');
+              //   if (pmNodes[3]) pmNodes[3].textContent = fmt(d.latest_nowcast?.no2,   'ppb');
 
-          const pairs = [
-            ['pm2Label', d.latest_vals?.pm2_5, 'µg/m³'],
-            ['pm10Label', d.latest_vals?.pm10, 'µg/m³'],
-            ['coLabel', d.latest_vals?.co, 'ppm'],
-            ['noLabel', d.latest_vals?.no2, 'ppb'],
-          ];
+              const pairs = [
+                ['pm2Label', d.latest_vals?.pm2_5, 'µg/m³'],
+                ['pm10Label', d.latest_vals?.pm10, 'µg/m³'],
+                ['coLabel', d.latest_vals?.co, 'ppm'],
+                ['noLabel', d.latest_vals?.no2, 'ppb'],
+              ];
 
-          for (const [id, value, unit] of pairs) {
-            const el = document.getElementById(id);
-            if (el) el.textContent = fmt(value, unit);
+              for (const [id, value, unit] of pairs) {
+                const el = document.getElementById(id);
+                if (el) el.textContent = fmt(value, unit);
+              }
+
+              const avgEl = document.getElementById('avgDbLbl');
+              if (avgEl) avgEl.textContent = (d.average_decibel == null || isNaN(d.average_decibel)) ? '—' : Math.floor(d.average_decibel);
+
+              const peakEl = document.getElementById('peakDbLbl');
+              if (peakEl) peakEl.textContent = (d.peak_decibel == null || isNaN(d.peak_decibel)) ? '—' : Math.floor(d.peak_decibel);
+
+              const dbEl = document.getElementById('latestDbLbl');
+              if (dbEl) dbEl.textContent = fmt(d.latest_decibel, 'Db');
+
+              const asOf = document.getElementById('asOfLbl');
+              if (asOf) {
+                let dateText = '—';
+                if (d.latest_datetime) {
+                  const dt = new Date(d.latest_datetime);
+                  dateText = `${dt.toLocaleDateString()} ${dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                }
+                asOf.textContent = `As of: ${dateText}`;
+              }
+
+              // AQI slider + background
+              const aqi = Math.floor(d.latest_aqi ?? 0);
+              const band = pickBand(aqi);
+              if (slider) { slider.value = aqi; slider.style.accentColor = band.hex; }
+              if (valueEl) { valueEl.textContent = aqi; valueEl.style.color = band.hex; }
+              if (catEl) { catEl.textContent = band.label; catEl.style.color = band.hex; }
+              if (backColor) backColor.style.backgroundImage = `linear-gradient(to top, ${band.bg} 0%, white 100%)`;
+            //   console.log("Insidee");
+              // ✅ Update 12h & 24h live buffers using the SAME label format as the segments
+              //   if (d.latest_datetime) {
+              //     appendPoint("12h", d.latest_datetime, d.latest_nowcast, d.latest_decibel);
+              //     appendPoint("24h", d.latest_datetime, d.latest_nowcast, d.latest_decibel);
+              //   }
+
+              let formatted = '—';
+              if (typeof d.latest_datetime === 'string' && d.latest_datetime.trim()) {
+                // Make "YYYY-MM-DD HH:mm:ss" ISO-like for safe parsing
+                const dt = new Date(d.latest_datetime.replace(' ', 'T'));
+                if (!Number.isNaN(dt.getTime())) {
+                  formatted = dt.toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: true
+                  });
+                }
+              }
+
+              const lastUpdatedEl = document.getElementById('lastUpdatedLbl');
+              if (lastUpdatedEl) lastUpdatedEl.textContent = formatted;
           }
 
-          const avgEl = document.getElementById('avgDbLbl');
-          if (avgEl) avgEl.textContent = (d.average_decibel == null || isNaN(d.average_decibel)) ? '—' : Math.floor(d.average_decibel);
-
-          const peakEl = document.getElementById('peakDbLbl');
-          if (peakEl) peakEl.textContent = (d.peak_decibel == null || isNaN(d.peak_decibel)) ? '—' : Math.floor(d.peak_decibel);
-
-          const dbEl = document.getElementById('latestDbLbl');
-          if (dbEl) dbEl.textContent = fmt(d.latest_decibel, 'Db');
-
-          const asOf = document.getElementById('asOfLbl');
-          if (asOf) {
-            let dateText = '—';
-            if (d.latest_datetime) {
-              const dt = new Date(d.latest_datetime);
-              dateText = `${dt.toLocaleDateString()} ${dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-            }
-            asOf.textContent = `As of: ${dateText}`;
-          }
-
-          // AQI slider + background
-          const aqi = Math.floor(d.latest_aqi ?? 0);
-          const band = pickBand(aqi);
-          if (slider) { slider.value = aqi; slider.style.accentColor = band.hex; }
-          if (valueEl) { valueEl.textContent = aqi; valueEl.style.color = band.hex; }
-          if (catEl) { catEl.textContent = band.label; catEl.style.color = band.hex; }
-          if (backColor) backColor.style.backgroundImage = `linear-gradient(to top, ${band.bg} 0%, white 100%)`;
-          console.log("Insidee");
-          // ✅ Update 12h & 24h live buffers using the SAME label format as the segments
-          //   if (d.latest_datetime) {
-          //     appendPoint("12h", d.latest_datetime, d.latest_nowcast, d.latest_decibel);
-          //     appendPoint("24h", d.latest_datetime, d.latest_nowcast, d.latest_decibel);
-          //   }
-
-          let formatted = '—';
-          if (typeof d.latest_datetime === 'string' && d.latest_datetime.trim()) {
-            // Make "YYYY-MM-DD HH:mm:ss" ISO-like for safe parsing
-            const dt = new Date(d.latest_datetime.replace(' ', 'T'));
-            if (!Number.isNaN(dt.getTime())) {
-              formatted = dt.toLocaleString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true
-              });
-            }
-          }
-
-          const lastUpdatedEl = document.getElementById('lastUpdatedLbl');
-          if (lastUpdatedEl) lastUpdatedEl.textContent = formatted;
 
           // Re-render whichever range is active
           //   const airRange = document.getElementById("aqiTimeSelect")?.value || "12h";
@@ -992,8 +1035,215 @@
         });
       }
     });
+    
+    // async function loadPrediction() {
+    //   const el = document.getElementById('aqiPredictionMarquee');
+    //   if (!el) return;
+    
+    //   // Optional: show a temporary message while fetching
+    //   el.textContent = "Loading prediction…";
+    
+    //   try {
+    //     const res = await fetch(`/api/predict-latest?t=${Date.now()}`, {
+    //       headers: { "Accept": "application/json" }
+    //     });
+    
+    //     // Try to parse JSON even for errors (Laravel often returns JSON errors too)
+    //     let data = null;
+    //     try { data = await res.json(); } catch (_) {}
+    
+    //     if (!res.ok || !data) {
+    //       el.textContent = "For the next hour, the average AQI will be: — and the average noise level will be: —";
+    //       console.warn("Prediction failed:", res.status, data);
+    //       return;
+    //     }
+    
+    //     const aqi = data.aqi_next_hour_avg ?? data.aqi_next_hour_avg_1h ?? data.aqi_pred;
+    //     const noise = data.noise_next_hour_avg ?? data.noise_next_hour_avg_1h ?? data.noise_pred;
+    
+    //     const aqiText = (aqi == null || Number.isNaN(Number(aqi))) ? "—" : Math.round(Number(aqi));
+    //     const noiseText = (noise == null || Number.isNaN(Number(noise))) ? "—" : Math.round(Number(noise));
+    
+    //     el.textContent = `For the next hour, the average AQI will be: ${aqiText} and the average noise level will be: ${noiseText}`;
+    //   } catch (err) {
+    //     console.error("Prediction fetch error:", err);
+    //     el.textContent = "For the next hour, the average AQI will be: — and the average noise level will be: —";
+    //   }
+    // }
+    
+    async function loadPrediction() {
+          const aqiEl = document.getElementById('aqiPredictionMarquee');
+          const noiseEl = document.getElementById('noisePredictionMarquee');
+        console.log("loading-prediction");
+          if (!aqiEl || !noiseEl) return;
+        
+          // Temporary loading messages
+          aqiEl.innerHTML = `
+                <div class="w-70 h-auto flex justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
+                      <circle cx="12" cy="3.5" r="1.5" fill="#000000" opacity="0">
+                        <animateTransform
+                          attributeName="transform"
+                          calcMode="discrete"
+                          dur="2.4s"
+                          repeatCount="indefinite"
+                          type="rotate"
+                          values="0 12 12;90 12 12;180 12 12;270 12 12"/>
+                        <animate
+                          attributeName="opacity"
+                          dur="0.6s"
+                          keyTimes="0;0.5;1"
+                          repeatCount="indefinite"
+                          values="1;1;0"/>
+                      </circle>
+                    
+                      <circle cx="12" cy="3.5" r="1.5" fill="#000000" opacity="0">
+                        <animateTransform
+                          attributeName="transform"
+                          begin="0.2s"
+                          calcMode="discrete"
+                          dur="2.4s"
+                          repeatCount="indefinite"
+                          type="rotate"
+                          values="30 12 12;120 12 12;210 12 12;300 12 12"/>
+                        <animate
+                          attributeName="opacity"
+                          begin="0.2s"
+                          dur="0.6s"
+                          keyTimes="0;0.5;1"
+                          repeatCount="indefinite"
+                          values="1;1;0"/>
+                      </circle>
+                    
+                      <circle cx="12" cy="3.5" r="1.5" fill="#000000" opacity="0">
+                        <animateTransform
+                          attributeName="transform"
+                          begin="0.4s"
+                          calcMode="discrete"
+                          dur="2.4s"
+                          repeatCount="indefinite"
+                          type="rotate"
+                          values="60 12 12;150 12 12;240 12 12;330 12 12"/>
+                        <animate
+                          attributeName="opacity"
+                          begin="0.4s"
+                          dur="0.6s"
+                          keyTimes="0;0.5;1"
+                          repeatCount="indefinite"
+                          values="1;1;0"/>
+                      </circle>
+                    </svg>
+                </div>
+                `;
+          noiseEl.innerHTML = `
+                <div class="w-70 h-auto flex justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
+                      <circle cx="12" cy="3.5" r="1.5" fill="#000000" opacity="0">
+                        <animateTransform
+                          attributeName="transform"
+                          calcMode="discrete"
+                          dur="2.4s"
+                          repeatCount="indefinite"
+                          type="rotate"
+                          values="0 12 12;90 12 12;180 12 12;270 12 12"/>
+                        <animate
+                          attributeName="opacity"
+                          dur="0.6s"
+                          keyTimes="0;0.5;1"
+                          repeatCount="indefinite"
+                          values="1;1;0"/>
+                      </circle>
+                    
+                      <circle cx="12" cy="3.5" r="1.5" fill="#000000" opacity="0">
+                        <animateTransform
+                          attributeName="transform"
+                          begin="0.2s"
+                          calcMode="discrete"
+                          dur="2.4s"
+                          repeatCount="indefinite"
+                          type="rotate"
+                          values="30 12 12;120 12 12;210 12 12;300 12 12"/>
+                        <animate
+                          attributeName="opacity"
+                          begin="0.2s"
+                          dur="0.6s"
+                          keyTimes="0;0.5;1"
+                          repeatCount="indefinite"
+                          values="1;1;0"/>
+                      </circle>
+                    
+                      <circle cx="12" cy="3.5" r="1.5" fill="#000000" opacity="0">
+                        <animateTransform
+                          attributeName="transform"
+                          begin="0.4s"
+                          calcMode="discrete"
+                          dur="2.4s"
+                          repeatCount="indefinite"
+                          type="rotate"
+                          values="60 12 12;150 12 12;240 12 12;330 12 12"/>
+                        <animate
+                          attributeName="opacity"
+                          begin="0.4s"
+                          dur="0.6s"
+                          keyTimes="0;0.5;1"
+                          repeatCount="indefinite"
+                          values="1;1;0"/>
+                      </circle>
+                    </svg>
+                </div>
+                `;
+        
+          try {
+            const res = await fetch(
+              `/api/predict-latest?hardware_id=${selectedHardwareId}&t=${Date.now()}`,
+              {
+                headers: { "Accept": "application/json" }
+              }
+            );
+        
+            let data = null;
+            try { data = await res.json(); } catch (_) {}
+        
+            if (!res.ok || !data) {
+              aqiEl.textContent = "—";
+              noiseEl.textContent = "—";
+              console.warn("Prediction failed:", res.status, data);
+              return;
+            }
+        
+            const aqi =
+              data.aqi_next_hour_avg ??
+              data.aqi_next_hour_avg_1h ??
+              data.aqi_pred;
+        
+            const noise =
+              data.noise_next_hour_avg ??
+              data.noise_next_hour_avg_1h ??
+              data.noise_pred;
+        
+            const aqiText =
+              (aqi == null || Number.isNaN(Number(aqi))) ? "—" : Math.round(Number(aqi));
+        
+            const noiseText =
+              (noise == null || Number.isNaN(Number(noise))) ? "—" : Math.round(Number(noise));
+        
+            // Separate outputs
+            aqiEl.textContent = `${aqiText}`;
+            noiseEl.textContent = `${noiseText} dB`;
+        
+          } catch (err) {
+            console.error("Prediction fetch error:", err);
+            aqiEl.textContent = "—";
+            noiseEl.textContent = "—";
+          }
+    }
 
-
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      loadPrediction();
+      setInterval(loadPrediction, 5 * 60 * 1000); // refresh every 5 minutes
+    });
+    
   </script>
 
 

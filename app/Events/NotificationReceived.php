@@ -8,7 +8,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
-use Illuminate\Foundation\Events\Dispatchable;
+    use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 class NotificationReceived implements ShouldBroadcastNow
@@ -33,6 +33,7 @@ class NotificationReceived implements ShouldBroadcastNow
         return 'NotificationReceived';
     }
 
+    // ✅ This makes the JSON be exactly what you return here
     public function broadcastWith(): array
     {
         return [

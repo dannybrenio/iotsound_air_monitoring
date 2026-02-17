@@ -13,6 +13,18 @@ use App\Http\Controllers\HistoryStatusController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\PredictController;
+
+use App\Http\Controllers\Api\ChangeUserPasswordController;
+
+
+Route::get('/predictions/compare/{hardwareId?}', [PredictController::class, 'compare'])
+    ->name('predictions.compare');
+
+Route::middleware('auth:sanctum')->post(
+    '/change-password',
+    ChangeUserPasswordController::class
+);
 
 // Pwd na tanggalin for checking of values onle
 Route::get('/weather', function (Request $request) {
@@ -115,5 +127,6 @@ Route::middleware('auth:sanctum')->put('/me', function (Request $request) {
     return $user->fresh(); // or UserResource
 });
 
+Route::get('/predict-latest', [PredictController::class, 'predictLatest']);
 
 

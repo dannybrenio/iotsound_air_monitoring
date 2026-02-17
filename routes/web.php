@@ -44,7 +44,7 @@ Route::post('/login', function (Request $request) {
     $password = $request->input('password');
 
     // Hardcoded credentials
-    if ($username === 'admin' && $password === 'admin') {
+    if ($username === 'admin' && $password === 'aeroson-admin-001') {
         Session::put('logged_in', true);
         return redirect()->route('adminDashboard');
     }
@@ -72,16 +72,22 @@ $authMiddleware = function (Request $request, \Closure $next) {
 // Apply the middleware group properly
 Route::middleware('auth.admin')->group(function () {
     Route::get('/admin_dashboard', [AdminDashboardController::class, 'index'])->name('adminDashboard');
+    Route::get('/admin/latest-aqi', [AdminDashboardController::class, 'latest']);
     Route::get('/admin_hardware', [HardwareController::class, 'index'])->name('hardware');
     Route::delete('/admin_hardware/{hardware}', [HardwareController::class, 'destroy'])
         ->name('hardware.destroy');
     Route::post('/admin_pending_hardware', [HardwareController::class, 'store'])
         ->name('hardware.store');
+    Route::put('/admin_hardware/{hardware}', [HardwareController::class, 'update'])
+        ->name('hardware.update');
     Route::get('/admin_hardware_data', [HardwareDataController::class, 'index'])->name('hardwareData');
     Route::get('/admin_pending_data', [PendingHardwareDataController::class, 'index'])->name('pendingData');
     Route::get('/admin_pending_hardware', [PendingHardwareController::class, 'index'])->name('pendingHardware');
     Route::get('/admin_report', [ReportController::class, 'index'])->name('report');
     Route::get('/admin_account', [UserController::class, 'index'])->name('account');
+    Route::put('/admin/accounts/{user}', [UserController::class, 'update'])->name('admin.accounts.update');
+    Route::delete('/admin/accounts/{user}', [UserController::class, 'destroy'])->name('admin.accounts.destroy');
+    Route::post('/admin/accounts', [UserController::class, 'store'])->name('admin.accounts.store');
     Route::get('/admin_alert', [AlertsController::class, 'index'])->name('alert');
     Route::get('/admin_device_status', [DeviceStatusController::class, 'index'])->name('device');
     Route::get('/admin_history_status', [HistoryStatusController::class, 'index'])->name('history');
@@ -91,7 +97,8 @@ Route::post('/notifications/mark-all-read', function() {
     History_status::where('isRead', 0)->update(['isRead' => 1]);
     return response()->json(['success' => true]);
 });
+
 Route::get('/test-alert', function () {
     $ctrl = new AlertsController();
-    return $ctrl->store('hw-aeroson-001', 'Emergency, Evacuation Advised!', 'High Noise Level');
+    return $ctrl->store('hw-aeroson-001', 'Moderate air quality – increased risk of respiratory irritation');
 });

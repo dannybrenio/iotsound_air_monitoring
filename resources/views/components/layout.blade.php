@@ -66,6 +66,32 @@
         .animate-marquee {
             animation: marquee 15s linear infinite;
         }
+        
+        #aqi-slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 3px;
+          height: 24px;
+          background: #000000;
+          border-radius: 2px;
+          cursor: pointer;
+        }
+        
+        select, ::picker(select){
+            appearance: base-select;
+            width: 100px;
+        }
+        
+        ::picker(select){
+            border: 0;
+            margin: .4rem 0;
+            box-shadow: 0 0 5px rgba(0, 0, 0, .15);
+            border-radius: 5px;
+        }
+        
+        option{
+            padding: 10px;
+            font-size 14px;
+        }
     </style>
 </head>
 
@@ -80,10 +106,10 @@
                 <a href="{{ route('dashboard') }}"
                     class="text-center h-full flex justify-center items-center hidden md:flex cursor-pointer uppercase">AeroSon</a>
             </div>
-            <div class="h-full w-[80%] flex justify-end items-center gap-x-4">
+            <div class="h-full w-[50%] flex justify-end items-center gap-x-4">
                 <div class="h-full w-auto gap-x-5 flex-row items-center justify-between hidden md:flex">
                     <a href="{{ route('dashboard') }}"
-                        class="flex flex-row gap-x-2 justify-center items-center text-sm h-[80%]
+                        class="flex flex-row gap-x-2 justify-center items-center text-base h-[80%]
                                 {{ request()->routeIs('dashboard') ? 'text-[#06402b] border-b-2 font-semibold border-[#06402b] hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
                         <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5">
@@ -94,7 +120,7 @@
                         Home
                     </a>
                     <a href="{{ route('about') }}"
-                        class="flex flex-row gap-x-2 justify-center items-center text-sm h-[80%]
+                        class="flex flex-row gap-x-2 justify-center items-center text-base h-[80%]
                                 {{ request()->routeIs('about') ? 'text-[#06402b] border-b-2 font-semibold border-[#06402b] hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
                         <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4">
@@ -105,7 +131,7 @@
                         About Us
                     </a>
                     <a href="{{ route('help') }}"
-                        class="flex flex-row gap-x-2 justify-center items-center text-sm h-[80%]
+                        class="flex flex-row gap-x-2 justify-center items-center text-base h-[80%]
                                 {{ request()->routeIs('help') ? 'text-[#06402b] border-b-2 font-semibold border-[#06402b] hover:scale-105 duration-300' : 'text-black hover:text-green-500 hover:scale-105 duration-300' }}">
                         <!-- <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
                             <path fill="#E0EBDC" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -114,10 +140,10 @@
                         </svg> -->
                         Knowledge Hub
                     </a>
-                    <a href="{{ route('login') }}"
-                        class="flex flex-row gap-x-2 justify-center items-center text-sm bg-[#06402b] rounded text-white font-bold w-20 uppercase h-[70%] hover:scale-105 duration-300">
-                        Sign In
-                    </a>
+                    <!--<a href="{{ route('login') }}"-->
+                    <!--    class="flex flex-row gap-x-2 justify-center items-center text-sm bg-[#06402b] rounded text-white font-bold w-20 uppercase h-[70%] hover:scale-105 duration-300">-->
+                    <!--    Sign In-->
+                    <!--</a>-->
                 </div>
                 <!-- Mobile Hamburger Button -->
                 <button id="hamburger-btn"
@@ -185,10 +211,10 @@
                     <span class="">Knowledge Hub</span>
                 </a>
 
-                <a href="{{ route('login') }}"
-                    class="mobile-nav-link flex gap-x-2 justify-center items-center text-base bg-[#06402b] rounded text-white font-bold w-full h-16 hover:scale-105 duration-300">
-                    Sign In
-                </a>
+                <!--<a href="{{ route('login') }}"-->
+                <!--    class="mobile-nav-link flex gap-x-2 justify-center items-center text-base bg-[#06402b] rounded text-white font-bold w-full h-16 hover:scale-105 duration-300">-->
+                <!--    Sign In-->
+                <!--</a>-->
             </nav>
 
             <!-- Menu Footer -->
@@ -264,7 +290,74 @@
                 </div>
             </div>
         </div>
-        <p class="text-gray-500 h-auto upppercase border-t border-gray-400 w-[80%] text-center pt-7">© 2025 AeroSon. All rights reserved.</p>
+        <div class="text-gray-500 h-auto upppercase border-t border-gray-400 w-[80%] text-center pt-7">
+            <h3> © 2025 AeroSon. All rights reserved. </h3>
+            <div x-data="{open: false}" 
+                class="flex flex-row gap-x-1 text-center md:text-start items-center w-full justify-center">
+                <!--<h3 @click = "open = true"-->
+                <!--    class="hover:underline cursor-pointer">Terms & Conditions</h3>-->
+                <div 
+                    x-show="open"
+                    @click.self="open = false"
+                    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                    style="display: none;">
+                    <div 
+                        @click.away="open = false"
+                        class="flex flex-col max-h-[80vh] bg-[#06402b] rounded-lg shadow-xl max-w-md w-[40%] mx-4 py-6">
+                        <!-- Modal Header -->
+                        <div class="flex flex-col gap-y-5 justify-between items-center mb-4">
+                            <div class="flex flex-row gap-x-2 justify-center items-center w-full">
+                                <h2 class="text-2xl text-white font-bold text-gray-800">Terms & Condition</h2>
+                            </div>
+                            <div class="text-black bg-white flex flex-col gap-y-3 items-start w-full p-6 overflow-y-auto max-h-[300px]">
+                                <div class="flex flex-row gap-x-2">
+                                    <h3 class="font-bold">Last updated:</h3>
+                                    <h3>January 31, 2026</h3>
+                                </div>
+                                <h3 class="text-justify">Welcome to <b>AeroSon</b>. By accessing or using this website, you agree to be bound by these Terms and Conditions.
+                                </h3>
+                                <div class="flex flex-col gap-x-2">
+                                    <h3 class="font-bold">1. Use of the Website</h3>
+                                    <h3 class="text-justify">You agree to use this website only for lawful purposes and in a way that does not infringe the rights of others or restrict their use of the site.</h3>
+                                </div>
+                                <div class="flex flex-col gap-x-2">
+                                    <h3 class="font-bold">2. Intellectual Property</h3>
+                                    <h3 class="text-justify">All content on this website, including text, images, logos, and design, is the property of <b>AeroSon</b> and may not be copied, reproduced, or distributed without permission.</h3>
+                                </div>
+                                <div class="flex flex-col gap-x-2">
+                                    <h3 class="font-bold">3. User Content</h3>
+                                    <h3 class="text-justify">If you submit content (comments, forms, uploads), you grant us the right to use, display, and distribute that content in connection with the website.</h3>
+                                </div>
+                                <div class="flex flex-col gap-x-2">
+                                    <h3 class="font-bold">4. Disclaimer</h3>
+                                    <h3 class="text-justify">The content on this website is provided for general information only. We make no guarantees regarding accuracy or completeness.</h3>
+                                </div>
+                                <div class="flex flex-col gap-x-2">
+                                    <h3 class="font-bold">5. Limitation of Liability</h3>
+                                    <h3 class="text-justify">We are not liable for any damages arising from the use or inability to use this website.</h3>
+                                </div>
+                                <div class="flex flex-col gap-x-2">
+                                    <h3 class="font-bold">6. External Links</h3>
+                                    <h3 class="text-justify">This website may contain links to third-party websites. We are not responsible for their content or practices.</h3>
+                                </div>
+                                <div class="flex flex-col gap-x-2">
+                                    <h3 class="font-bold">7. Changes to These Terms</h3>
+                                    <h3 class="text-justify">We may update these Terms & Conditions at any time. Continued use of the website means you accept the updated terms.</h3>
+                                </div>
+                                <div class="flex flex-col gap-x-2">
+                                    <h3 class="font-bold">8. Governing Law</h3>
+                                    <h3 class="text-justify">These terms are governed by the laws of <b>Caloocan City, Philippines</b>.</h3>
+                                </div>
+                                <div class="flex flex-col gap-x-2">
+                                    <h3 class="font-bold">Contact Us:</h3>
+                                    <h3 class="text-justify">If you have questions about these Terms, contact us at aeroson@gmail.com.</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </footer>
 </body>
 <script>

@@ -19,14 +19,14 @@
                     <tbody>
                        @foreach($device_statuses as $device_status) 
                                 <tr class="{{ $loop->even ? 'bg-gray-300' : 'bg-white' }}">
-                                <td class="px-4 py-2 text-start">{{$device_status->status_id}}</td>
-                                <td class="px-4 py-2 text-start">{{$device_status->hardware_info}}</td>
-                                <td class="px-4 py-2 text-start">{{$device_status->pms_status}}</td>
-                                <td class="px-4 py-2 text-start">{{$device_status->mq135_status}}</td> 
-                                <td class="px-4 py-2 text-start">{{$device_status->mq7_status}}</td>
-                                <td class="px-4 py-2 text-start">{{$device_status->sound_status}}</td>
-                                <td class="px-4 py-2 text-start">{{$device_status->timestamp_status}}</td>
-                                <td class="px-4 py-2 text-start">{{$device_status->created_at}}</td>
+                                <td class="px-4 py-2 text-start uppercase">{{$device_status->status_id}}</td>
+                                <td class="px-4 py-2 text-start uppercase">{{$device_status->hardware_info}}</td>
+                                <td class="px-4 py-2 text-start uppercase">{{$device_status->pms_status}}</td>
+                                <td class="px-4 py-2 text-start uppercase">{{$device_status->mq135_status}}</td> 
+                                <td class="px-4 py-2 text-start uppercase">{{$device_status->mq7_status}}</td>
+                                <td class="px-4 py-2 text-start uppercase">{{$device_status->sound_status}}</td>
+                                <td class="px-4 py-2 text-start uppercase">{{$device_status->timestamp_status}}</td>
+                                <td class="px-4 py-2 text-start uppercase">{{$device_status->created_at}}</td>
                             </tr>
                         @endforeach
                         </table>

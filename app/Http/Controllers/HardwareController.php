@@ -16,8 +16,9 @@ class HardwareController extends Controller
     public function index(){
         $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
         $hardwares = Hardware::paginate(10);
+        $pending_hardwares = Pending_hardware::all();
             
-        return view('admin.hardware.admin_hardware', compact('hardwares', 'notifs'));
+        return view('admin.hardware.admin_hardware', compact('hardwares', 'pending_hardwares', 'notifs'));
     }
 
     public function create(){
@@ -26,55 +27,58 @@ class HardwareController extends Controller
         return view('admin.hardware.hardware_create', compact('pending_list', 'notifs'));
     }
 
-    public function store(Request $request){
-        // $pending = Pending_hardware::findOrFail($request->hardware_info);
+     public function store(Request $request)
+    {
+        $request->validate([
+            'hardware_info' => 'required|string',
+        ]);
+    
         $pending = Pending_hardware::where('hardware_info', $request->hardware_info)->firstOrFail();
-
-
-        $insertedData = [];
-
-        $hardwareInfo = $pending->hardware_info;
-        $latitude = $pending->latitude;
-        $longitude = $pending->longitude;
-
-
+    
+        
+        $hardwareInfo  = $pending->hardware_info;
+        $locationName  = $pending->location_name;
+        $latitude      = $pending->latitude;
+        $longitude     = $pending->longitude;
+        
         $hardware_created = Hardware::create([
-                'hardware_info' => $hardwareInfo,
-                'longitude' => $longitude,
-                'latitude' => $latitude, 
+            'hardware_info'  => $hardwareInfo,
+            'location_name'  => $locationName,
+            'longitude'      => $longitude,
+            'latitude'       => $latitude,
+            'status'         => 'active'
+        ]);
+    
+        if ($hardware_created) {
+            Device_status::create([
+                'hardware_info'      => $hardwareInfo,
+                'pms_status'         => 'active',
+                'mq135_status'       => 'active',
+                'mq7_status'         => 'active',
+                'sound_status'       => 'active',
+                'timestamp_status'   => 'active',
             ]);
-
-            if($hardware_created){
-                Device_status::create([
-                    'hardware_info' => $hardwareInfo,
-                    'pms_status' => 'active',
-                    'mq135_status' => 'active',
-                    'mq7_status' => 'active',
-                    'sound_status' => 'active',
-                    'timestamp_status' => 'active',
-                ]);
-            }
-            
-            $hardware_id_fetch = $hardware_created->hardware_id;
-
-               $pending_data_fetch= Pending_hardware_data::where('pending_hardware_info', $hardwareInfo)->get();
-
-                foreach ($pending_data_fetch as $pending_fetch) {
-                $newData = $pending_fetch->toArray();
-                $newData['hardware_id'] = $hardware_id_fetch; // assign foreign key
-                $record = Hardware_data::create($newData);
-
-               // $insertedData[] = $record;
-    }
-                //    return response([
-                //     'inserted_count' => count($insertedData),
-                //     'inserted_data' => $insertedData,
-                // ], 200);
-
-                Pending_hardware_data::where('pending_hardware_info', $hardwareInfo)->delete();
-                $pending->delete();
-                return redirect()->route('pendingHardware')->with('success', 'Device registered successfully!');
         }
+    
+        $hardware_id_fetch = $hardware_created->hardware_id;
+    
+        $pending_data_fetch = Pending_hardware_data::where('pending_hardware_info', $hardwareInfo)->get();
+    
+        foreach ($pending_data_fetch as $pending_fetch) {
+            $newData = $pending_fetch->toArray();
+    
+            unset($newData['id']);
+    
+            $newData['hardware_id'] = $hardware_id_fetch;
+    
+            Hardware_data::create($newData);
+        }
+    
+        Pending_hardware_data::where('pending_hardware_info', $hardwareInfo)->delete();
+        $pending->delete();
+    
+        return redirect()->route('hardware')->with('success', 'Device registered successfully!');
+    }
 
     public function edit($hardware_id){
         $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
@@ -82,17 +86,20 @@ class HardwareController extends Controller
         return view('admin.hardware.hardware_update', compact('hardware', 'notifs'));
     }
 
-    public function update(Request $request, $hardware_id){   
+    public function update(Request $request, $hardware)
+    {
         $validated = $request->validate([
-        'hardware_info' => 'required',
-        'hardware_location' => 'required',
-    ]);
-
-        $hardware = Hardware::findOrFail($hardware_id);
-        $hardware->update($validated);
-        return redirect()->route('hardware')->with('success', 'Device updated successfully!');
-    }
+            'hardware_info' => 'required|string',
+            'location_name' => 'required|string',
+            'longitude'     => 'required',
+            'latitude'      => 'required',
+        ]);
     
+        $hw = Hardware::where('hardware_id', $hardware)->firstOrFail();
+        $hw->update($validated);
+    
+        return redirect()->route('hardware')->with('success', 'Hardware updated successfully!');
+    }
 
     public function destroy($hardware_id){
         $hardware = Hardware::findOrFail($hardware_id);

@@ -174,72 +174,99 @@ class ExportsController extends Controller
     
     public function downloadAqi(AqiCalculator $aqi): StreamedResponse
     {
-        $window = $this->getNowcastWindow();
-    
         $file = 'aqi-raw-' . now()->timezone('Asia/Manila')->format('Y-m-d_H-i-s') . '.csv';
+
         $headers = [
-            'Content-Type'        => 'text/csv',
+            'Content-Type'        => 'text/csv; charset=UTF-8',
             'Content-Disposition' => "attachment; filename=\"{$file}\"",
             'Cache-Control'       => 'no-store, no-cache',
         ];
-    
-        return response()->stream(function () use ($aqi, $window) {
+
+        return response()->stream(function () use ($aqi) {
             DB::connection()->disableQueryLog();
             set_time_limit(0);
-    
-            try {
-                $out = fopen('php://output', 'w');
-    
-                // Header: raw values + instantaneous AQI per reading
+
+            $out = fopen('php://output', 'w');
+
+            // ✅ Excel UTF-8 BOM
+            fwrite($out, "\xEF\xBB\xBF");
+
+            // ✅ CSV Header
+            fputcsv($out, [
+                'pm2_5_raw','pm10_raw','no2_raw','co_raw','decibel_raw','reading_timestamp',
+
+                // ✅ weather columns
+                'temperature_2m','relative_humidity_2m','windspeed_10m','winddirection_10m',
+                'pressure_msl','precipitation','weather_code',
+
+                // ✅ AQI values
+                'pm2_5_aqi_inst','pm10_aqi_inst','no2_aqi_inst','co_aqi_inst',
+            ]);
+
+            // ✅ Join weather_data (hourly) to sensor data (5-min)
+            $rows = DB::table('hardware_data as h')
+                ->leftJoin('weather_data as w', DB::raw("DATE_FORMAT(h.realtime_stamp, '%Y-%m-%d %H:00:00')"), '=', 'w.weather_timestamp')
+                ->select([
+                    'h.pm2_5','h.pm10','h.co','h.no2','h.decibels','h.realtime_stamp',
+                    'w.temperature_2m',
+                    'w.relative_humidity_2m',
+                    'w.windspeed_10m',
+                    'w.winddirection_10m',
+                    'w.pressure_msl',
+                    'w.precipitation',
+                    'w.weather_code',
+                ])
+                ->orderBy('h.realtime_stamp', 'asc')
+                ->cursor();
+
+            $i = 0;
+
+            foreach ($rows as $r) {
+                $inst = $aqi->convertInstantAQIForRow($r);
+
+                $ts = Carbon::parse($r->realtime_stamp)
+                    ->timezone('Asia/Manila')
+                    ->toDateTimeString();
+
                 fputcsv($out, [
-                    'pm2_5_raw','pm10_raw','no2_raw','co_raw','decibel_raw','reading_timestamp',
-                    'pm2_5_aqi_inst','pm10_aqi_inst','no2_aqi_inst','co_aqi_inst',
+                    $r->pm2_5 ?? null,
+                    $r->pm10  ?? null,
+                    $r->no2   ?? null,
+                    $r->co    ?? null,
+                    $r->decibels ?? null,
+                    $ts,
+
+                    // ✅ weather
+                    $r->temperature_2m ?? null,
+                    $r->relative_humidity_2m ?? null,
+                    $r->windspeed_10m ?? null,
+                    $r->winddirection_10m ?? null,
+                    $r->pressure_msl ?? null,
+                    $r->precipitation ?? null,
+                    $r->weather_code ?? null,
+
+                    // ✅ AQI
+                    $inst['pm2_5'] ?? null,
+                    $inst['pm10']  ?? null,
+                    $inst['no2']   ?? null,
+                    $inst['co']    ?? null,
                 ]);
-    
-                $exportTs = now()->timezone('Asia/Manila')->toDateTimeString();
-    
-                // Rows: RAW readings only
-                foreach ($window as $r) {
-                    $inst = $aqi->convertInstantAQIForRow($r);
-    
-                    fputcsv($out, [
-                        $r->pm2_5 ?? null,
-                        $r->pm10  ?? null,
-                        $r->no2   ?? null,
-                        $r->co    ?? null,
-                        // tolerate either column name
-                        ($r->decibel ?? $r->decibels ?? null),
-                        \Carbon\Carbon::parse($r->realtime_stamp, 'UTC')->timezone('Asia/Manila')->toDateTimeString(),
-    
-                        // instantaneous AQI (per reading, not NowCast)
-                        $inst['pm2_5'] ?? null,
-                        $inst['pm10']  ?? null,
-                        $inst['no2']   ?? null,
-                        $inst['co']    ?? null,
-    
-                    ]);
+
+                if (++$i % 500 === 0) {
+                    fflush($out);
                 }
-    
-                fclose($out);
-            } catch (\Throwable $e) {
-                Log::error('downloadAqi() stream failed: ' . $e->getMessage(), [
-                    'trace' => $e->getTraceAsString(),
-                ]);
-                $out = fopen('php://output', 'w');
-                fputcsv($out, ['message']);
-                fputcsv($out, ['Internal error generating CSV. Check server logs.']);
-                fclose($out);
             }
+
+            fclose($out);
         }, 200, $headers);
     }
-
-
-    private function getNowcastWindow(): Collection
+    
+    private function getNowcastWindow()
     {
         return DB::table('hardware_data')
             ->select(['pm2_5','pm10','co','no2','decibels','realtime_stamp'])
             ->orderBy('realtime_stamp', 'asc')
-            ->get();
+            ->cursor(); // ✅ lazy generator
     }
 
     public function downloadSensorHistory(Request $request): StreamedResponse

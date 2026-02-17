@@ -1,7 +1,20 @@
 <x-admin :$notifs>
-    <div class="h-auto flex justify-center items-start px-7">
+    <div class="h-auto lg:h-screen flex justify-center items-start px-7">
         <div class="container mx-auto">
             <h1 class="text-xl font-bold mb-10">Alerts</h1>
+            <div class="flex justify-end w-full">
+                <style>
+                    select, ::picker(select){
+                        appearance: base-select;
+                        width: 100px;
+                    }
+                </style>
+                <select
+                  class="border border-[#06402b] rounded-md p-2 text-sm text-[#06402b] focus:ring-0 focus:outline-none cursor-pointer mb-3">
+                  <option value="12h">AIR</option>
+                  <option value="24h">NOISE</option>
+                </select>
+            </div>
             <div class="overflow-x-auto">
                 <table class="w-full bg-white border border-gray-200 rounded-lg shadow">
                     <thead>
