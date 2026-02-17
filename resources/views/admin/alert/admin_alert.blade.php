@@ -9,11 +9,18 @@
                         width: 100px;
                     }
                 </style>
-                <select
-                  class="border border-[#06402b] rounded-md p-2 text-sm text-[#06402b] focus:ring-0 focus:outline-none cursor-pointer mb-3">
-                  <option value="12h">AIR</option>
-                  <option value="24h">NOISE</option>
-                </select>
+
+                <form method="GET" class="mb-3">
+                    <select
+                        name="type"
+                        onchange="this.form.submit()"
+                        class="border border-[#06402b] rounded-md p-2 text-sm text-[#06402b] focus:ring-0 focus:outline-none cursor-pointer"
+                    >
+                        <option value="air" {{ ($type ?? request('type', 'air')) === 'air' ? 'selected' : '' }}>AIR</option>
+                        <option value="noise" {{ ($type ?? request('type', 'air')) === 'noise' ? 'selected' : '' }}>NOISE</option>
+                    </select>
+                </form>
+                
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full bg-white border border-gray-200 rounded-lg shadow">

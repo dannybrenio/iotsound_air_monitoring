@@ -219,12 +219,13 @@
           try {
             const response = await fetch('/admin/latest-aqi');
             const data = await response.json();
-        
-            const aqiValue = data?.aqi ?? 'No data';
+            console.log("inside");
+
+            const aqiValue = Math.floor(data?.aqi) ?? 'No data';
             const aqiElement = document.getElementById('aqi');
             aqiElement.textContent = aqiValue;
             
-            document.getElementById('decibel').textContent = data?.decibel ?? 'No data';
+            document.getElementById('decibel').textContent = Math.floor(data?.decibel) ?? 'No data';
         
             // Update background gradient and text color of the parent div
             const category = getAQICategory(aqiValue);

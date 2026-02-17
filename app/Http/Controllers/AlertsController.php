@@ -11,11 +11,28 @@ use Illuminate\Support\Facades\Log;
 
 class AlertsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $notifs = History_status::where('isRead', 0)->orderByDesc('created_at')->get();
-        $alerts = Alerts::orderBy('alert_id', 'desc')->paginate(10);
-        return view('admin.alert.admin_alert', compact('alerts', 'notifs'));
+        $notifs = History_status::where('isRead', 0)
+                    ->orderByDesc('created_at')
+                    ->get();
+
+        $type = $request->query('type', 'air'); // default AIR
+
+        $alerts = Alerts::when($type === 'air', function ($query) {
+                $query->where('alert_body', 'like', '%air%');
+            })
+            ->when($type === 'noise', function ($query) {
+                $query->where(function ($q) {
+                    $q->where('alert_body', 'like', '%noise%')
+                      ->orWhere('alert_body', 'like', '%sound%');
+                });
+            })
+            ->orderByDesc('alert_id')
+            ->paginate(10)
+            ->appends(['type' => $type]);
+
+        return view('admin.alert.admin_alert', compact('alerts', 'notifs', 'type'));
     }
 
     public function store(string $hardwareIdentifyer, ?string $aqiLevel = null, ?string $dbLabel = null)
